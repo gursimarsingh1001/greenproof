@@ -1,0 +1,139 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id                    Int                    @id @default(autoincrement())
+  name                  String
+  brandId               Int
+  brand                 Brand                  @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  barcode               String                 @unique
+  category              String
+  description           String?
+  imageUrl              String?
+  priceCents            Int?
+  dataSource            String                 @default("local_seed")
+  sourceUrl             String?
+  sourceMetadata        Json?
+  // SQLite cannot store primitive string lists directly, so claims are kept as a JSON array.
+  claims                Json                   @default("[]")
+  productCertifications ProductCertification[]
+  verificationSnapshots VerificationSnapshot[]
+  feedback              Feedback[]
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+
+  @@index([brandId])
+  @@index([category])
+  @@index([dataSource])
+  @@index([name])
+  @@unique([name, brandId])
+}
+
+model Brand {
+  id                  Int                  @id @default(autoincrement())
+  name                String               @unique
+  website             String?
+  isFlagged           Boolean              @default(false)
+  flagReason          String?
+  reputationScore     Float                @default(0.5)
+  products            Product[]
+  brandCertifications BrandCertification[]
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+
+  @@index([reputationScore])
+}
+
+model Certification {
+  id                    Int                    @id @default(autoincrement())
+  name                  String                 @unique
+  acronym               String                 @unique
+  issuingBody           String
+  scope                 String
+  brandCertifications   BrandCertification[]
+  productCertifications ProductCertification[]
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+}
+
+model BrandCertification {
+  brandId           Int
+  certificationId   Int
+  certificateNumber String?
+  isValid           Boolean       @default(false)
+  expiryDate        DateTime?
+  brand             Brand         @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  certification     Certification @relation(fields: [certificationId], references: [id], onDelete: Cascade)
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  @@id([brandId, certificationId])
+}
+
+model ProductCertification {
+  productId         Int
+  certificationId   Int
+  certificateNumber String?
+  isVerified        Boolean       @default(false)
+  product           Product       @relation(fields: [productId], references: [id], onDelete: Cascade)
+  certification     Certification @relation(fields: [certificationId], references: [id], onDelete: Cascade)
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  @@id([productId, certificationId])
+}
+
+model VagueTerm {
+  term        String   @id
+  category    String
+  penalty     Int      @default(-20)
+  explanation String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ImpossibleClaim {
+  claimPattern String   @id
+  reason       String
+  penalty      Int      @default(-40)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Feedback {
+  id            Int      @id @default(autoincrement())
+  productId     Int?
+  product       Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+  issueType     String   @default("other")
+  message       String
+  email         String?
+  reportedScore Int?
+  expectedScore Int?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([productId])
+  @@index([createdAt])
+}
+
+model VerificationSnapshot {
+  id               Int      @id @default(autoincrement())
+  productId        Int
+  product          Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  displayId        String   @unique
+  resultHash       String
+  algorithmVersion String
+  canonicalPayload Json
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([productId])
+  @@index([createdAt])
+  @@index([productId, resultHash, algorithmVersion])
+}

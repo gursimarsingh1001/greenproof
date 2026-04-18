@@ -1,0 +1,38 @@
+{
+  "name": "greenproof",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:api": "tsc --project tsconfig.json",
+    "start:api": "npm run build:api && node dist/src/api/server.js",
+    "dev:api": "npm run build:api && node --watch dist/src/api/server.js",
+    "db:generate": "prisma generate",
+    "db:migrate": "node prisma/prepare-db.mjs && prisma migrate deploy",
+    "db:migrate:dev": "prisma migrate dev",
+    "db:push": "prisma db push",
+    "db:seed": "prisma db seed",
+    "db:studio": "prisma studio",
+    "test:api": "tsx tests/api.test.ts",
+    "test:engine": "tsx tests/engine.test.ts",
+    "test:integrity": "npm run build:api && node dist/tests/integrity.test.js",
+    "typecheck": "tsc --noEmit",
+    "test:seed-data": "tsx tests/seed-data-test.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.7.0",
+    "dotenv": "^16.4.7",
+    "express": "^5.2.1",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^22.10.2",
+    "prisma": "^6.7.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  }
+}
