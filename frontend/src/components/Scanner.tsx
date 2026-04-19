@@ -222,7 +222,7 @@ export function Scanner({ defaultMode }: ScannerProps) {
       cancelled = true;
       resetCameraSession();
     };
-  }, [mode, runLookup]);
+  }, [mode]);
 
   const handleManualSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
