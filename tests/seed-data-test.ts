@@ -47,6 +47,7 @@ assertUniqueValues(
 for (const product of products) {
   assert(product.description.trim().length > 0, `${product.name} should include a description.`);
   assert(product.claims.length > 0, `${product.name} should include at least one seeded claim.`);
+  assert(product.imageUrl && product.imageUrl.length > 0, `${product.name} should include an image URL.`);
   assert(
     product.expectedTrustScore >= 0 && product.expectedTrustScore <= 100,
     `${product.name} expected score must be 0-100.`
@@ -55,6 +56,15 @@ for (const product of products) {
     assert(product.priceCents > 0, `${product.name} priceCents must be positive when present.`);
   }
 }
+
+const patagoniaHoodie = products.find((product) => product.name === "Patagonia Organic Cotton Hoodie");
+assert(
+  patagoniaHoodie?.imageUrl?.includes("kind=hoodie"),
+  "Patagonia Organic Cotton Hoodie should use hoodie artwork."
+);
+
+const pactTee = products.find((product) => product.name === "Pact Organic Crew Tee");
+assert(pactTee?.imageUrl?.includes("kind=tee"), "Pact Organic Crew Tee should use tee artwork.");
 
 for (const requiredProduct of [
   "Patagonia Organic Cotton Hoodie",

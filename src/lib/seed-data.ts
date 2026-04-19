@@ -359,6 +359,9 @@ export const brandCertifications: BrandCertificationSeed[] = [
   }
 ];
 
+const productArt = (kind: string, label: string): string =>
+  `/api/product-art?kind=${encodeURIComponent(kind)}&label=${encodeURIComponent(label)}`;
+
 export const products: ProductSeed[] = [
   {
     name: "Patagonia Organic Cotton Hoodie",
@@ -366,7 +369,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000001",
     category: "Apparel",
     description: "Patagonia markets this hoodie as Fair Trade Certified, made with organic cotton, finished with Bluesign approved fabric, and detailed with a recycled lining.",
-    imageUrl: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1200&q=80",
+    imageUrl: productArt("hoodie", "Patagonia Organic Cotton Hoodie"),
     priceCents: 12900,
     claims: ["Fair Trade Certified", "Organic Cotton", "Bluesign Approved"],
     scenario: "gold",
@@ -378,7 +381,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000002",
     category: "Household",
     description: "This dish soap highlights USDA Biobased Content, EPA Safer Choice recognition, no artificial fragrances, and a recycled bottle on pack.",
-    imageUrl: "https://images.unsplash.com/photo-1583947582886-f40ec95dd752?auto=format&fit=crop&w=1200&q=80",
+    imageUrl: productArt("dish-soap", "Seventh Generation Dish Soap"),
     priceCents: 499,
     claims: ["USDA Biobased Content", "EPA Safer Choice", "No Artificial Fragrances"],
     scenario: "gold",
@@ -390,7 +393,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000003",
     category: "Household",
     description: "Ecover positions this toilet cleaner as Cradle to Cradle Certified with plant-based ingredients.",
-    imageUrl: "https://images.unsplash.com/photo-1610552050890-fe99536c2612?auto=format&fit=crop&w=1200&q=80",
+    imageUrl: productArt("cleaner-bottle", "Ecover Toilet Cleaner"),
     priceCents: 679,
     claims: ["Cradle to Cradle Certified", "Plant-Based Ingredients"],
     scenario: "gold",
@@ -402,6 +405,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000004",
     category: "Personal Care",
     description: "The soap bar claims USDA Organic ingredients, Fair Trade Certified sourcing, and regenerative organic farming support.",
+    imageUrl: productArt("soap-bar", "Dr. Bronner's Organic Soap Bar"),
     claims: ["USDA Organic", "Fair Trade Certified", "Regenerative Organic"],
     scenario: "gold",
     expectedTrustScore: 90
@@ -412,7 +416,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000005",
     category: "Apparel",
     description: "Pact describes this tee as GOTS certified organic cotton made in a Fair Trade Certified factory.",
-    imageUrl: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1200&q=80",
+    imageUrl: productArt("tee", "Pact Organic Crew Tee"),
     priceCents: 3400,
     claims: ["GOTS Certified", "Organic Cotton", "Fair Trade Certified"],
     scenario: "gold",
@@ -424,6 +428,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000006",
     category: "Home",
     description: "This mattress protector advertises GOTS certification, OEKO-TEX Standard 100, and MADE SAFE materials.",
+    imageUrl: productArt("mattress", "Avocado Organic Mattress Protector"),
     claims: ["GOTS", "OEKO-TEX Standard 100", "MADE SAFE"],
     scenario: "gold",
     expectedTrustScore: 89
@@ -434,6 +439,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000007",
     category: "Home",
     description: "Naturepedic promotes this sheet set as GOTS certified, MADE SAFE certified, and made from organic cotton.",
+    imageUrl: productArt("sheets", "Naturepedic Organic Cotton Sheet Set"),
     claims: ["GOTS", "MADE SAFE", "Organic Cotton"],
     scenario: "gold",
     expectedTrustScore: 90
@@ -444,6 +450,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000008",
     category: "Footwear",
     description: "Allbirds highlights FSC certified packaging and carbon neutral operations for these Tree Runners.",
+    imageUrl: productArt("runner-shoe", "Allbirds Tree Runners"),
     claims: ["FSC Certified Packaging", "Carbon Neutral"],
     scenario: "gold",
     expectedTrustScore: 84
@@ -454,6 +461,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000009",
     category: "Household",
     description: "The pack focuses on FSC certified bamboo fiber and recycled packaging for reduced waste.",
+    imageUrl: productArt("toilet-paper", "Who Gives A Crap Bamboo Toilet Paper"),
     claims: ["FSC Certified", "Recycled Packaging"],
     scenario: "gold",
     expectedTrustScore: 85
@@ -464,6 +472,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000010",
     category: "Footwear",
     description: "Veja describes these sneakers as Fair Trade Certified with organic cotton details and responsibly sourced leather.",
+    imageUrl: productArt("sneaker", "Veja Campo Sneakers"),
     claims: ["Fair Trade Certified", "Organic Cotton", "Responsible Leather"],
     scenario: "gold",
     expectedTrustScore: 83
@@ -474,7 +483,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000011",
     category: "Apparel",
     description: "This tee uses sustainable cotton messaging, a Conscious Choice hangtag, and recycled materials messaging without listing a product certification.",
-    imageUrl: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=1200&q=80",
+    imageUrl: productArt("tee", "H&M Conscious Collection T-Shirt"),
     priceCents: 1999,
     claims: ["Sustainable Cotton", "Conscious Choice"],
     scenario: "mixed",
@@ -486,7 +495,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000012",
     category: "Footwear",
     description: "Adidas markets the shoes as made with ocean plastic and recycled materials, but the recycled percentage is not obvious on front pack.",
-    imageUrl: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1200&q=80",
+    imageUrl: productArt("runner-shoe", "Adidas Parley Shoes"),
     priceCents: 12000,
     claims: ["Made with Ocean Plastic", "Recycled Materials"],
     scenario: "mixed",
@@ -498,7 +507,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000013",
     category: "Beauty",
     description: "The Body Shop positions this serum as vegan, cruelty-free, and backed by Community Trade sourcing.",
-    imageUrl: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=1200&q=80",
+    imageUrl: productArt("serum", "The Body Shop Vitamin C Serum"),
     priceCents: 1899,
     claims: ["Vegan", "Cruelty-Free", "Community Trade"],
     scenario: "mixed",
@@ -510,6 +519,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000014",
     category: "Home",
     description: "IKEA describes this kitchen front as made with recycled materials and designed as a sustainable choice.",
+    imageUrl: productArt("cabinet", "IKEA KUNGSBACKA Kitchen Front"),
     claims: ["Recycled Materials", "Sustainable Design"],
     scenario: "mixed",
     expectedTrustScore: 63
@@ -520,6 +530,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000015",
     category: "Household",
     description: "Method says the soap is cruelty-free and made with plant-based ingredients.",
+    imageUrl: productArt("pump-bottle", "Method Foaming Hand Soap"),
     claims: ["Cruelty-Free", "Plant-Based Ingredients"],
     scenario: "mixed",
     expectedTrustScore: 70
@@ -530,6 +541,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000016",
     category: "Beauty",
     description: "The shampoo bar is marketed as a vegan formula with recycled packaging, but without product-level verification.",
+    imageUrl: productArt("shampoo-bar", "Garnier Whole Blends Shampoo Bar"),
     claims: ["Vegan Formula", "Recycled Packaging"],
     scenario: "mixed",
     expectedTrustScore: 61
@@ -540,6 +552,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000017",
     category: "Beauty",
     description: "The balm emphasizes natural origin ingredients and responsible beeswax sourcing.",
+    imageUrl: productArt("lip-balm", "Burt's Bees Lip Balm"),
     claims: ["Natural Origin", "Responsible Beeswax"],
     scenario: "mixed",
     expectedTrustScore: 56
@@ -550,6 +563,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000018",
     category: "Beauty",
     description: "Lush promotes this shampoo bar with naked packaging and vegan ingredients.",
+    imageUrl: productArt("shampoo-bar", "Lush Shampoo Bar"),
     claims: ["Naked Packaging", "Vegan"],
     scenario: "mixed",
     expectedTrustScore: 72
@@ -560,6 +574,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000019",
     category: "Footwear",
     description: "TOMS markets the sneaker as Earthwise with recycled cotton uppers, but the certification detail is limited.",
+    imageUrl: productArt("sneaker", "TOMS Earthwise Sneakers"),
     claims: ["Earthwise", "Recycled Cotton"],
     scenario: "mixed",
     expectedTrustScore: 58
@@ -570,6 +585,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000020",
     category: "Apparel",
     description: "The jacket copy says it is made from recycled plastic bottles in a clean factory network.",
+    imageUrl: productArt("puffer", "Everlane ReNew Puffer"),
     claims: ["Made from Recycled Plastic Bottles", "Clean Factory"],
     scenario: "mixed",
     expectedTrustScore: 57
@@ -580,6 +596,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000021",
     category: "Food & Beverage",
     description: "Nespresso highlights recycled aluminum and carbon neutral delivery for this capsule line.",
+    imageUrl: productArt("capsules", "Nespresso Recycled Aluminum Capsules"),
     claims: ["Recycled Aluminum", "Carbon Neutral Delivery"],
     scenario: "mixed",
     expectedTrustScore: 66
@@ -590,6 +607,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000022",
     category: "Beauty",
     description: "Aveda promotes the conditioner as vegan, cruelty-free, and 93% naturally derived.",
+    imageUrl: productArt("conditioner", "Aveda Botanical Repair Conditioner"),
     claims: ["Vegan", "Cruelty-Free", "Naturally Derived"],
     scenario: "mixed",
     expectedTrustScore: 69
@@ -600,7 +618,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000023",
     category: "Apparel",
     description: "FastFashionX sells this tee with eco-friendly, green fabric, and nature inspired messaging without any certification details.",
-    imageUrl: "https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?auto=format&fit=crop&w=1200&q=80",
+    imageUrl: productArt("tee", "FastFashionX Eco Collection Basic Tee"),
     priceCents: 2999,
     claims: ["Eco-Friendly", "Green Fabric", "Nature Inspired"],
     scenario: "greenwashing",
@@ -612,6 +630,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000024",
     category: "Beauty",
     description: "The bottle claims all natural care, chemical-free cleansing, and 100% organic ingredients despite showing no certification.",
+    imageUrl: productArt("cleaner-bottle", "Cheapo Natural Shampoo"),
     claims: ["All Natural", "Chemical-Free", "100% Organic Ingredients"],
     scenario: "greenwashing",
     expectedTrustScore: 18
@@ -622,6 +641,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000025",
     category: "Accessories",
     description: "WastefulCo labels the bottle as earth-friendly, sustainable packaging, and eco-conscious with no product evidence.",
+    imageUrl: productArt("water-bottle", "WastefulCo Earth Friendly Water Bottle"),
     claims: ["Earth Friendly", "Sustainable Packaging", "Eco-Conscious"],
     scenario: "greenwashing",
     expectedTrustScore: 31
@@ -632,6 +652,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000026",
     category: "Beauty",
     description: "GlowPure describes the cream as clean beauty, toxin-free, and conscious skincare.",
+    imageUrl: productArt("cream-jar", "GlowPure Clean Beauty Cream"),
     claims: ["Clean Beauty", "Toxin-Free", "Conscious Skincare"],
     scenario: "greenwashing",
     expectedTrustScore: 22
@@ -642,6 +663,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000027",
     category: "Household",
     description: "The pouch promises planet-friendly cleaning, zero toxins, and an eco smart formula without specifics.",
+    imageUrl: productArt("laundry-pods", "UrbanFuel Planet Friendly Laundry Pods"),
     claims: ["Planet Friendly", "Zero Toxins", "Eco Smart Formula"],
     scenario: "greenwashing",
     expectedTrustScore: 28
@@ -652,6 +674,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000028",
     category: "Home",
     description: "QuickSip calls the set a green choice made with natural materials that are harmless for daily use.",
+    imageUrl: productArt("cup-set", "QuickSip Green Cup Set"),
     claims: ["Green Choice", "Natural Materials", "Harmless"],
     scenario: "greenwashing",
     expectedTrustScore: 20
@@ -662,6 +685,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000029",
     category: "Home",
     description: "PureNest markets the spray as 100% natural, chemical-free, and eco-friendly while providing no verification.",
+    imageUrl: productArt("spray-bottle", "PureNest 100% Natural Room Spray"),
     claims: ["100% Natural", "Chemical-Free", "Eco-Friendly"],
     scenario: "greenwashing",
     expectedTrustScore: 12
@@ -672,6 +696,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000030",
     category: "Home",
     description: "This straw pack uses sustainable, earth-friendly, and ocean positive language with no standards cited.",
+    imageUrl: productArt("straw-pack", "OceanHalo Sustainable Straw Pack"),
     claims: ["Sustainable", "Earth-Friendly", "Ocean Positive"],
     scenario: "greenwashing",
     expectedTrustScore: 27
@@ -682,6 +707,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000031",
     category: "Apparel",
     description: "FlexWear promotes the tee as conscious fashion with responsible fabric and a natural feel.",
+    imageUrl: productArt("tee", "FlexWear Conscious Active Tee"),
     claims: ["Conscious Fashion", "Responsible Fabric", "Natural Feel"],
     scenario: "greenwashing",
     expectedTrustScore: 29
@@ -692,6 +718,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000032",
     category: "Household",
     description: "EarthGlow says the bags are compostable, eco-friendly, and naturally strong without showing a compostability certificate.",
+    imageUrl: productArt("trash-bags", "EarthGlow Home Compostable Trash Bags"),
     claims: ["Compostable", "Eco-Friendly", "Naturally Strong"],
     scenario: "greenwashing",
     expectedTrustScore: 34
@@ -702,7 +729,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000033",
     category: "Baby",
     description: "The diapers are described as plant-based, hypoallergenic, and sustainably sourced, but the sustainability proof is limited.",
-    imageUrl: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?auto=format&fit=crop&w=1200&q=80",
+    imageUrl: productArt("diapers", "Honest Company Diapers"),
     priceCents: 2799,
     claims: ["Plant-Based", "Hypoallergenic", "Sustainably Sourced"],
     scenario: "edge",
@@ -714,6 +741,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000034",
     category: "Automotive",
     description: "Tesla frames the vehicle around zero emissions, sustainable energy, and carbon neutral manufacturing claims.",
+    imageUrl: productArt("car", "Tesla Model Y"),
     claims: ["Zero Emissions", "Sustainable Energy", "Carbon Neutral Manufacturing"],
     scenario: "edge",
     expectedTrustScore: 62
@@ -724,6 +752,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000035",
     category: "Beauty",
     description: "This balm leans on clean beauty, vegan ingredients, and responsible packaging language.",
+    imageUrl: productArt("lip-balm", "Sephora Collection Clean Lip Balm"),
     claims: ["Clean Beauty", "Vegan", "Responsible Packaging"],
     scenario: "edge",
     expectedTrustScore: 46
@@ -734,6 +763,7 @@ export const products: ProductSeed[] = [
     barcode: "8901000000036",
     category: "Household",
     description: "KindKlean promotes a refill pouch, plant-based ingredients, and recyclable packaging with moderate supporting detail.",
+    imageUrl: productArt("refill-pouch", "KindKlean Refill Hand Wash"),
     claims: ["Refill System", "Plant-Based Ingredients", "Recyclable Packaging"],
     scenario: "edge",
     expectedTrustScore: 67
