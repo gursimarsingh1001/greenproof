@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { AlertTriangle, Copy, Fingerprint, LoaderCircle, ShieldCheck, ShieldQuestion } from "lucide-react";
+import { readJsonResponse } from "@/lib/backend";
 import type {
   ApiEnvelope,
   IntegrityMetadata,
@@ -34,7 +35,7 @@ export function IntegrityBadge({ integrity, report }: IntegrityBadgeProps) {
           report
         })
       });
-      const payload = (await response.json()) as ApiEnvelope<VerifyIntegrityPayload>;
+      const payload = await readJsonResponse<ApiEnvelope<VerifyIntegrityPayload>>(response);
 
       if (!response.ok || !payload.success || !payload.data) {
         throw new Error(payload.error ?? "Integrity verification failed.");

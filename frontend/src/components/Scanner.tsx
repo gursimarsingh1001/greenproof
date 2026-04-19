@@ -4,6 +4,7 @@ import { startTransition, useEffect, useEffectEvent, useRef, useState } from "re
 import { BrowserMultiFormatReader } from "@zxing/library";
 import { Camera, Keyboard, LoaderCircle, ScanLine, Search, Sparkles } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { readJsonResponse } from "@/lib/backend";
 import { useScanStore } from "@/lib/scan-store";
 import type { ApiEnvelope, ScanResultPayload } from "@/lib/types";
 
@@ -46,7 +47,7 @@ export function Scanner({ defaultMode }: ScannerProps) {
         },
         body: JSON.stringify(payload)
       });
-      const result = (await response.json()) as ApiEnvelope<ScanResultPayload>;
+      const result = await readJsonResponse<ApiEnvelope<ScanResultPayload>>(response);
 
       if (!response.ok || !result.success || !result.data) {
         throw new Error(result.error ?? "No product match found.");

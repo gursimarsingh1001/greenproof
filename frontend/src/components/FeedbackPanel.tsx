@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { MessageSquarePlus, Send } from "lucide-react";
+import { readJsonResponse } from "@/lib/backend";
 import type { FeedbackPayload } from "@/lib/types";
 
 interface FeedbackPanelProps {
@@ -36,7 +37,7 @@ export function FeedbackPanel({ productId, reportedScore }: FeedbackPanelProps) 
           expectedScore: expectedScore ? Number(expectedScore) : undefined
         })
       });
-      const payload = (await response.json()) as { success: boolean; error?: string };
+      const payload = await readJsonResponse<{ success: boolean; error?: string }>(response);
 
       if (!response.ok || !payload.success) {
         setResponseMessage(payload.error ?? "We couldn't send your feedback just now.");
