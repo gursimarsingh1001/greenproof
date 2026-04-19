@@ -369,9 +369,9 @@ export function Scanner({ defaultMode }: ScannerProps) {
         <section className="surface-card p-6">
           <div className="mb-5">
             <p className="eyebrow">Recommended Searches</p>
-            <h2 className="mt-3 font-[var(--font-display)] text-3xl font-semibold text-ink">Try these dataset-backed products first</h2>
+            <h2 className="mt-3 font-[var(--font-display)] text-3xl font-semibold text-ink">Try these products first</h2>
             <p className="mt-3 text-sm leading-6 text-moss/65">
-              Tap any product below to run an instant trust check using GreenProof&apos;s seeded demo catalog.
+              Tap any product below to run an instant trust check in GreenProof.
             </p>
           </div>
 
