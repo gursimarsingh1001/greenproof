@@ -1,0 +1,7 @@
+node_modules
+.next
+.env.local
+tmp-front.log
+tmp-front.err.log
+tmp-front-live.log
+tmp-front-live.err.log

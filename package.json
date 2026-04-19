@@ -7,6 +7,7 @@
     "build:api": "tsc --project tsconfig.json",
     "start:api": "npm run build:api && node dist/src/api/server.js",
     "dev:api": "npm run build:api && node --watch dist/src/api/server.js",
+    "postinstall": "prisma generate",
     "db:generate": "prisma generate",
     "db:migrate": "node prisma/prepare-db.mjs && prisma migrate deploy",
     "db:migrate:dev": "prisma migrate dev",

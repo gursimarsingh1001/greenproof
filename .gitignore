@@ -18,3 +18,5 @@ frontend/tmp-front-live.err.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+.vercel

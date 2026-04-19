@@ -1,0 +1,11 @@
+node_modules
+dist
+frontend
+tests
+.env
+.git
+.next
+tmp-api.log
+tmp-api.err.log
+tmp-api-live.log
+tmp-api-live.err.log

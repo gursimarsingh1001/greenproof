@@ -1,0 +1,8 @@
+{
+  "functions": {
+    "api/[...route].ts": {
+      "includeFiles": "prisma/dev.db",
+      "maxDuration": 15
+    }
+  }
+}
