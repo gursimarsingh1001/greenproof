@@ -12,6 +12,25 @@ interface ScannerProps {
   defaultMode: "camera" | "manual";
 }
 
+const recommendedSearches = [
+  { term: "Patagonia Organic Cotton Hoodie", tone: "trusted" as const },
+  { term: "Pact Organic Crew Tee", tone: "trusted" as const },
+  { term: "Seventh Generation Dish Soap", tone: "trusted" as const },
+  { term: "The Body Shop Vitamin C Serum", tone: "mixed" as const },
+  { term: "Adidas Parley Shoes", tone: "mixed" as const },
+  { term: "Honest Company Diapers", tone: "mixed" as const },
+  { term: "FastFashionX Eco Collection Basic Tee", tone: "warning" as const },
+  { term: "Cheapo Natural Shampoo", tone: "warning" as const },
+  { term: "WastefulCo Earth Friendly Water Bottle", tone: "warning" as const },
+  { term: "Tesla Model Y", tone: "mixed" as const }
+];
+
+const toneClassNames = {
+  trusted: "border-leaf/20 bg-leaf/10 text-moss hover:border-leaf/35 hover:bg-leaf/15",
+  mixed: "border-amber/30 bg-amber/10 text-[#7a5600] hover:border-amber/45 hover:bg-amber/15",
+  warning: "border-berry/20 bg-berry/8 text-[#8f2438] hover:border-berry/35 hover:bg-berry/12"
+} as const;
+
 export function Scanner({ defaultMode }: ScannerProps) {
   const [mode, setMode] = useState<"camera" | "manual">(defaultMode);
   const [query, setQuery] = useState("");
@@ -229,6 +248,12 @@ export function Scanner({ defaultMode }: ScannerProps) {
     await runLookup(query);
   };
 
+  const handleRecommendedSearch = (term: string) => {
+    setMode("manual");
+    setQuery(term);
+    void runLookup(term);
+  };
+
   return (
     <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
       <section className="surface-card mesh-card relative overflow-hidden p-5 md:p-7">
@@ -339,6 +364,29 @@ export function Scanner({ defaultMode }: ScannerProps) {
           </form>
 
           {error ? <p className="mt-4 rounded-2xl bg-berry/10 px-4 py-3 text-sm text-[#b42323]">{error}</p> : null}
+        </section>
+
+        <section className="surface-card p-6">
+          <div className="mb-5">
+            <p className="eyebrow">Recommended Searches</p>
+            <h2 className="mt-3 font-[var(--font-display)] text-3xl font-semibold text-ink">Try these dataset-backed products first</h2>
+            <p className="mt-3 text-sm leading-6 text-moss/65">
+              Tap any product below to run an instant trust check using GreenProof&apos;s seeded demo catalog.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap gap-3">
+            {recommendedSearches.map((item) => (
+              <button
+                key={item.term}
+                type="button"
+                onClick={() => handleRecommendedSearch(item.term)}
+                className={`rounded-full border px-4 py-3 text-left text-sm font-semibold transition ${toneClassNames[item.tone]}`}
+              >
+                {item.term}
+              </button>
+            ))}
+          </div>
         </section>
 
         <section className="surface-card mesh-card p-6">
