@@ -1,5 +1,5 @@
 import express, { type NextFunction, type Request, type Response } from "express";
-import { sendError } from "./http.js";
+import { sendError, sendSuccess } from "./http.js";
 import { createRateLimitMiddleware } from "./middleware/rateLimit.js";
 import { createBrandsRouter } from "./routes/brands.js";
 import { createCertificationsRouter } from "./routes/certifications.js";
@@ -22,6 +22,25 @@ export function createApp() {
   app.set("trust proxy", true);
   app.use(express.json({ limit: "1mb" }));
   app.use(createRateLimitMiddleware({ windowMs: 60_000, maxRequests: 90 }));
+
+  app.get("/", (_request, response) => {
+    sendSuccess(response, {
+      service: "GreenProof API",
+      status: "ok",
+      docs: {
+        health: "/api/health",
+        stats: "/api/stats",
+        scan: "/api/scan"
+      }
+    });
+  });
+
+  app.get("/api/health", (_request, response) => {
+    sendSuccess(response, {
+      service: "GreenProof API",
+      status: "ok"
+    });
+  });
 
   app.use("/api/scan", createScanRouter(apiService));
   app.use("/api/product", createProductsRouter(apiService));

@@ -109,6 +109,30 @@ await new Promise<void>((resolve) => {
 const baseUrl = `http://127.0.0.1:${(server.address() as AddressInfo).port}`;
 
 try {
+  const rootResponse = await fetch(baseUrl);
+  const rootBody = (await rootResponse.json()) as ApiResponse<{
+    service: string;
+    status: string;
+    docs: Record<string, string>;
+  }>;
+
+  assert.equal(rootResponse.status, 200);
+  assertSuccess(rootBody);
+  assert.equal(rootBody.data.service, "GreenProof API");
+  assert.equal(rootBody.data.status, "ok");
+  assert.equal(rootBody.data.docs.health, "/api/health");
+
+  const healthResponse = await fetch(`${baseUrl}/api/health`);
+  const healthBody = (await healthResponse.json()) as ApiResponse<{
+    service: string;
+    status: string;
+  }>;
+
+  assert.equal(healthResponse.status, 200);
+  assertSuccess(healthBody);
+  assert.equal(healthBody.data.service, "GreenProof API");
+  assert.equal(healthBody.data.status, "ok");
+
   const seededProduct = await db.product.findUnique({
     where: {
       barcode: "8901000000023"

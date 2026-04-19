@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GreenProof API</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, #eef7f0, #f8fbf7);
+        color: #193127;
+      }
+
+      main {
+        max-width: 640px;
+        padding: 32px;
+        border: 1px solid rgba(25, 49, 39, 0.08);
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.92);
+        box-shadow: 0 20px 60px rgba(25, 49, 39, 0.08);
+      }
+
+      h1 {
+        margin: 0 0 12px;
+        font-size: 32px;
+      }
+
+      p {
+        margin: 0 0 14px;
+        line-height: 1.6;
+      }
+
+      code,
+      a {
+        color: #0f7a47;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>GreenProof API</h1>
+      <p>The backend is live and healthy.</p>
+      <p>Health check: <a href="/api/health"><code>/api/health</code></a></p>
+      <p>Stats endpoint: <a href="/api/stats"><code>/api/stats</code></a></p>
+    </main>
+  </body>
+</html>
