@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ArrowUpRight, Leaf } from "lucide-react";
 import type { VerificationAlternative } from "@/lib/types";
 
@@ -7,7 +8,11 @@ interface AlternativeCardProps {
 
 export function AlternativeCard({ alternative }: AlternativeCardProps) {
   return (
-    <article className="surface-card group mesh-card flex flex-col gap-4 p-5 transition duration-300 hover:-translate-y-1">
+    <Link
+      href={`/results/${alternative.product.id}`}
+      aria-label={`Open ${alternative.product.name} report`}
+      className="surface-card group mesh-card flex flex-col gap-4 p-5 transition duration-300 hover:-translate-y-1 hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-moss/35"
+    >
       <div className="flex items-start justify-between gap-4">
         <div>
           <div className="eyebrow mb-3 w-fit">Better Pick</div>
@@ -31,6 +36,6 @@ export function AlternativeCard({ alternative }: AlternativeCardProps) {
         </span>
         <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
       </div>
-    </article>
+    </Link>
   );
 }
