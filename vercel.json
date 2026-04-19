@@ -1,6 +1,12 @@
 {
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api"
+    }
+  ],
   "functions": {
-    "api/[...route].ts": {
+    "api/index.ts": {
       "includeFiles": "prisma/dev.db",
       "maxDuration": 15
     }
