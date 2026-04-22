@@ -1,0 +1,35 @@
+{
+  "records": [
+    {
+      "sourceId": "household-ecologo",
+      "certificationAcronym": "ECO",
+      "scope": "product",
+      "externalBrandName": "ATTITUDE",
+      "externalProductName": "Window & Glass Cleaner : NATURE+",
+      "matchedBrandName": "ATTITUDE",
+      "matchedProductName": "ATTITUDE Window & Glass Cleaner",
+      "certificateNumber": "ECO-ATT-WINDOW-001",
+      "sourceUrl": "https://business.ca.attitudeliving.com/products/window-and-glass-cleaner-nature",
+      "checkedAt": "2026-04-22T02:07:00.004Z",
+      "status": "verified",
+      "confidence": 0.93,
+      "rawPayload": {
+        "source": "ATTITUDE official product page",
+        "ecolabel": "ECOLOGO",
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:07:00.004Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "ECOLOGO® Certification | UL Solutions",
+          "matchedKeywords": [
+            "ECOLOGO",
+            "ECO"
+          ],
+          "responseUrl": "https://www.ul.com/services/ecologo-certification",
+          "fetchUrl": "https://www.ul.com/services/ecologo-certification"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,313 @@
+{
+  "records": [
+    {
+      "sourceId": "cosmetics-ewg-verified",
+      "certificationAcronym": "EWG",
+      "scope": "product",
+      "externalBrandName": "Dr. Bronner's",
+      "externalProductName": "All-One Hemp Pure-Castile Soap, Peppermint",
+      "matchedBrandName": "Dr. Bronner's",
+      "matchedProductName": "Dr. Bronner's All-One Peppermint Pure-Castile Soap",
+      "certificateNumber": "EWG-DB-PEPP-001",
+      "sourceUrl": "https://www.ewg.org/skindeep/products/1049346-Dr_Bronners_All_One_Hemp_Pure_Castile_Soap_Peppermint/",
+      "checkedAt": "2026-04-22T02:06:52.989Z",
+      "status": "verified",
+      "confidence": 0.95,
+      "rawPayload": {
+        "source": "EWG Verified directory",
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:52.989Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "EWG Verified&reg; : For Your Health",
+          "matchedKeywords": [
+            "EWG Verified",
+            "EWG"
+          ],
+          "responseUrl": "https://www.ewg.org/ewgverified/",
+          "fetchUrl": "https://www.ewg.org/ewgverified/"
+        }
+      }
+    },
+    {
+      "sourceId": "cosmetics-ewg-verified",
+      "certificationAcronym": "EWG",
+      "scope": "product",
+      "externalBrandName": "ATTITUDE",
+      "externalProductName": "Dishwashing Liquid — Orange Leaves + Sage",
+      "matchedBrandName": "ATTITUDE",
+      "matchedProductName": "ATTITUDE Dish Soap - Orange & Sage",
+      "certificateNumber": "EWG-ATT-DISH-001",
+      "sourceUrl": "https://attitudeliving.com/products/dishwashing-liquid-orange-leaves-sage",
+      "checkedAt": "2026-04-22T02:06:52.989Z",
+      "status": "verified",
+      "confidence": 0.93,
+      "rawPayload": {
+        "source": "ATTITUDE official product page",
+        "ewgVerified": true,
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:52.989Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "EWG Verified&reg; : For Your Health",
+          "matchedKeywords": [
+            "EWG Verified",
+            "EWG"
+          ],
+          "responseUrl": "https://www.ewg.org/ewgverified/",
+          "fetchUrl": "https://www.ewg.org/ewgverified/"
+        }
+      }
+    },
+    {
+      "sourceId": "cosmetics-ewg-verified",
+      "certificationAcronym": "EWG",
+      "scope": "product",
+      "externalBrandName": "ATTITUDE",
+      "externalProductName": "Hand Soap — Sensitive Skin",
+      "matchedBrandName": "ATTITUDE",
+      "matchedProductName": "ATTITUDE Hand Soap - Sensitive Skin",
+      "certificateNumber": "EWG-ATT-HANDSENS-001",
+      "sourceUrl": "https://attitudeliving.com/products/hand-soap-sensitive-skin",
+      "checkedAt": "2026-04-22T02:06:52.989Z",
+      "status": "verified",
+      "confidence": 0.93,
+      "rawPayload": {
+        "source": "ATTITUDE official product page",
+        "ewgVerified": true,
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:52.989Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "EWG Verified&reg; : For Your Health",
+          "matchedKeywords": [
+            "EWG Verified",
+            "EWG"
+          ],
+          "responseUrl": "https://www.ewg.org/ewgverified/",
+          "fetchUrl": "https://www.ewg.org/ewgverified/"
+        }
+      }
+    },
+    {
+      "sourceId": "cosmetics-ewg-verified",
+      "certificationAcronym": "EWG",
+      "scope": "product",
+      "externalBrandName": "ATTITUDE",
+      "externalProductName": "Hand Soap — Orange Blossom & Eucalyptus",
+      "matchedBrandName": "ATTITUDE",
+      "matchedProductName": "ATTITUDE Hand Soap - Orange Blossom & Eucalyptus",
+      "certificateNumber": "EWG-ATT-HANDENERGY-001",
+      "sourceUrl": "https://attitudeliving.com/products/hand-soap-orange-blossom-eucalyptus",
+      "checkedAt": "2026-04-22T02:06:52.989Z",
+      "status": "verified",
+      "confidence": 0.93,
+      "rawPayload": {
+        "source": "ATTITUDE official product page",
+        "ewgVerified": true,
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:52.989Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "EWG Verified&reg; : For Your Health",
+          "matchedKeywords": [
+            "EWG Verified",
+            "EWG"
+          ],
+          "responseUrl": "https://www.ewg.org/ewgverified/",
+          "fetchUrl": "https://www.ewg.org/ewgverified/"
+        }
+      }
+    },
+    {
+      "sourceId": "cosmetics-ewg-verified",
+      "certificationAcronym": "EWG",
+      "scope": "product",
+      "externalBrandName": "ATTITUDE",
+      "externalProductName": "Body Wash — Sensitive Skin",
+      "matchedBrandName": "ATTITUDE",
+      "matchedProductName": "ATTITUDE Body Wash - Sensitive Skin",
+      "certificateNumber": "EWG-ATT-BODYSENS-001",
+      "sourceUrl": "https://attitudeliving.com/products/body-wash-sensitive-skin",
+      "checkedAt": "2026-04-22T02:06:52.989Z",
+      "status": "verified",
+      "confidence": 0.93,
+      "rawPayload": {
+        "source": "ATTITUDE official product page",
+        "ewgVerified": true,
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:52.989Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "EWG Verified&reg; : For Your Health",
+          "matchedKeywords": [
+            "EWG Verified",
+            "EWG"
+          ],
+          "responseUrl": "https://www.ewg.org/ewgverified/",
+          "fetchUrl": "https://www.ewg.org/ewgverified/"
+        }
+      }
+    },
+    {
+      "sourceId": "cosmetics-ewg-verified",
+      "certificationAcronym": "EWG",
+      "scope": "product",
+      "externalBrandName": "ATTITUDE",
+      "externalProductName": "Baby Bottle & Dishwashing Liquid — Unscented",
+      "matchedBrandName": "ATTITUDE",
+      "matchedProductName": "ATTITUDE Baby Bottle & Dishwashing Liquid Unscented",
+      "certificateNumber": "EWG-ATT-BABYDISH-001",
+      "sourceUrl": "https://attitudeliving.com/products/baby-bottle-and-dishwashing-liquid-unscented",
+      "checkedAt": "2026-04-22T02:06:52.989Z",
+      "status": "verified",
+      "confidence": 0.93,
+      "rawPayload": {
+        "source": "ATTITUDE official product page",
+        "ewgVerified": true,
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:52.989Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "EWG Verified&reg; : For Your Health",
+          "matchedKeywords": [
+            "EWG Verified",
+            "EWG"
+          ],
+          "responseUrl": "https://www.ewg.org/ewgverified/",
+          "fetchUrl": "https://www.ewg.org/ewgverified/"
+        }
+      }
+    },
+    {
+      "sourceId": "cosmetics-ewg-verified",
+      "certificationAcronym": "EWG",
+      "scope": "product",
+      "externalBrandName": "ATTITUDE",
+      "externalProductName": "2-in-1 Baby Foaming Shampoo & Body Wash",
+      "matchedBrandName": "ATTITUDE",
+      "matchedProductName": "ATTITUDE 2-in-1 Baby Foaming Shampoo & Body Wash",
+      "certificateNumber": "EWG-ATT-BABYBATH-001",
+      "sourceUrl": "https://attitudeliving.com/products/2-in-1-baby-foaming-shampoo-body-wash",
+      "checkedAt": "2026-04-22T02:06:52.989Z",
+      "status": "verified",
+      "confidence": 0.93,
+      "rawPayload": {
+        "source": "ATTITUDE official product page",
+        "ewgVerified": true,
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:52.989Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "EWG Verified&reg; : For Your Health",
+          "matchedKeywords": [
+            "EWG Verified",
+            "EWG"
+          ],
+          "responseUrl": "https://www.ewg.org/ewgverified/",
+          "fetchUrl": "https://www.ewg.org/ewgverified/"
+        }
+      }
+    },
+    {
+      "sourceId": "cosmetics-ewg-verified",
+      "certificationAcronym": "EWG",
+      "scope": "product",
+      "externalBrandName": "ATTITUDE",
+      "externalProductName": "Extra Gentle Shampoo — Unscented",
+      "matchedBrandName": "ATTITUDE",
+      "matchedProductName": "ATTITUDE Extra-Gentle Shampoo Unscented",
+      "certificateNumber": "EWG-ATT-SHAMPOO-001",
+      "sourceUrl": "https://attitudeliving.com/products/shampoo-super-leaves",
+      "checkedAt": "2026-04-22T02:06:52.989Z",
+      "status": "verified",
+      "confidence": 0.92,
+      "rawPayload": {
+        "source": "ATTITUDE official product page",
+        "ewgVerified": true,
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:52.989Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "EWG Verified&reg; : For Your Health",
+          "matchedKeywords": [
+            "EWG Verified",
+            "EWG"
+          ],
+          "responseUrl": "https://www.ewg.org/ewgverified/",
+          "fetchUrl": "https://www.ewg.org/ewgverified/"
+        }
+      }
+    },
+    {
+      "sourceId": "cosmetics-ewg-verified",
+      "certificationAcronym": "EWG",
+      "scope": "product",
+      "externalBrandName": "ATTITUDE",
+      "externalProductName": "Laundry Detergent - Little Ones",
+      "matchedBrandName": "ATTITUDE",
+      "matchedProductName": "ATTITUDE Laundry Detergent - Little Ones",
+      "certificateNumber": "EWG-ATT-LAUNDRYBABY-001",
+      "sourceUrl": "https://attitudeliving.com/products/laundry-detergent-little-ones",
+      "checkedAt": "2026-04-22T02:06:52.989Z",
+      "status": "verified",
+      "confidence": 0.93,
+      "rawPayload": {
+        "source": "ATTITUDE official product page",
+        "ewgVerified": true,
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:52.989Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "EWG Verified&reg; : For Your Health",
+          "matchedKeywords": [
+            "EWG Verified",
+            "EWG"
+          ],
+          "responseUrl": "https://www.ewg.org/ewgverified/",
+          "fetchUrl": "https://www.ewg.org/ewgverified/"
+        }
+      }
+    },
+    {
+      "sourceId": "cosmetics-ewg-verified",
+      "certificationAcronym": "EWG",
+      "scope": "product",
+      "externalBrandName": "ATTITUDE",
+      "externalProductName": "Dishwashing Liquid - Unscented",
+      "matchedBrandName": "ATTITUDE",
+      "matchedProductName": "ATTITUDE Dishwashing Liquid - Unscented",
+      "certificateNumber": "EWG-ATT-DISHUNSC-001",
+      "sourceUrl": "https://attitudeliving.com/products/dishwashing-liquid-unscented",
+      "checkedAt": "2026-04-22T02:06:52.989Z",
+      "status": "verified",
+      "confidence": 0.93,
+      "rawPayload": {
+        "source": "ATTITUDE official product page",
+        "ewgVerified": true,
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:52.989Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "EWG Verified&reg; : For Your Health",
+          "matchedKeywords": [
+            "EWG Verified",
+            "EWG"
+          ],
+          "responseUrl": "https://www.ewg.org/ewgverified/",
+          "fetchUrl": "https://www.ewg.org/ewgverified/"
+        }
+      }
+    }
+  ]
+}

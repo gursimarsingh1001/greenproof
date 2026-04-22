@@ -9,6 +9,8 @@ import {
   products,
   vagueTerms
 } from "../src/lib/seed-data.js";
+import { certificationSources } from "../src/lib/certification-sources.js";
+import { brandAliases, officialEvidenceSeeds, productAliases } from "../src/lib/official-evidence-seeds.js";
 
 const prisma = new PrismaClient();
 
@@ -30,10 +32,15 @@ function getId(lookup: Map<string, number>, key: string, label: string): number 
  */
 async function resetDatabase(): Promise<void> {
   await prisma.verificationSnapshot.deleteMany();
+  await prisma.certificationEvidence.deleteMany();
+  await prisma.certificationIngestionRun.deleteMany();
   await prisma.productCertification.deleteMany();
   await prisma.brandCertification.deleteMany();
+  await prisma.productAlias.deleteMany();
+  await prisma.brandAlias.deleteMany();
   await prisma.product.deleteMany();
   await prisma.brand.deleteMany();
+  await prisma.certificationSource.deleteMany();
   await prisma.certification.deleteMany();
   await prisma.vagueTerm.deleteMany();
   await prisma.impossibleClaim.deleteMany();
@@ -118,6 +125,45 @@ async function seedProducts(brandLookup: Map<string, number>): Promise<Map<strin
 }
 
 /**
+ * Seeds official source registry rows.
+ */
+async function seedCertificationSources(): Promise<void> {
+  for (const source of certificationSources) {
+    await prisma.certificationSource.create({
+      data: source
+    });
+  }
+}
+
+/**
+ * Seeds brand and product alias tables for fuzzy matching.
+ */
+async function seedAliases(
+  brandLookup: Map<string, number>,
+  productLookup: Map<string, number>
+): Promise<void> {
+  for (const alias of brandAliases) {
+    await prisma.brandAlias.create({
+      data: {
+        brandId: getId(brandLookup, alias.brandName, "brand"),
+        alias: alias.alias,
+        isPrimary: alias.isPrimary ?? false
+      }
+    });
+  }
+
+  for (const alias of productAliases) {
+    await prisma.productAlias.create({
+      data: {
+        productId: getId(productLookup, alias.productName, "product"),
+        alias: alias.alias,
+        isPrimary: alias.isPrimary ?? false
+      }
+    });
+  }
+}
+
+/**
  * Seeds certification join tables after base entities exist.
  */
 async function seedCertificationLinks(
@@ -158,6 +204,41 @@ async function seedCertificationLinks(
 }
 
 /**
+ * Seeds canonical official evidence rows that back the richer evidence layer.
+ */
+async function seedOfficialEvidence(
+  brandLookup: Map<string, number>,
+  certificationLookup: Map<string, number>,
+  productLookup: Map<string, number>
+): Promise<void> {
+  for (const evidence of officialEvidenceSeeds) {
+    await prisma.certificationEvidence.create({
+      data: {
+        sourceId: evidence.sourceId,
+        certificationId: getId(
+          certificationLookup,
+          evidence.certificationAcronym,
+          "certification"
+        ),
+        scope: evidence.scope,
+        status: evidence.status,
+        matchedVia: evidence.confidence && evidence.confidence < 0.98 ? "alias" : "exact",
+        confidence: evidence.confidence ?? 1,
+        externalBrandName: evidence.externalBrandName,
+        externalProductName: evidence.externalProductName ?? null,
+        certificateNumber: evidence.certificateNumber ?? null,
+        sourceUrl: evidence.sourceUrl,
+        rawPayload: (evidence.rawPayload ?? {}) as Prisma.InputJsonValue,
+        checkedAt: new Date(evidence.checkedAt),
+        expiresAt: evidence.expiresAt ? new Date(evidence.expiresAt) : null,
+        brandId: evidence.matchedBrandName ? getId(brandLookup, evidence.matchedBrandName, "brand") : null,
+        productId: evidence.matchedProductName ? getId(productLookup, evidence.matchedProductName, "product") : null
+      }
+    });
+  }
+}
+
+/**
  * Seeds the complete GreenProof Phase 1 dataset.
  */
 async function main(): Promise<void> {
@@ -167,14 +248,21 @@ async function main(): Promise<void> {
   const brandLookup = await seedBrands();
   const productLookup = await seedProducts(brandLookup);
 
+  await seedCertificationSources();
+  await seedAliases(brandLookup, productLookup);
   await seedCertificationLinks(brandLookup, certificationLookup, productLookup);
+  await seedOfficialEvidence(brandLookup, certificationLookup, productLookup);
 
   console.info("GreenProof seed completed.");
   console.info(`Brands: ${brands.length}`);
   console.info(`Certifications: ${certifications.length}`);
+  console.info(`Certification sources: ${certificationSources.length}`);
   console.info(`Products: ${products.length}`);
+  console.info(`Brand aliases: ${brandAliases.length}`);
+  console.info(`Product aliases: ${productAliases.length}`);
   console.info(`Brand certifications: ${brandCertifications.length}`);
   console.info(`Product certifications: ${productCertifications.length}`);
+  console.info(`Official evidence rows: ${officialEvidenceSeeds.length}`);
   console.info(`Vague terms: ${vagueTerms.length}`);
   console.info(`Impossible claims: ${impossibleClaims.length}`);
 }

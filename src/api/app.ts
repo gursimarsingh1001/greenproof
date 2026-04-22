@@ -7,6 +7,7 @@ import { createCertificationSourcesRouter } from "./routes/certification-sources
 import { createFeedbackRouter } from "./routes/feedback.js";
 import { createProductsRouter } from "./routes/products.js";
 import { createScanRouter } from "./routes/scan.js";
+import { createSyncEvidenceRouter } from "./routes/sync-evidence.js";
 import { createStatsRouter } from "./routes/stats.js";
 import { createVerifyIntegrityRouter } from "./routes/verify-integrity.js";
 import { GreenProofApiService } from "./services/api-service.js";
@@ -30,7 +31,8 @@ export function createApp() {
       docs: {
         health: "/api/health",
         stats: "/api/stats",
-        scan: "/api/scan"
+        scan: "/api/scan",
+        syncEvidence: "/api/sync-evidence"
       }
     });
   });
@@ -46,7 +48,8 @@ export function createApp() {
   app.use("/api/product", createProductsRouter(apiService));
   app.use("/api/brand", createBrandsRouter(apiService));
   app.use("/api/certifications", createCertificationsRouter(apiService));
-  app.use("/api/certification-sources", createCertificationSourcesRouter());
+  app.use("/api/certification-sources", createCertificationSourcesRouter(apiService));
+  app.use("/api/sync-evidence", createSyncEvidenceRouter(apiService));
   app.use("/api/stats", createStatsRouter(apiService));
   app.use("/api/feedback", createFeedbackRouter(apiService));
   app.use("/api/verify-integrity", createVerifyIntegrityRouter(apiService));

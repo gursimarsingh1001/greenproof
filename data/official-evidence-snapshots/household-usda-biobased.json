@@ -1,0 +1,33 @@
+{
+  "records": [
+    {
+      "sourceId": "household-usda-biobased",
+      "certificationAcronym": "BIO",
+      "scope": "product",
+      "externalBrandName": "Seventh Generation",
+      "externalProductName": "Dish Liquid",
+      "matchedBrandName": "Seventh Generation",
+      "matchedProductName": "Seventh Generation Dish Soap",
+      "certificateNumber": "BIO-SG-DISH-001",
+      "sourceUrl": "https://www.biopreferred.gov/BioPreferred/faces/catalog/Catalog.xhtml",
+      "checkedAt": "2026-04-22T02:06:59.666Z",
+      "status": "verified",
+      "confidence": 0.97,
+      "rawPayload": {
+        "source": "USDA BioPreferred catalog",
+        "productType": "Dishwashing liquid",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:59.666Z",
+          "httpStatus": 200,
+          "contentType": "text/html;charset=UTF-8",
+          "pageTitle": "BioPreferred|Catalog",
+          "matchedKeywords": [
+            "BIO"
+          ],
+          "responseUrl": "https://www.biopreferred.gov/BioPreferred/faces/catalog/Catalog.xhtml",
+          "fetchUrl": "https://www.biopreferred.gov/BioPreferred/faces/catalog/Catalog.xhtml"
+        }
+      }
+    }
+  ]
+}

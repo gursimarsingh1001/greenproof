@@ -14,6 +14,14 @@ const verifyIntegritySchema = z.object({
     brand: z.record(z.string(), z.unknown()),
     dataSource: z.enum(["local_seed", "open_food_facts"]),
     sourceDetails: z.record(z.string(), z.unknown()).optional(),
+    evidenceLookup: z.enum(["cached", "live_refresh", "none_found"]),
+    evidenceSources: z.array(z.string()),
+    evidenceFreshness: z.enum(["fresh", "stale", "unavailable"]),
+    officialEvidence: z.object({
+      lastCheckedAt: z.string().optional(),
+      product: z.array(z.record(z.string(), z.unknown())),
+      brand: z.array(z.record(z.string(), z.unknown()))
+    }),
     claims: z.array(z.record(z.string(), z.unknown())),
     result: z.record(z.string(), z.unknown()),
     explanation: z.record(z.string(), z.unknown()),

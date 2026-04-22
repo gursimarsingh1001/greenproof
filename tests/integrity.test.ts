@@ -31,10 +31,10 @@ const orderedHash = hashObject({
     score: 23,
     penalties: [{ reason: "vague term" }, { reason: "flagged brand" }]
   },
-  brand: "FastFashionX"
+    brand: "Biotique"
 });
 const reorderedHash = hashObject({
-  brand: "FastFashionX",
+    brand: "Biotique",
   report: {
     penalties: [{ reason: "vague term" }, { reason: "flagged brand" }],
     score: 23
@@ -74,7 +74,7 @@ try {
 
   assert.equal(scanResponse.status, 200);
   assertSuccess(scanBody);
-  assert.equal(scanBody.data.product.name, "FastFashionX Eco Collection Basic Tee");
+  assert.equal(scanBody.data.product.name, "Biotique Fresh Neem Pimple Control Face Wash");
   assert.equal(scanBody.data.integrity.displayId.length, 16);
   assert.equal(scanBody.data.integrity.resultHash.length, 64);
 
@@ -83,6 +83,10 @@ try {
     brand: scanBody.data.brand,
     dataSource: scanBody.data.dataSource,
     ...(scanBody.data.sourceDetails ? { sourceDetails: scanBody.data.sourceDetails } : {}),
+    evidenceLookup: scanBody.data.evidenceLookup,
+    evidenceSources: scanBody.data.evidenceSources,
+    evidenceFreshness: scanBody.data.evidenceFreshness,
+    officialEvidence: scanBody.data.officialEvidence,
     claims: scanBody.data.claims,
     result: scanBody.data.result,
     explanation: scanBody.data.explanation,

@@ -203,6 +203,14 @@ export function buildSourceDetails(product: {
     };
   }
 
+  if (product.dataSource === "official_evidence_import") {
+    return {
+      label: parsedSourceDetails?.label ?? "Official Evidence Import",
+      ...(product.sourceUrl ? { productUrl: product.sourceUrl } : {}),
+      ...(parsedSourceDetails?.labels ? { labels: parsedSourceDetails.labels } : {})
+    };
+  }
+
   return {
     label: "GreenProof Seed Catalog"
   };
@@ -240,7 +248,12 @@ function mapProductToVerificationRecord(product: ProductWithRelations): Verifica
       claims: productClaims
     },
     brand,
-    dataSource: product.dataSource === "open_food_facts" ? "open_food_facts" : "local_seed",
+    dataSource:
+      product.dataSource === "open_food_facts"
+        ? "open_food_facts"
+        : product.dataSource === "official_evidence_import"
+          ? "official_evidence_import"
+          : "local_seed",
     sourceUrl: product.sourceUrl,
     ...(sourceDetails ? { sourceDetails } : { sourceDetails: null }),
     rawText,

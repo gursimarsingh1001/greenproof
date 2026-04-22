@@ -1,0 +1,60 @@
+{
+  "records": [
+    {
+      "sourceId": "cosmetics-peta-cruelty-free",
+      "certificationAcronym": "PETA",
+      "scope": "brand",
+      "externalBrandName": "The Body Shop Natura Cosmeticos",
+      "matchedBrandName": "The Body Shop",
+      "certificateNumber": "PETA-TBS-2026",
+      "sourceUrl": "https://crueltyfree.peta.org/company/the-body-shop-natura-cosmeticos/",
+      "checkedAt": "2026-04-22T02:07:13.964Z",
+      "status": "verified",
+      "confidence": 0.93,
+      "rawPayload": {
+        "source": "PETA cruelty-free database",
+        "matchType": "brand",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:07:13.964Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "Is The Body Shop Cruelty-Free? | PETA",
+          "matchedKeywords": [
+            "The Body Shop",
+            "PETA"
+          ],
+          "responseUrl": "https://crueltyfree.peta.org/company/the-body-shop-natura-cosmeticos/",
+          "fetchUrl": "https://crueltyfree.peta.org/company/the-body-shop-natura-cosmeticos/"
+        }
+      }
+    },
+    {
+      "sourceId": "cosmetics-peta-cruelty-free",
+      "certificationAcronym": "PETA",
+      "scope": "brand",
+      "externalBrandName": "Aveda (Estee Lauder)",
+      "matchedBrandName": "Aveda",
+      "certificateNumber": "PETA-AVEDA-2026",
+      "sourceUrl": "https://crueltyfree.peta.org/company/aveda-estee-lauder/",
+      "checkedAt": "2026-04-22T02:07:13.964Z",
+      "status": "verified",
+      "confidence": 0.92,
+      "rawPayload": {
+        "source": "PETA cruelty-free database",
+        "matchType": "brand",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:07:13.964Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "Is The Body Shop Cruelty-Free? | PETA",
+          "matchedKeywords": [
+            "The Body Shop",
+            "PETA"
+          ],
+          "responseUrl": "https://crueltyfree.peta.org/company/the-body-shop-natura-cosmeticos/",
+          "fetchUrl": "https://crueltyfree.peta.org/company/the-body-shop-natura-cosmeticos/"
+        }
+      }
+    }
+  ]
+}

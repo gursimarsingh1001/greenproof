@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Camera, ShieldCheck, Sparkles, Workflow } from "lucide-react";
+import { ArrowRight, Camera, ShieldCheck, Workflow } from "lucide-react";
 import { PhoneShowcase } from "@/components/PhoneShowcase";
 import { RecentScans } from "@/components/RecentScans";
 import { fetchBackendData } from "@/lib/backend";
@@ -108,17 +108,6 @@ export default async function HomePage() {
               <p className="mt-3 text-sm leading-6 text-moss/68">{text}</p>
             </article>
           ))}
-        </div>
-      </section>
-
-      <section className="surface-card mesh-card flex flex-col gap-5 px-6 py-7 md:flex-row md:items-center md:justify-between md:px-8">
-        <div>
-          <span className="eyebrow">Demo Ready</span>
-          <h2 className="mt-4 font-[var(--font-display)] text-3xl font-semibold text-ink">Built for a sharp three-minute story</h2>
-        </div>
-        <div className="flex items-center gap-3 rounded-[24px] bg-white/75 px-5 py-4 text-sm leading-6 text-moss/70">
-          <Sparkles className="h-5 w-5 text-leaf" />
-          <span>Scan, explain, compare alternatives, and move on without losing momentum.</span>
         </div>
       </section>
     </main>

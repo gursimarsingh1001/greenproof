@@ -1,0 +1,236 @@
+{
+  "records": [
+    {
+      "sourceId": "cosmetics-made-safe",
+      "certificationAcronym": "MSAFE",
+      "scope": "product",
+      "externalBrandName": "Mamaearth",
+      "externalProductName": "Vitamin C Daily Glow Face Wash",
+      "matchedBrandName": "Mamaearth",
+      "matchedProductName": "Mamaearth Vitamin C Face Wash",
+      "certificateNumber": "MSAFE-ME-VITC-001",
+      "sourceUrl": "https://www.madesafe.org/search-certified-products/",
+      "checkedAt": "2026-04-22T02:06:53.928Z",
+      "status": "verified",
+      "confidence": 0.97,
+      "rawPayload": {
+        "source": "MADE SAFE directory",
+        "productFamily": "Face Wash",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:53.928Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=utf-8",
+          "pageTitle": "MADE SAFE® Certified ~ Product Catalog &ndash; MADE SAFE a program of Nontoxic Certified",
+          "matchedKeywords": [
+            "MADE SAFE"
+          ],
+          "responseUrl": "https://madesafe.org/collections/certified-products-catalog",
+          "fetchUrl": "https://madesafe.org/find-products/products"
+        }
+      }
+    },
+    {
+      "sourceId": "cosmetics-made-safe",
+      "certificationAcronym": "MSAFE",
+      "scope": "product",
+      "externalBrandName": "Mamaearth",
+      "externalProductName": "Onion Shampoo",
+      "matchedBrandName": "Mamaearth",
+      "matchedProductName": "Mamaearth Onion Shampoo",
+      "certificateNumber": "MSAFE-ME-ONION-001",
+      "sourceUrl": "https://www.madesafe.org/search-certified-products/",
+      "checkedAt": "2026-04-22T02:06:53.928Z",
+      "status": "verified",
+      "confidence": 0.97,
+      "rawPayload": {
+        "source": "MADE SAFE directory",
+        "productFamily": "Hair Care",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:53.928Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=utf-8",
+          "pageTitle": "MADE SAFE® Certified ~ Product Catalog &ndash; MADE SAFE a program of Nontoxic Certified",
+          "matchedKeywords": [
+            "MADE SAFE"
+          ],
+          "responseUrl": "https://madesafe.org/collections/certified-products-catalog",
+          "fetchUrl": "https://madesafe.org/find-products/products"
+        }
+      }
+    },
+    {
+      "sourceId": "cosmetics-made-safe",
+      "certificationAcronym": "MSAFE",
+      "scope": "product",
+      "externalBrandName": "Mamaearth",
+      "externalProductName": "Organic Bamboo Based Baby Wipes",
+      "matchedBrandName": "Mamaearth",
+      "matchedProductName": "Mamaearth Organic Bamboo Baby Wipes",
+      "certificateNumber": "MSAFE-ME-WIPES-001",
+      "sourceUrl": "https://madesafe.org/blogs/viewpoint/changing-your-wipe-can-help-wipe-the-oceans-clean",
+      "checkedAt": "2026-04-22T02:06:53.928Z",
+      "status": "verified",
+      "confidence": 0.95,
+      "rawPayload": {
+        "source": "MADE SAFE public article",
+        "articleTitle": "Changing Your Wipe Can Help Wipe the Oceans Clean",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:53.928Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=utf-8",
+          "pageTitle": "MADE SAFE® Certified ~ Product Catalog &ndash; MADE SAFE a program of Nontoxic Certified",
+          "matchedKeywords": [
+            "MADE SAFE"
+          ],
+          "responseUrl": "https://madesafe.org/collections/certified-products-catalog",
+          "fetchUrl": "https://madesafe.org/find-products/products"
+        }
+      }
+    },
+    {
+      "sourceId": "cosmetics-made-safe",
+      "certificationAcronym": "MSAFE",
+      "scope": "product",
+      "externalBrandName": "Mamaearth",
+      "externalProductName": "Mineral Based Sunscreen",
+      "matchedBrandName": "Mamaearth",
+      "matchedProductName": "Mamaearth Mineral Based Sunscreen",
+      "certificateNumber": "MSAFE-ME-SUN-001",
+      "sourceUrl": "https://madesafe.org/blogs/viewpoint/new-years-revolution-sunscreen-challenge-june",
+      "checkedAt": "2026-04-22T02:06:53.928Z",
+      "status": "verified",
+      "confidence": 0.95,
+      "rawPayload": {
+        "source": "MADE SAFE public article",
+        "articleTitle": "New Year's Revolution ~ Sunscreen Challenge (June)",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:53.928Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=utf-8",
+          "pageTitle": "MADE SAFE® Certified ~ Product Catalog &ndash; MADE SAFE a program of Nontoxic Certified",
+          "matchedKeywords": [
+            "MADE SAFE"
+          ],
+          "responseUrl": "https://madesafe.org/collections/certified-products-catalog",
+          "fetchUrl": "https://madesafe.org/find-products/products"
+        }
+      }
+    },
+    {
+      "sourceId": "cosmetics-made-safe",
+      "certificationAcronym": "MSAFE",
+      "scope": "product",
+      "externalBrandName": "Mamaearth",
+      "externalProductName": "Natural Mosquito Repellent",
+      "matchedBrandName": "Mamaearth",
+      "matchedProductName": "Mamaearth Natural Mosquito Repellent",
+      "certificateNumber": "MSAFE-ME-BUG-001",
+      "sourceUrl": "https://madesafe.org/blogs/viewpoint/chemical-profile-permethrin-pyrethrins",
+      "checkedAt": "2026-04-22T02:06:53.928Z",
+      "status": "verified",
+      "confidence": 0.95,
+      "rawPayload": {
+        "source": "MADE SAFE public article",
+        "articleTitle": "Chemical Profile: Permethrin & Pyrethrins",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:53.928Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=utf-8",
+          "pageTitle": "MADE SAFE® Certified ~ Product Catalog &ndash; MADE SAFE a program of Nontoxic Certified",
+          "matchedKeywords": [
+            "MADE SAFE"
+          ],
+          "responseUrl": "https://madesafe.org/collections/certified-products-catalog",
+          "fetchUrl": "https://madesafe.org/find-products/products"
+        }
+      }
+    },
+    {
+      "sourceId": "cosmetics-made-safe",
+      "certificationAcronym": "MSAFE",
+      "scope": "product",
+      "externalBrandName": "Mamaearth",
+      "externalProductName": "Repellent Gel",
+      "matchedBrandName": "Mamaearth",
+      "matchedProductName": "Mamaearth Mosquito Repellent Gel",
+      "certificateNumber": "MSAFE-ME-GEL-001",
+      "sourceUrl": "https://madesafe.org/blogs/viewpoint/chemical-profile-permethrin-pyrethrins",
+      "checkedAt": "2026-04-22T02:06:53.928Z",
+      "status": "verified",
+      "confidence": 0.95,
+      "rawPayload": {
+        "source": "MADE SAFE public article",
+        "articleTitle": "Chemical Profile: Permethrin & Pyrethrins",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:53.928Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=utf-8",
+          "pageTitle": "MADE SAFE® Certified ~ Product Catalog &ndash; MADE SAFE a program of Nontoxic Certified",
+          "matchedKeywords": [
+            "MADE SAFE"
+          ],
+          "responseUrl": "https://madesafe.org/collections/certified-products-catalog",
+          "fetchUrl": "https://madesafe.org/find-products/products"
+        }
+      }
+    },
+    {
+      "sourceId": "cosmetics-made-safe",
+      "certificationAcronym": "MSAFE",
+      "scope": "product",
+      "externalBrandName": "Mamaearth",
+      "externalProductName": "Body Roll-On",
+      "matchedBrandName": "Mamaearth",
+      "matchedProductName": "Mamaearth Body Roll-On Repellent",
+      "certificateNumber": "MSAFE-ME-BODY-001",
+      "sourceUrl": "https://madesafe.org/blogs/viewpoint/chemical-profile-permethrin-pyrethrins",
+      "checkedAt": "2026-04-22T02:06:53.928Z",
+      "status": "verified",
+      "confidence": 0.95,
+      "rawPayload": {
+        "source": "MADE SAFE public article",
+        "articleTitle": "Chemical Profile: Permethrin & Pyrethrins",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:53.928Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=utf-8",
+          "pageTitle": "MADE SAFE® Certified ~ Product Catalog &ndash; MADE SAFE a program of Nontoxic Certified",
+          "matchedKeywords": [
+            "MADE SAFE"
+          ],
+          "responseUrl": "https://madesafe.org/collections/certified-products-catalog",
+          "fetchUrl": "https://madesafe.org/find-products/products"
+        }
+      }
+    },
+    {
+      "sourceId": "cosmetics-made-safe",
+      "certificationAcronym": "MSAFE",
+      "scope": "product",
+      "externalBrandName": "Mamaearth",
+      "externalProductName": "Fabric Roll-On",
+      "matchedBrandName": "Mamaearth",
+      "matchedProductName": "Mamaearth Fabric Roll-On Repellent",
+      "certificateNumber": "MSAFE-ME-FABRIC-001",
+      "sourceUrl": "https://madesafe.org/blogs/viewpoint/chemical-profile-permethrin-pyrethrins",
+      "checkedAt": "2026-04-22T02:06:53.928Z",
+      "status": "verified",
+      "confidence": 0.95,
+      "rawPayload": {
+        "source": "MADE SAFE public article",
+        "articleTitle": "Chemical Profile: Permethrin & Pyrethrins",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:53.928Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=utf-8",
+          "pageTitle": "MADE SAFE® Certified ~ Product Catalog &ndash; MADE SAFE a program of Nontoxic Certified",
+          "matchedKeywords": [
+            "MADE SAFE"
+          ],
+          "responseUrl": "https://madesafe.org/collections/certified-products-catalog",
+          "fetchUrl": "https://madesafe.org/find-products/products"
+        }
+      }
+    }
+  ]
+}

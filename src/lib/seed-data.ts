@@ -114,6 +114,54 @@ export const certifications: CertificationSeed[] = [
     name: "Carbon Trust Standard",
     issuingBody: "Carbon Trust",
     scope: "climate"
+  },
+  {
+    acronym: "EWG",
+    name: "EWG Verified",
+    issuingBody: "Environmental Working Group",
+    scope: "ingredient-screening"
+  },
+  {
+    acronym: "GS",
+    name: "Green Seal Certified",
+    issuingBody: "Green Seal",
+    scope: "cleaning"
+  },
+  {
+    acronym: "COSMOS",
+    name: "COSMOS Organic",
+    issuingBody: "COSMOS-standard AISBL",
+    scope: "organic-cosmetics"
+  },
+  {
+    acronym: "ECO",
+    name: "UL ECOLOGO Certified",
+    issuingBody: "UL Solutions",
+    scope: "household-cleaning"
+  },
+  {
+    acronym: "PETA",
+    name: "PETA Cruelty-Free",
+    issuingBody: "People for the Ethical Treatment of Animals",
+    scope: "animal-welfare"
+  },
+  {
+    acronym: "BCI",
+    name: "Better Cotton",
+    issuingBody: "Better Cotton",
+    scope: "cotton-sourcing"
+  },
+  {
+    acronym: "NSF",
+    name: "NSF Contents Certified",
+    issuingBody: "NSF",
+    scope: "wellness"
+  },
+  {
+    acronym: "DFE",
+    name: "EPA Design for the Environment",
+    issuingBody: "United States Environmental Protection Agency",
+    scope: "disinfectant-safety"
   }
 ];
 
@@ -269,7 +317,19 @@ export const brands: BrandSeed[] = [
   { name: "PureNest", website: "https://purenest.example", isFlagged: false, reputationScore: 0.37 },
   { name: "OceanHalo", website: "https://oceanhalo.example", isFlagged: false, reputationScore: 0.41 },
   { name: "FlexWear", website: "https://flexwear.example", isFlagged: false, reputationScore: 0.44 },
-  { name: "EarthGlow Home", website: "https://earthglowhome.example", isFlagged: false, reputationScore: 0.46 }
+  { name: "EarthGlow Home", website: "https://earthglowhome.example", isFlagged: false, reputationScore: 0.46 },
+  { name: "No Nasties", website: "https://www.nonasties.in", isFlagged: false, reputationScore: 0.89 },
+  { name: "Mamaearth", website: "https://mamaearth.in", isFlagged: false, reputationScore: 0.62 },
+  { name: "Patanjali", website: "https://www.patanjaliayurved.net", isFlagged: false, reputationScore: 0.46 },
+  { name: "Biotique", website: "https://www.biotique.com", isFlagged: false, reputationScore: 0.44 },
+  { name: "Beco", website: "https://www.letsbeco.com", isFlagged: false, reputationScore: 0.57 },
+  { name: "The Better Home", website: "https://thebetterhome.com", isFlagged: false, reputationScore: 0.58 },
+  { name: "Safely", website: "https://getsafely.com", isFlagged: false, reputationScore: 0.59 },
+  { name: "Ceyon Naturaa", website: "https://www.ceyon.org", isFlagged: false, reputationScore: 0.68 },
+  { name: "VIVA DORIA", website: "https://vivadoria.com", isFlagged: false, reputationScore: 0.66 },
+  { name: "ATTITUDE", website: "https://attitudeliving.com", isFlagged: false, reputationScore: 0.73 },
+  { name: "SmartyPants", website: "https://smartypantsvitamins.com", isFlagged: false, reputationScore: 0.71 },
+  { name: "Clorox", website: "https://www.clorox.com", isFlagged: false, reputationScore: 0.56 }
 ];
 
 export const brandCertifications: BrandCertificationSeed[] = [
@@ -362,16 +422,26 @@ export const brandCertifications: BrandCertificationSeed[] = [
 const productArt = (kind: string, label: string): string =>
   `/api/product-art?kind=${encodeURIComponent(kind)}&label=${encodeURIComponent(label)}`;
 
+const productPhoto = {
+  noNastiesBlancTee: "https://www.nonasties.in/cdn/shop/files/BlancClassicTee.jpg?v=1765790141&width=1080",
+  hmOrganicCottonTee: "https://image.hm.com/assets/hm/a3/a0/a3a095271ae3365b0a7f4498ded14504ab2de70a.jpg?imwidth=2160",
+  mamaearthVitaminCFaceWash: "https://images.mamaearth.in/catalog/product/1/_/1_203.jpg?format=auto&height=600",
+  mamaearthOnionShampoo: "https://images.mamaearth.in/catalog/product/o/n/onion-shampoo-fop_white_bg.jpg?format=auto&height=600",
+  patanjaliKeshKanti: "https://www.patanjaliayurved.net/assets/product_images/400x500/1684507984KeshkantiNaturalHairCleanser180ml.png",
+  biotiqueNeemFaceWash: "https://www.biotique.com/cdn/shop/files/8904352004056_1-min_600x.jpg?v=1670241121",
+  becoDishwashRefill: "https://www.letsbeco.com/cdn/shop/files/Artboard_1_2_411ede67-e8d6-40d3-a501-fbd7e0bacf98.webp?v=1751351679",
+  betterHomeDishwash: "https://thebetterhome.com/cdn/shop/files/7d0c0b1d-b406-45eb-a944-c8d171cb6dce.jpg?v=1744200783&width=1946"
+} as const;
+
 export const products: ProductSeed[] = [
   {
-    name: "Patagonia Organic Cotton Hoodie",
-    brandName: "Patagonia",
+    name: "No Nasties Blanc Classic Tee",
+    brandName: "No Nasties",
     barcode: "8901000000001",
     category: "Apparel",
-    description: "Patagonia markets this hoodie as Fair Trade Certified, made with organic cotton, finished with Bluesign approved fabric, and detailed with a recycled lining.",
-    imageUrl: productArt("hoodie", "Patagonia Organic Cotton Hoodie"),
-    priceCents: 12900,
-    claims: ["Fair Trade Certified", "Organic Cotton", "Bluesign Approved"],
+    description: "No Nasties presents this tee as 100% organic cotton, made in a Fair Trade certified factory, and shipped with plastic-free packaging.",
+    imageUrl: productPhoto.noNastiesBlancTee,
+    claims: ["Organic Cotton", "Fair Trade Factory", "Plastic-Free Packaging"],
     scenario: "gold",
     expectedTrustScore: 94
   },
@@ -388,16 +458,15 @@ export const products: ProductSeed[] = [
     expectedTrustScore: 91
   },
   {
-    name: "Ecover Toilet Cleaner",
-    brandName: "Ecover",
+    name: "The Better Home Dishwash Liquid",
+    brandName: "The Better Home",
     barcode: "8901000000003",
     category: "Household",
-    description: "Ecover positions this toilet cleaner as Cradle to Cradle Certified with plant-based ingredients.",
-    imageUrl: productArt("cleaner-bottle", "Ecover Toilet Cleaner"),
-    priceCents: 679,
-    claims: ["Cradle to Cradle Certified", "Plant-Based Ingredients"],
-    scenario: "gold",
-    expectedTrustScore: 88
+    description: "The Better Home markets this dishwash liquid as biodegradable, non-toxic, eco-friendly, and plant based for family-safe cleaning.",
+    imageUrl: productPhoto.betterHomeDishwash,
+    claims: ["Biodegradable", "Eco-Friendly", "Plant-Based Cleaner"],
+    scenario: "mixed",
+    expectedTrustScore: 30
   },
   {
     name: "Dr. Bronner's Organic Soap Bar",
@@ -478,16 +547,15 @@ export const products: ProductSeed[] = [
     expectedTrustScore: 83
   },
   {
-    name: "H&M Conscious Collection T-Shirt",
+    name: "H&M Organic Cotton T-Shirt",
     brandName: "H&M",
     barcode: "8901000000011",
     category: "Apparel",
-    description: "This tee uses sustainable cotton messaging, a Conscious Choice hangtag, and recycled materials messaging without listing a product certification.",
-    imageUrl: productArt("tee", "H&M Conscious Collection T-Shirt"),
-    priceCents: 1999,
-    claims: ["Sustainable Cotton", "Conscious Choice"],
+    description: "H&M lists this basic tee as 100% organic cotton and still leans on Conscious Choice style messaging without product-level certification detail.",
+    imageUrl: productPhoto.hmOrganicCottonTee,
+    claims: ["Organic Cotton", "Conscious Choice"],
     scenario: "mixed",
-    expectedTrustScore: 52
+    expectedTrustScore: 54
   },
   {
     name: "Adidas Parley Shoes",
@@ -502,16 +570,367 @@ export const products: ProductSeed[] = [
     expectedTrustScore: 68
   },
   {
-    name: "The Body Shop Vitamin C Serum",
-    brandName: "The Body Shop",
-    barcode: "8901000000013",
+    name: "Mamaearth Vitamin C Face Wash",
+    brandName: "Mamaearth",
+    barcode: "8901000000132",
     category: "Beauty",
-    description: "The Body Shop positions this serum as vegan, cruelty-free, and backed by Community Trade sourcing.",
-    imageUrl: productArt("serum", "The Body Shop Vitamin C Serum"),
-    priceCents: 1899,
-    claims: ["Vegan", "Cruelty-Free", "Community Trade"],
+    description: "Mamaearth positions this face wash as MADE SAFE certified, dermatologically tested, and powered by natural ingredients like vitamin C and turmeric.",
+    imageUrl: productPhoto.mamaearthVitaminCFaceWash,
+    claims: ["Made Safe Certified", "Natural Ingredients", "Dermatologically Tested"],
+    scenario: "mixed",
+    expectedTrustScore: 80
+  },
+  {
+    name: "Mamaearth Organic Bamboo Baby Wipes",
+    brandName: "Mamaearth",
+    barcode: "8901000000037",
+    category: "Personal Care",
+    description: "Mamaearth presents these baby wipes as MADE SAFE certified, organic bamboo based, and gentle enough for daily baby care.",
+    imageUrl: productArt("wipe-pack", "Mamaearth Organic Bamboo Baby Wipes"),
+    claims: ["Made Safe Certified", "Organic Bamboo Based", "Gentle Daily Care"],
+    scenario: "gold",
+    expectedTrustScore: 84
+  },
+  {
+    name: "Mamaearth Mineral Based Sunscreen",
+    brandName: "Mamaearth",
+    barcode: "8901000000038",
+    category: "Beauty",
+    description: "Mamaearth markets this sunscreen as mineral based and MADE SAFE certified for safer daily sun protection.",
+    imageUrl: productArt("sunscreen", "Mamaearth Mineral Based Sunscreen"),
+    claims: ["Made Safe Certified", "Mineral Based", "Daily Sun Protection"],
+    scenario: "edge",
+    expectedTrustScore: 78
+  },
+  {
+    name: "Mamaearth Natural Mosquito Repellent",
+    brandName: "Mamaearth",
+    barcode: "8901000000039",
+    category: "Personal Care",
+    description: "Mamaearth positions this repellent as a natural mosquito repellent with MADE SAFE-backed safer-ingredient positioning for casual outdoor use.",
+    imageUrl: productArt("spray-bottle", "Mamaearth Natural Mosquito Repellent"),
+    claims: ["Made Safe Certified", "Natural Mosquito Repellent", "Safer Ingredient Positioning"],
+    scenario: "edge",
+    expectedTrustScore: 77
+  },
+  {
+    name: "Mamaearth Mosquito Repellent Gel",
+    brandName: "Mamaearth",
+    barcode: "8901000000040",
+    category: "Personal Care",
+    description: "Mamaearth describes this mosquito repellent gel as a safer repellent option supported by MADE SAFE public certification references.",
+    imageUrl: productArt("gel-tube", "Mamaearth Mosquito Repellent Gel"),
+    claims: ["Made Safe Certified", "Mosquito Repellent Gel", "Safer Daily Use"],
+    scenario: "edge",
+    expectedTrustScore: 76
+  },
+  {
+    name: "Mamaearth Body Roll-On Repellent",
+    brandName: "Mamaearth",
+    barcode: "8901000000041",
+    category: "Personal Care",
+    description: "Mamaearth positions this body roll-on as a natural mosquito repellent option referenced in MADE SAFE public materials.",
+    imageUrl: productArt("roll-on", "Mamaearth Body Roll-On Repellent"),
+    claims: ["Made Safe Certified", "Body Roll-On Repellent", "Natural Repellent"],
+    scenario: "edge",
+    expectedTrustScore: 76
+  },
+  {
+    name: "Mamaearth Fabric Roll-On Repellent",
+    brandName: "Mamaearth",
+    barcode: "8901000000042",
+    category: "Household",
+    description: "Mamaearth markets this fabric roll-on as a safer mosquito repellent option for textiles, echoed in MADE SAFE public guidance.",
+    imageUrl: productArt("roll-on", "Mamaearth Fabric Roll-On Repellent"),
+    claims: ["Made Safe Certified", "Fabric Roll-On Repellent", "Safer Textile Use"],
+    scenario: "edge",
+    expectedTrustScore: 75
+  },
+  {
+    name: "Dr. Bronner's All-One Peppermint Pure-Castile Soap",
+    brandName: "Dr. Bronner's",
+    barcode: "8901000000043",
+    category: "Personal Care",
+    description: "This peppermint castile soap is listed by EWG Verified and positioned as a multi-use soap with screened ingredients.",
+    imageUrl: productArt("cleaner-bottle", "Dr. Bronner's Peppermint Castile Soap"),
+    claims: ["EWG Verified", "Ingredient Screened", "Multi-Use Castile Soap"],
     scenario: "mixed",
     expectedTrustScore: 74
+  },
+  {
+    name: "Safely Dish Soap - Fresh",
+    brandName: "Safely",
+    barcode: "8901000000044",
+    category: "Household",
+    description: "Safely presents this fresh dish soap with Green Seal product-level certification for lower-impact cleaning performance.",
+    imageUrl: productArt("dish-soap", "Safely Dish Soap - Fresh"),
+    claims: ["Green Seal Certified", "Dish Soap", "Lower-Impact Cleaning"],
+    scenario: "edge",
+    expectedTrustScore: 72
+  },
+  {
+    name: "Ceyon Naturaa Cleansing Cream Face Wash",
+    brandName: "Ceyon Naturaa",
+    barcode: "8901000000045",
+    category: "Beauty",
+    description: "Ceyon Naturaa positions this cleansing cream as a COSMOS ORGANIC certified face wash certified by Ecocert Greenlife.",
+    imageUrl: productArt("cream-jar", "Ceyon Naturaa Cleansing Cream"),
+    claims: ["COSMOS Organic", "Ecocert Greenlife Certified", "Certified Organic Face Wash"],
+    scenario: "edge",
+    expectedTrustScore: 86
+  },
+  {
+    name: "VIVA DORIA Organic Jojoba Oil",
+    brandName: "VIVA DORIA",
+    barcode: "8901000000046",
+    category: "Beauty",
+    description: "VIVA DORIA lists this jojoba oil under a USDA organic operation profile handled by Ecocert SAS, giving it strong certified-organic evidence.",
+    imageUrl: productArt("serum", "VIVA DORIA Organic Jojoba Oil"),
+    claims: ["USDA Organic", "Certified Organic Jojoba Oil", "Ecocert Certified Operation"],
+    scenario: "edge",
+    expectedTrustScore: 84
+  },
+  {
+    name: "ATTITUDE Window & Glass Cleaner",
+    brandName: "ATTITUDE",
+    barcode: "8901000000047",
+    category: "Household",
+    description: "ATTITUDE markets this window and glass cleaner as ECOLOGO certified, biodegradable, and plant-based on its official product page.",
+    imageUrl: productArt("spray-bottle", "ATTITUDE Window & Glass Cleaner"),
+    claims: ["UL ECOLOGO Certified", "Biodegradable", "Plant-Based Cleaner"],
+    scenario: "edge",
+    expectedTrustScore: 80
+  },
+  {
+    name: "SmartyPants Prenatal Organic Multi & Probiotics",
+    brandName: "SmartyPants",
+    barcode: "8901000000048",
+    category: "Wellness",
+    description: "SmartyPants lists this prenatal gummy in the official NSF certified products database as an organic multi with probiotics.",
+    imageUrl: productArt("capsules", "SmartyPants Prenatal Organic Multi"),
+    claims: ["NSF Contents Certified", "Prenatal Organic Multi", "Probiotics"],
+    scenario: "edge",
+    expectedTrustScore: 78
+  },
+  {
+    name: "Clorox EcoClean Disinfecting Cleaner",
+    brandName: "Clorox",
+    barcode: "8901000000049",
+    category: "Household",
+    description: "Clorox EcoClean appears on EPA's DfE-certified disinfectants list as a lower-toxicity disinfecting cleaner under the legacy Design for the Environment program.",
+    imageUrl: productArt("spray-bottle", "Clorox EcoClean Cleaner"),
+    claims: ["DfE Certified", "Disinfecting Cleaner", "EPA Listed"],
+    scenario: "edge",
+    expectedTrustScore: 74
+  },
+  {
+    name: "Adidas Boston 12 GRS Running Shoe",
+    brandName: "Adidas",
+    barcode: "8901000000050",
+    category: "Footwear",
+    description: "adidas frames the Boston 12 running shoe around Global Recycled Standard certified materials in its official sustainability material innovation post.",
+    imageUrl: productArt("runner-shoe", "Adidas Boston 12 GRS Shoe"),
+    claims: ["GRS Certified Materials", "Running Shoe", "Recycled Content"],
+    scenario: "edge",
+    expectedTrustScore: 82
+  },
+  {
+    name: "ATTITUDE Dish Soap - Orange & Sage",
+    brandName: "ATTITUDE",
+    barcode: "8901000000051",
+    category: "Household",
+    description: "ATTITUDE presents this dish soap as EWG VERIFIED and made for high-performance dish cleaning with plant- and mineral-based ingredients.",
+    imageUrl: productArt("dish-soap", "ATTITUDE Dish Soap"),
+    claims: ["EWG Verified", "Plant- and Mineral-Based", "Dish Soap"],
+    scenario: "edge",
+    expectedTrustScore: 81
+  },
+  {
+    name: "ATTITUDE Extra-Gentle Shampoo Unscented",
+    brandName: "ATTITUDE",
+    barcode: "8901000000052",
+    category: "Beauty",
+    description: "ATTITUDE presents this extra-gentle shampoo as EWG VERIFIED, dermatologically tested, and built from naturally sourced ingredients for sensitive scalps.",
+    imageUrl: productArt("conditioner", "ATTITUDE Extra-Gentle Shampoo"),
+    claims: ["EWG Verified", "Dermatologically Tested", "Naturally Sourced Ingredients"],
+    scenario: "edge",
+    expectedTrustScore: 80
+  },
+  {
+    name: "Safely Hand Soap - Calm",
+    brandName: "Safely",
+    barcode: "8901000000053",
+    category: "Household",
+    description: "Safely lists this Calm hand soap in Green Seal's certified product directory, highlighting mineral-based surfactants and skin-conditioning agents.",
+    imageUrl: productArt("pump-bottle", "Safely Hand Soap Calm"),
+    claims: ["Green Seal Certified", "Mineral-Based Surfactants", "Hand Soap"],
+    scenario: "edge",
+    expectedTrustScore: 78
+  },
+  {
+    name: "Safely Hand Soap - Fresh",
+    brandName: "Safely",
+    barcode: "8901000000054",
+    category: "Household",
+    description: "Safely lists this Fresh hand soap in Green Seal's directory with mineral-based surfactants and coconut-based conditioning agents.",
+    imageUrl: productArt("pump-bottle", "Safely Hand Soap Fresh"),
+    claims: ["Green Seal Certified", "Mineral-Based Surfactants", "Hand Soap"],
+    scenario: "edge",
+    expectedTrustScore: 78
+  },
+  {
+    name: "Safely Dish Soap - Rise",
+    brandName: "Safely",
+    barcode: "8901000000055",
+    category: "Household",
+    description: "Safely's Rise dish soap appears in the Green Seal certified product directory as a specialty household cleaner built for grease and baked-on messes.",
+    imageUrl: productArt("dish-soap", "Safely Dish Soap Rise"),
+    claims: ["Green Seal Certified", "Specialty Household Cleaner", "Dish Soap"],
+    scenario: "edge",
+    expectedTrustScore: 79
+  },
+  {
+    name: "Safely Universal Cleaner - Fresh",
+    brandName: "Safely",
+    barcode: "8901000000056",
+    category: "Household",
+    description: "Safely's Fresh universal cleaner is listed by Green Seal for household cleaning use with coconut-derived ingredients and citric acid.",
+    imageUrl: productArt("spray-bottle", "Safely Universal Cleaner Fresh"),
+    claims: ["Green Seal Certified", "Universal Cleaner", "Coconut-Derived Ingredients"],
+    scenario: "edge",
+    expectedTrustScore: 80
+  },
+  {
+    name: "Safely Hand Soap - Rise",
+    brandName: "Safely",
+    barcode: "8901000000057",
+    category: "Household",
+    description: "Safely's Rise hand soap is listed in the Green Seal directory as a certified hand cleanser using mineral-based surfactants and coconut-based conditioning agents.",
+    imageUrl: productArt("pump-bottle", "Safely Hand Soap Rise"),
+    claims: ["Green Seal Certified", "Mineral-Based Surfactants", "Hand Soap"],
+    scenario: "edge",
+    expectedTrustScore: 78
+  },
+  {
+    name: "Safely Universal Cleaner - Calm",
+    brandName: "Safely",
+    barcode: "8901000000058",
+    category: "Household",
+    description: "Safely's Calm universal cleaner appears in Green Seal's household cleaning directory for its safer, multi-surface formulation.",
+    imageUrl: productArt("spray-bottle", "Safely Universal Cleaner Calm"),
+    claims: ["Green Seal Certified", "Universal Cleaner", "Multi-Surface Formula"],
+    scenario: "edge",
+    expectedTrustScore: 80
+  },
+  {
+    name: "Safely Universal Cleaner - Rise",
+    brandName: "Safely",
+    barcode: "8901000000059",
+    category: "Household",
+    description: "Safely's Rise universal cleaner is certified by Green Seal for household use and positioned as a safer general-purpose cleaner.",
+    imageUrl: productArt("spray-bottle", "Safely Universal Cleaner Rise"),
+    claims: ["Green Seal Certified", "Universal Cleaner", "General-Purpose Cleaner"],
+    scenario: "edge",
+    expectedTrustScore: 80
+  },
+  {
+    name: "ATTITUDE Baby Bottle & Dishwashing Liquid Unscented",
+    brandName: "ATTITUDE",
+    barcode: "8901000000060",
+    category: "Household",
+    description: "ATTITUDE lists this baby bottle and dishwashing liquid as EWG VERIFIED and formulated for dishes, bottles, and baby accessories with naturally sourced ingredients.",
+    imageUrl: productArt("dish-soap", "ATTITUDE Baby Bottle Dishwashing Liquid"),
+    claims: ["EWG Verified", "Naturally Sourced Ingredients", "Baby Bottle & Dishwashing Liquid"],
+    scenario: "edge",
+    expectedTrustScore: 82
+  },
+  {
+    name: "ATTITUDE 2-in-1 Baby Foaming Shampoo & Body Wash",
+    brandName: "ATTITUDE",
+    barcode: "8901000000061",
+    category: "Beauty",
+    description: "ATTITUDE presents this baby foaming shampoo and body wash as EWG VERIFIED and dermatologically tested for sensitive skin routines.",
+    imageUrl: productArt("pump-bottle", "ATTITUDE Baby Shampoo Body Wash"),
+    claims: ["EWG Verified", "Dermatologically Tested", "Baby Shampoo & Body Wash"],
+    scenario: "edge",
+    expectedTrustScore: 82
+  },
+  {
+    name: "ATTITUDE Hand Soap - Sensitive Skin",
+    brandName: "ATTITUDE",
+    barcode: "8901000000062",
+    category: "Household",
+    description: "ATTITUDE lists this sensitive skin hand soap as EWG VERIFIED and dermatologically tested, formulated with oat for delicate skin.",
+    imageUrl: productArt("pump-bottle", "ATTITUDE Hand Soap Sensitive Skin"),
+    claims: ["EWG Verified", "Dermatologically Tested", "Sensitive Skin Hand Soap"],
+    scenario: "edge",
+    expectedTrustScore: 81
+  },
+  {
+    name: "ATTITUDE Hand Soap - Orange Blossom & Eucalyptus",
+    brandName: "ATTITUDE",
+    barcode: "8901000000063",
+    category: "Household",
+    description: "ATTITUDE presents this energizing hand soap as EWG VERIFIED and dermatologically tested, with naturally sourced ingredients and orange blossom notes.",
+    imageUrl: productArt("pump-bottle", "ATTITUDE Hand Soap Orange Blossom"),
+    claims: ["EWG Verified", "Dermatologically Tested", "Naturally Sourced Ingredients"],
+    scenario: "edge",
+    expectedTrustScore: 81
+  },
+  {
+    name: "ATTITUDE Body Wash - Sensitive Skin",
+    brandName: "ATTITUDE",
+    barcode: "8901000000064",
+    category: "Beauty",
+    description: "ATTITUDE's sensitive skin body wash is shown as EWG VERIFIED and dermatologically tested with oat for delicate skin routines.",
+    imageUrl: productArt("conditioner", "ATTITUDE Body Wash Sensitive Skin"),
+    claims: ["EWG Verified", "Dermatologically Tested", "Sensitive Skin Body Wash"],
+    scenario: "edge",
+    expectedTrustScore: 81
+  },
+  {
+    name: "ATTITUDE Laundry Detergent - Little Ones",
+    brandName: "ATTITUDE",
+    barcode: "8901000000065",
+    category: "Household",
+    description: "ATTITUDE lists this Little Ones laundry detergent as EWG VERIFIED and made for baby clothing with naturally sourced ingredients and hypoallergenic positioning.",
+    imageUrl: productArt("laundry-pods", "ATTITUDE Laundry Detergent Little Ones"),
+    claims: ["EWG Verified", "Hypoallergenic Formula", "Baby Laundry Detergent"],
+    scenario: "edge",
+    expectedTrustScore: 82
+  },
+  {
+    name: "ATTITUDE Dishwashing Liquid - Unscented",
+    brandName: "ATTITUDE",
+    barcode: "8901000000066",
+    category: "Household",
+    description: "ATTITUDE presents this unscented dishwashing liquid as EWG VERIFIED and designed for effective dish cleaning with naturally sourced ingredients.",
+    imageUrl: productArt("dish-soap", "ATTITUDE Dishwashing Liquid Unscented"),
+    claims: ["EWG Verified", "Naturally Sourced Ingredients", "Unscented Dishwashing Liquid"],
+    scenario: "edge",
+    expectedTrustScore: 82
+  },
+  {
+    name: "Safely Laundry Detergent - Calm",
+    brandName: "Safely",
+    barcode: "8901000000067",
+    category: "Household",
+    description: "Safely lists this Calm laundry detergent in Green Seal's certified directory for lower-impact laundering with plant- and mineral-based cleaning agents.",
+    imageUrl: productArt("laundry-pods", "Safely Laundry Detergent Calm"),
+    claims: ["Green Seal Certified", "Laundry Detergent", "Lower-Impact Cleaning"],
+    scenario: "edge",
+    expectedTrustScore: 80
+  },
+  {
+    name: "Safely Laundry Detergent - Rise",
+    brandName: "Safely",
+    barcode: "8901000000068",
+    category: "Household",
+    description: "Safely's Rise laundry detergent appears in the Green Seal directory as a certified household cleaning product built for everyday laundry use.",
+    imageUrl: productArt("laundry-pods", "Safely Laundry Detergent Rise"),
+    claims: ["Green Seal Certified", "Laundry Detergent", "Household Cleaning"],
+    scenario: "edge",
+    expectedTrustScore: 80
   },
   {
     name: "IKEA KUNGSBACKA Kitchen Front",
@@ -613,38 +1032,37 @@ export const products: ProductSeed[] = [
     expectedTrustScore: 69
   },
   {
-    name: "FastFashionX Eco Collection Basic Tee",
-    brandName: "FastFashionX",
+    name: "Biotique Fresh Neem Pimple Control Face Wash",
+    brandName: "Biotique",
     barcode: "8901000000023",
-    category: "Apparel",
-    description: "FastFashionX sells this tee with eco-friendly, green fabric, and nature inspired messaging without any certification details.",
-    imageUrl: productArt("tee", "FastFashionX Eco Collection Basic Tee"),
-    priceCents: 2999,
-    claims: ["Eco-Friendly", "Green Fabric", "Nature Inspired"],
+    category: "Beauty",
+    description: "Biotique labels this neem face wash as 100% natural botanical, chemical free, cruelty free, and recyclable packaged despite limited certification evidence.",
+    imageUrl: productPhoto.biotiqueNeemFaceWash,
+    claims: ["100% Natural Botanical", "Chemical Free", "Cruelty Free"],
     scenario: "greenwashing",
-    expectedTrustScore: 23
+    expectedTrustScore: 0
   },
   {
-    name: "Cheapo Natural Shampoo",
-    brandName: "CheapoCorp",
+    name: "Patanjali Kesh Kanti Natural Hair Cleanser",
+    brandName: "Patanjali",
     barcode: "8901000000024",
     category: "Beauty",
-    description: "The bottle claims all natural care, chemical-free cleansing, and 100% organic ingredients despite showing no certification.",
-    imageUrl: productArt("cleaner-bottle", "Cheapo Natural Shampoo"),
-    claims: ["All Natural", "Chemical-Free", "100% Organic Ingredients"],
-    scenario: "greenwashing",
-    expectedTrustScore: 18
+    description: "Patanjali describes this hair cleanser as a natural herbal composition for dryness, dandruff, and hair glow without third-party sustainability verification.",
+    imageUrl: productPhoto.patanjaliKeshKanti,
+    claims: ["Natural Ingredients", "Herbal Composition", "Hair Glow"],
+    scenario: "mixed",
+    expectedTrustScore: 57
   },
   {
-    name: "WastefulCo Earth Friendly Water Bottle",
-    brandName: "WastefulCo",
+    name: "Beco Natural Dishwash Liquid Refill",
+    brandName: "Beco",
     barcode: "8901000000025",
-    category: "Accessories",
-    description: "WastefulCo labels the bottle as earth-friendly, sustainable packaging, and eco-conscious with no product evidence.",
-    imageUrl: productArt("water-bottle", "WastefulCo Earth Friendly Water Bottle"),
-    claims: ["Earth Friendly", "Sustainable Packaging", "Eco-Conscious"],
+    category: "Household",
+    description: "Beco presents this refill pack as a natural dishwash liquid with plant-based coconut cleaners and a lower-waste refill format.",
+    imageUrl: productPhoto.becoDishwashRefill,
+    claims: ["Natural Dishwash", "Plant-Based Cleaner", "Refill Pack"],
     scenario: "greenwashing",
-    expectedTrustScore: 31
+    expectedTrustScore: 39
   },
   {
     name: "GlowPure Clean Beauty Cream",
@@ -724,16 +1142,15 @@ export const products: ProductSeed[] = [
     expectedTrustScore: 34
   },
   {
-    name: "Honest Company Diapers",
-    brandName: "Honest Company",
+    name: "Mamaearth Onion Shampoo",
+    brandName: "Mamaearth",
     barcode: "8901000000033",
-    category: "Baby",
-    description: "The diapers are described as plant-based, hypoallergenic, and sustainably sourced, but the sustainability proof is limited.",
-    imageUrl: productArt("diapers", "Honest Company Diapers"),
-    priceCents: 2799,
-    claims: ["Plant-Based", "Hypoallergenic", "Sustainably Sourced"],
+    category: "Beauty",
+    description: "Mamaearth promotes this onion shampoo with a MADE SAFE certification badge, plant keratin, and a sulfate-free formula for hair fall control.",
+    imageUrl: productPhoto.mamaearthOnionShampoo,
+    claims: ["Made Safe Certified", "Natural Ingredients", "Sulfate-Free Formula"],
     scenario: "edge",
-    expectedTrustScore: 48
+    expectedTrustScore: 79
   },
   {
     name: "Tesla Model Y",
@@ -772,27 +1189,15 @@ export const products: ProductSeed[] = [
 
 export const productCertifications: ProductCertificationSeed[] = [
   {
-    productName: "Patagonia Organic Cotton Hoodie",
-    certificationAcronym: "FTC",
-    certificateNumber: "FTC-PAT-HOOD-001",
-    isVerified: true
-  },
-  {
-    productName: "Patagonia Organic Cotton Hoodie",
+    productName: "No Nasties Blanc Classic Tee",
     certificationAcronym: "GOTS",
-    certificateNumber: "GOTS-PAT-HOOD-001",
+    certificateNumber: "GOTS-NN-TEE-001",
     isVerified: true
   },
   {
-    productName: "Patagonia Organic Cotton Hoodie",
-    certificationAcronym: "BLS",
-    certificateNumber: "BLS-PAT-HOOD-001",
-    isVerified: true
-  },
-  {
-    productName: "Patagonia Organic Cotton Hoodie",
-    certificationAcronym: "GRS",
-    certificateNumber: "GRS-PAT-HOOD-001",
+    productName: "No Nasties Blanc Classic Tee",
+    certificationAcronym: "FTC",
+    certificateNumber: "FTC-NN-TEE-001",
     isVerified: true
   },
   {
@@ -811,12 +1216,6 @@ export const productCertifications: ProductCertificationSeed[] = [
     productName: "Seventh Generation Dish Soap",
     certificationAcronym: "GRS",
     certificateNumber: "GRS-SG-DISH-001",
-    isVerified: true
-  },
-  {
-    productName: "Ecover Toilet Cleaner",
-    certificationAcronym: "C2C",
-    certificateNumber: "C2C-EC-CLEAN-001",
     isVerified: true
   },
   {
@@ -907,6 +1306,210 @@ export const productCertifications: ProductCertificationSeed[] = [
     productName: "Adidas Parley Shoes",
     certificationAcronym: "GRS",
     certificateNumber: "GRS-ADI-PARLEY-001",
+    isVerified: true
+  },
+  {
+    productName: "Mamaearth Vitamin C Face Wash",
+    certificationAcronym: "MSAFE",
+    certificateNumber: "MSAFE-ME-VITC-001",
+    isVerified: true
+  },
+  {
+    productName: "Mamaearth Onion Shampoo",
+    certificationAcronym: "MSAFE",
+    certificateNumber: "MSAFE-ME-ONION-001",
+    isVerified: true
+  },
+  {
+    productName: "Mamaearth Organic Bamboo Baby Wipes",
+    certificationAcronym: "MSAFE",
+    certificateNumber: "MSAFE-ME-WIPES-001",
+    isVerified: true
+  },
+  {
+    productName: "Mamaearth Mineral Based Sunscreen",
+    certificationAcronym: "MSAFE",
+    certificateNumber: "MSAFE-ME-SUN-001",
+    isVerified: true
+  },
+  {
+    productName: "Mamaearth Natural Mosquito Repellent",
+    certificationAcronym: "MSAFE",
+    certificateNumber: "MSAFE-ME-BUG-001",
+    isVerified: true
+  },
+  {
+    productName: "Mamaearth Mosquito Repellent Gel",
+    certificationAcronym: "MSAFE",
+    certificateNumber: "MSAFE-ME-GEL-001",
+    isVerified: true
+  },
+  {
+    productName: "Mamaearth Body Roll-On Repellent",
+    certificationAcronym: "MSAFE",
+    certificateNumber: "MSAFE-ME-BODY-001",
+    isVerified: true
+  },
+  {
+    productName: "Mamaearth Fabric Roll-On Repellent",
+    certificationAcronym: "MSAFE",
+    certificateNumber: "MSAFE-ME-FABRIC-001",
+    isVerified: true
+  },
+  {
+    productName: "Dr. Bronner's All-One Peppermint Pure-Castile Soap",
+    certificationAcronym: "EWG",
+    certificateNumber: "EWG-DB-PEPP-001",
+    isVerified: true
+  },
+  {
+    productName: "Safely Dish Soap - Fresh",
+    certificationAcronym: "GS",
+    certificateNumber: "GS-SAF-DISH-001",
+    isVerified: true
+  },
+  {
+    productName: "Ceyon Naturaa Cleansing Cream Face Wash",
+    certificationAcronym: "COSMOS",
+    certificateNumber: "COSMOS-CEYON-FACE-001",
+    isVerified: true
+  },
+  {
+    productName: "VIVA DORIA Organic Jojoba Oil",
+    certificationAcronym: "USDA",
+    certificateNumber: "USDA-VIVA-JOJOBA-001",
+    isVerified: true
+  },
+  {
+    productName: "ATTITUDE Window & Glass Cleaner",
+    certificationAcronym: "ECO",
+    certificateNumber: "ECO-ATT-WINDOW-001",
+    isVerified: true
+  },
+  {
+    productName: "SmartyPants Prenatal Organic Multi & Probiotics",
+    certificationAcronym: "NSF",
+    certificateNumber: "NSF-SP-PRENATAL-001",
+    isVerified: true
+  },
+  {
+    productName: "Clorox EcoClean Disinfecting Cleaner",
+    certificationAcronym: "DFE",
+    certificateNumber: "DFE-CLX-ECO-001",
+    isVerified: true
+  },
+  {
+    productName: "Adidas Boston 12 GRS Running Shoe",
+    certificationAcronym: "GRS",
+    certificateNumber: "GRS-ADI-B12-001",
+    isVerified: true
+  },
+  {
+    productName: "ATTITUDE Dish Soap - Orange & Sage",
+    certificationAcronym: "EWG",
+    certificateNumber: "EWG-ATT-DISH-001",
+    isVerified: true
+  },
+  {
+    productName: "ATTITUDE Extra-Gentle Shampoo Unscented",
+    certificationAcronym: "EWG",
+    certificateNumber: "EWG-ATT-SHAMPOO-001",
+    isVerified: true
+  },
+  {
+    productName: "Safely Hand Soap - Calm",
+    certificationAcronym: "GS",
+    certificateNumber: "GS-SAF-HAND-001",
+    isVerified: true
+  },
+  {
+    productName: "Safely Hand Soap - Fresh",
+    certificationAcronym: "GS",
+    certificateNumber: "GS-SAF-HANDFRESH-001",
+    isVerified: true
+  },
+  {
+    productName: "Safely Dish Soap - Rise",
+    certificationAcronym: "GS",
+    certificateNumber: "GS-SAF-DISHRISE-001",
+    isVerified: true
+  },
+  {
+    productName: "Safely Universal Cleaner - Fresh",
+    certificationAcronym: "GS",
+    certificateNumber: "GS-SAF-UNIFRESH-001",
+    isVerified: true
+  },
+  {
+    productName: "Safely Hand Soap - Rise",
+    certificationAcronym: "GS",
+    certificateNumber: "GS-SAF-HANDRISE-001",
+    isVerified: true
+  },
+  {
+    productName: "Safely Universal Cleaner - Calm",
+    certificationAcronym: "GS",
+    certificateNumber: "GS-SAF-UNICALM-001",
+    isVerified: true
+  },
+  {
+    productName: "Safely Universal Cleaner - Rise",
+    certificationAcronym: "GS",
+    certificateNumber: "GS-SAF-UNIRISE-001",
+    isVerified: true
+  },
+  {
+    productName: "ATTITUDE Baby Bottle & Dishwashing Liquid Unscented",
+    certificationAcronym: "EWG",
+    certificateNumber: "EWG-ATT-BABYDISH-001",
+    isVerified: true
+  },
+  {
+    productName: "ATTITUDE 2-in-1 Baby Foaming Shampoo & Body Wash",
+    certificationAcronym: "EWG",
+    certificateNumber: "EWG-ATT-BABYBATH-001",
+    isVerified: true
+  },
+  {
+    productName: "ATTITUDE Hand Soap - Sensitive Skin",
+    certificationAcronym: "EWG",
+    certificateNumber: "EWG-ATT-HANDSENS-001",
+    isVerified: true
+  },
+  {
+    productName: "ATTITUDE Hand Soap - Orange Blossom & Eucalyptus",
+    certificationAcronym: "EWG",
+    certificateNumber: "EWG-ATT-HANDENERGY-001",
+    isVerified: true
+  },
+  {
+    productName: "ATTITUDE Body Wash - Sensitive Skin",
+    certificationAcronym: "EWG",
+    certificateNumber: "EWG-ATT-BODYSENS-001",
+    isVerified: true
+  },
+  {
+    productName: "ATTITUDE Laundry Detergent - Little Ones",
+    certificationAcronym: "EWG",
+    certificateNumber: "EWG-ATT-LAUNDRYBABY-001",
+    isVerified: true
+  },
+  {
+    productName: "ATTITUDE Dishwashing Liquid - Unscented",
+    certificationAcronym: "EWG",
+    certificateNumber: "EWG-ATT-DISHUNSC-001",
+    isVerified: true
+  },
+  {
+    productName: "Safely Laundry Detergent - Calm",
+    certificationAcronym: "GS",
+    certificateNumber: "GS-SAF-LAUNDRYCALM-001",
+    isVerified: true
+  },
+  {
+    productName: "Safely Laundry Detergent - Rise",
+    certificationAcronym: "GS",
+    certificateNumber: "GS-SAF-LAUNDRYRISE-001",
     isVerified: true
   },
   {

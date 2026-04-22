@@ -1,0 +1,34 @@
+{
+  "records": [
+    {
+      "sourceId": "household-carbon-trust",
+      "certificationAcronym": "CTS",
+      "scope": "product",
+      "externalBrandName": "Nespresso",
+      "externalProductName": "Recycled Aluminum Capsules",
+      "matchedBrandName": "Nespresso",
+      "matchedProductName": "Nespresso Recycled Aluminum Capsules",
+      "certificateNumber": "CTS-NESP-CAPS-001",
+      "sourceUrl": "https://www.carbontrust.com/our-work-and-impact/case-studies/nespresso",
+      "checkedAt": "2026-04-22T02:07:02.163Z",
+      "status": "verified",
+      "confidence": 0.87,
+      "rawPayload": {
+        "source": "Carbon Trust case study",
+        "productFamily": "capsules",
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:07:02.163Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "Standard Bearers | The Carbon Trust",
+          "matchedKeywords": [
+            "Carbon Trust Standard"
+          ],
+          "responseUrl": "https://www.carbontrust.com/the-carbon-trust-standard/standard-bearers",
+          "fetchUrl": "https://www.carbontrust.com/the-carbon-trust-standard/standard-bearers"
+        }
+      }
+    }
+  ]
+}

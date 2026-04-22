@@ -5,13 +5,13 @@ import { useEffect, useState } from "react";
 import { AlertTriangle, CheckCircle2, Copy, ScanLine, Share2, XCircle } from "lucide-react";
 import { useScanStore } from "@/lib/scan-store";
 import { AlternativeCard } from "./AlternativeCard";
+import { BrandReputationCard } from "./BrandReputationCard";
 import { ExplanationCard } from "./ExplanationCard";
 import { FeedbackPanel } from "./FeedbackPanel";
 import { IntegrityBadge } from "./IntegrityBadge";
 import { ScoreDisplay } from "./ScoreDisplay";
 import { SourceContextCard } from "./SourceContextCard";
 import { TrustBreakdownChart } from "./TrustBreakdownChart";
-import { formatPrice } from "@/lib/presentation";
 import type { BrandReputationPayload, ScanResultPayload } from "@/lib/types";
 
 interface ResultsClientProps {
@@ -22,7 +22,6 @@ interface ResultsClientProps {
 export function ResultsClient({ payload, brandReputation }: ResultsClientProps) {
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const addRecentScan = useScanStore((state) => state.addRecentScan);
-  const displayPrice = formatPrice(payload.product.priceCents);
 
   useEffect(() => {
     addRecentScan({
@@ -52,7 +51,7 @@ export function ResultsClient({ payload, brandReputation }: ResultsClientProps) 
 
   return (
     <div className="space-y-8">
-      <section className="surface-card mesh-card grid gap-6 p-6 md:grid-cols-[1.15fr_0.85fr] md:p-8">
+      <section className="surface-card mesh-card grid gap-6 p-6 md:grid-cols-[1.15fr_0.85fr] md:items-start md:p-8">
         <div className="space-y-5">
           <div className="eyebrow w-fit">Product Report</div>
           <div className="grid gap-5 md:grid-cols-[220px_1fr] md:items-start">
@@ -76,15 +75,6 @@ export function ResultsClient({ payload, brandReputation }: ResultsClientProps) 
                 {payload.product.name}
               </h1>
               <p className="text-base text-moss/72">by {payload.brand.name}</p>
-              {displayPrice ? (
-                <div className="inline-flex items-center rounded-full border border-moss/10 bg-white/85 px-4 py-2 text-sm font-semibold text-moss">
-                  {displayPrice}
-                </div>
-              ) : (
-                <div className="inline-flex items-center rounded-full border border-moss/10 bg-white/75 px-4 py-2 text-sm font-semibold text-moss/58">
-                  Price unavailable
-                </div>
-              )}
             </div>
           </div>
 
@@ -96,18 +86,17 @@ export function ResultsClient({ payload, brandReputation }: ResultsClientProps) 
             ))}
           </div>
 
-          <SourceContextCard dataSource={payload.dataSource} sourceDetails={payload.sourceDetails} />
+          <SourceContextCard
+            dataSource={payload.dataSource}
+            sourceDetails={payload.sourceDetails}
+            evidenceLookup={payload.evidenceLookup}
+            evidenceSources={payload.evidenceSources}
+            evidenceFreshness={payload.evidenceFreshness}
+            officialEvidence={payload.officialEvidence}
+          />
         </div>
 
-        <div className="surface-card flex min-h-[220px] items-center justify-center rounded-[30px] bg-[linear-gradient(135deg,#1e3329,#2f5541)] p-6 text-white">
-          <div className="text-center">
-            <p className="text-xs uppercase tracking-[0.28em] text-white/55">Brand Reputation</p>
-            <p className="mt-3 font-[var(--font-display)] text-6xl font-semibold">{Math.round(payload.brand.reputationScore * 100)}</p>
-            <p className="mt-2 text-sm text-white/75">
-              {payload.brand.isFlagged ? payload.brand.flagReason : "No brand-level red flag in the current dataset."}
-            </p>
-          </div>
-        </div>
+        <BrandReputationCard brand={payload.brand} brandReputation={brandReputation} />
       </section>
 
       <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
@@ -191,6 +180,10 @@ export function ResultsClient({ payload, brandReputation }: ResultsClientProps) 
           brand: payload.brand,
           dataSource: payload.dataSource,
           sourceDetails: payload.sourceDetails,
+          evidenceLookup: payload.evidenceLookup,
+          evidenceSources: payload.evidenceSources,
+          evidenceFreshness: payload.evidenceFreshness,
+          officialEvidence: payload.officialEvidence,
           claims: payload.claims,
           result: payload.result,
           explanation: payload.explanation,

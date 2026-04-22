@@ -55,3 +55,55 @@ export interface ImpossibleClaimSeed {
   reason: string;
   penalty: number;
 }
+
+export type CertificationSourceSector = "fashion" | "cosmetics" | "household";
+export type CertificationEvidenceScope = "product" | "brand";
+export type CertificationEvidenceStatus =
+  | "verified"
+  | "expired"
+  | "manual_review"
+  | "unmatched"
+  | "unsupported";
+
+export interface CertificationSourceSeed {
+  id: string;
+  sector: CertificationSourceSector;
+  certificationName: string;
+  databaseUrl: string;
+  access: string;
+  notes: string;
+  coverageHint?: string;
+  isOfficial: boolean;
+  isSupported: boolean;
+  wave: number;
+  priority: number;
+}
+
+export interface BrandAliasSeed {
+  brandName: string;
+  alias: string;
+  isPrimary?: boolean;
+}
+
+export interface ProductAliasSeed {
+  productName: string;
+  alias: string;
+  isPrimary?: boolean;
+}
+
+export interface OfficialEvidenceSeed {
+  sourceId: string;
+  certificationAcronym: string;
+  scope: CertificationEvidenceScope;
+  externalBrandName: string;
+  externalProductName?: string;
+  matchedBrandName?: string;
+  matchedProductName?: string;
+  certificateNumber?: string;
+  sourceUrl: string;
+  checkedAt: string;
+  expiresAt?: string;
+  status: CertificationEvidenceStatus;
+  confidence?: number;
+  rawPayload?: Record<string, unknown>;
+}

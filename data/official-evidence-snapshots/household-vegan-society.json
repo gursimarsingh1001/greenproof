@@ -1,0 +1,31 @@
+{
+  "records": [
+    {
+      "sourceId": "household-vegan-society",
+      "certificationAcronym": "VEG",
+      "scope": "brand",
+      "externalBrandName": "Ecover",
+      "matchedBrandName": "Ecover",
+      "certificateNumber": "VEG-ECO-2026",
+      "sourceUrl": "https://www.vegansociety.com/search/products?q=ecover",
+      "checkedAt": "2026-04-22T02:07:18.802Z",
+      "status": "verified",
+      "confidence": 0.9,
+      "rawPayload": {
+        "source": "Vegan Society trademark search",
+        "matchType": "brand",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:07:18.802Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=utf-8",
+          "pageTitle": "Trademark search | The Vegan Society",
+          "matchedKeywords": [
+            "VEG"
+          ],
+          "responseUrl": "https://www.vegansociety.com/resources/lifestyle/shopping/trademark-search",
+          "fetchUrl": "https://www.vegansociety.com/resources/lifestyle/shopping/trademark-search"
+        }
+      }
+    }
+  ]
+}

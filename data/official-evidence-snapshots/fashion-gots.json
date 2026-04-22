@@ -1,0 +1,91 @@
+{
+  "records": [
+    {
+      "sourceId": "fashion-gots",
+      "certificationAcronym": "GOTS",
+      "scope": "product",
+      "externalBrandName": "No Nasties",
+      "externalProductName": "Blanc Classic Tee",
+      "matchedBrandName": "No Nasties",
+      "matchedProductName": "No Nasties Blanc Classic Tee",
+      "certificateNumber": "GOTS-NN-TEE-001",
+      "sourceUrl": "https://global-standard.org/certification-database",
+      "checkedAt": "2026-04-22T02:07:04.240Z",
+      "status": "verified",
+      "confidence": 0.99,
+      "rawPayload": {
+        "source": "GOTS directory",
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:07:04.240Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=utf-8",
+          "pageTitle": "Certified Suppliers - GOTS - Global Organic Textile Standard",
+          "matchedKeywords": [
+            "GOTS"
+          ],
+          "responseUrl": "https://global-standard.org/find-suppliers-shops-and-inputs/certifiedsuppliers",
+          "fetchUrl": "https://global-standard.org/en/find-suppliers-shops-and-inputs/certifiedsuppliers"
+        }
+      }
+    },
+    {
+      "sourceId": "fashion-gots",
+      "certificationAcronym": "GOTS",
+      "scope": "product",
+      "externalBrandName": "Pact",
+      "externalProductName": "Organic Crew Tee",
+      "matchedBrandName": "Pact",
+      "matchedProductName": "Pact Organic Crew Tee",
+      "certificateNumber": "GOTS-PACT-TEE-001",
+      "sourceUrl": "https://global-standard.org/certification-database",
+      "checkedAt": "2026-04-22T02:07:04.240Z",
+      "status": "verified",
+      "confidence": 0.99,
+      "rawPayload": {
+        "source": "GOTS directory",
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:07:04.240Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=utf-8",
+          "pageTitle": "Certified Suppliers - GOTS - Global Organic Textile Standard",
+          "matchedKeywords": [
+            "GOTS"
+          ],
+          "responseUrl": "https://global-standard.org/find-suppliers-shops-and-inputs/certifiedsuppliers",
+          "fetchUrl": "https://global-standard.org/en/find-suppliers-shops-and-inputs/certifiedsuppliers"
+        }
+      }
+    },
+    {
+      "sourceId": "fashion-gots",
+      "certificationAcronym": "GOTS",
+      "scope": "product",
+      "externalBrandName": "Naturepedic",
+      "externalProductName": "Organic Cotton Sheet Set",
+      "matchedBrandName": "Naturepedic",
+      "matchedProductName": "Naturepedic Organic Cotton Sheet Set",
+      "certificateNumber": "GOTS-NAT-SHEET-001",
+      "sourceUrl": "https://global-standard.org/certification-database",
+      "checkedAt": "2026-04-22T02:07:04.240Z",
+      "status": "verified",
+      "confidence": 0.96,
+      "rawPayload": {
+        "source": "GOTS directory",
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:07:04.240Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=utf-8",
+          "pageTitle": "Certified Suppliers - GOTS - Global Organic Textile Standard",
+          "matchedKeywords": [
+            "GOTS"
+          ],
+          "responseUrl": "https://global-standard.org/find-suppliers-shops-and-inputs/certifiedsuppliers",
+          "fetchUrl": "https://global-standard.org/en/find-suppliers-shops-and-inputs/certifiedsuppliers"
+        }
+      }
+    }
+  ]
+}

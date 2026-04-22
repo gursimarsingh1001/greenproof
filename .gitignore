@@ -7,6 +7,7 @@ dist/
 .env
 prisma/dev.db
 prisma/dev.db-journal
+prisma/schema.generated.prisma
 tmp-api.log
 tmp-api.err.log
 tmp-api-live.log

@@ -110,6 +110,54 @@ export const CLAIM_PATTERN_LIBRARY: ClaimPatternDefinition[] = [
     pattern: /\b(made.?safe)\b/gi
   },
   {
+    key: "ewg-verified",
+    type: "certifiable",
+    confidence: 0.94,
+    pattern: /\b(ewg.?verified)\b/gi
+  },
+  {
+    key: "green-seal",
+    type: "certifiable",
+    confidence: 0.94,
+    pattern: /\b(green.?seal)\b/gi
+  },
+  {
+    key: "ecologo",
+    type: "certifiable",
+    confidence: 0.94,
+    pattern: /\b(eco.?logo|ecologo)\b/gi
+  },
+  {
+    key: "cosmos",
+    type: "certifiable",
+    confidence: 0.94,
+    pattern: /\b(cosmos(?:.?organic)?|cosmos.?ecocert)\b/gi
+  },
+  {
+    key: "nsf",
+    type: "certifiable",
+    confidence: 0.93,
+    pattern: /\b(nsf(?:.?certified)?)\b/gi
+  },
+  {
+    key: "design-for-the-environment",
+    type: "certifiable",
+    confidence: 0.93,
+    pattern: /\b(design.?for.?the.?environment|dfe(?:.?certified)?)\b/gi
+  },
+  {
+    key: "better-cotton",
+    type: "certifiable",
+    confidence: 0.93,
+    pattern: /\b(better.?cotton|better.?cotton.?initiative|bci)\b/gi
+  },
+  {
+    key: "peta-cruelty-free",
+    type: "certifiable",
+    confidence: 0.93,
+    pattern: /\b(peta.?approved|peta.?cruelty.?free)\b/gi
+  },
+  {
     key: "regenerative-organic",
     type: "certifiable",
     confidence: 0.94,
@@ -204,9 +252,19 @@ export const CERTIFICATION_CLAIM_MATCHERS: CertificationClaimMatcher[] = [
   { pattern: /\b(oeko.?tex|standard.100)\b/i, certificationAcronyms: ["OEKO"] },
   { pattern: /\b(bluesign|bluesign approved)\b/i, certificationAcronyms: ["BLS"] },
   { pattern: /\b(made.?safe)\b/i, certificationAcronyms: ["MSAFE"] },
+  { pattern: /\b(ewg.?verified)\b/i, certificationAcronyms: ["EWG"] },
+  { pattern: /\b(green.?seal)\b/i, certificationAcronyms: ["GS"] },
+  { pattern: /\b(eco.?logo|ecologo)\b/i, certificationAcronyms: ["ECO"] },
+  { pattern: /\b(cosmos(?:.?organic)?|cosmos.?ecocert|ecocert)\b/i, certificationAcronyms: ["COSMOS"] },
+  { pattern: /\b(nsf(?:.?certified)?)\b/i, certificationAcronyms: ["NSF"] },
+  {
+    pattern: /\b(design.?for.?the.?environment|dfe(?:.?certified)?)\b/i,
+    certificationAcronyms: ["DFE"]
+  },
+  { pattern: /\b(better.?cotton|better.?cotton.?initiative|bci)\b/i, certificationAcronyms: ["BCI"] },
+  { pattern: /\b(peta.?approved|peta.?cruelty.?free)\b/i, certificationAcronyms: ["PETA"] },
   { pattern: /\b(rainforest.alliance|utz)\b/i, certificationAcronyms: ["RA"] }
   ,
-  { pattern: /\b(ecocert)\b/i, certificationAcronyms: [] },
   { pattern: /\b(recycled|post.?consumer|pre.?consumer)\b/i, certificationAcronyms: ["GRS"] },
   { pattern: /\b(carbon.?neutral|net.?zero|climate.?neutral)\b/i, certificationAcronyms: ["CTS"] }
 ];

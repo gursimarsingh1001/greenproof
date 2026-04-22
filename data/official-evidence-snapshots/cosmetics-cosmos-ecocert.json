@@ -1,0 +1,35 @@
+{
+  "records": [
+    {
+      "sourceId": "cosmetics-cosmos-ecocert",
+      "certificationAcronym": "COSMOS",
+      "scope": "product",
+      "externalBrandName": "Ceyon Naturaa",
+      "externalProductName": "Cleansing Cream -- Face Wash",
+      "matchedBrandName": "Ceyon Naturaa",
+      "matchedProductName": "Ceyon Naturaa Cleansing Cream Face Wash",
+      "certificateNumber": "COSMOS-CEYON-FACE-001",
+      "sourceUrl": "https://www.cosmos-standard.org/en/databases/products-directory/?company=118412&page=123",
+      "checkedAt": "2026-04-22T02:06:52.705Z",
+      "status": "verified",
+      "confidence": 0.96,
+      "rawPayload": {
+        "source": "COSMOS certified products directory",
+        "certifiedBy": "ECOCERT GREENLIFE",
+        "signature": "ORGANIC",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:52.705Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=utf-8",
+          "pageTitle": "COSMOS ORGANIC | COSMOS NATURAL | Certified Products Directory",
+          "matchedKeywords": [
+            "Ceyon Naturaa",
+            "COSMOS"
+          ],
+          "responseUrl": "https://www.cosmos-standard.org/en/databases/products-directory/?company=118412&page=123",
+          "fetchUrl": "https://www.cosmos-standard.org/en/databases/products-directory/?company=118412&page=123"
+        }
+      }
+    }
+  ]
+}

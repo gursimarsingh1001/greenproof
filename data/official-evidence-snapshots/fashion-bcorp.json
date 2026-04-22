@@ -1,0 +1,148 @@
+{
+  "records": [
+    {
+      "sourceId": "fashion-bcorp",
+      "certificationAcronym": "BCORP",
+      "scope": "brand",
+      "externalBrandName": "Patagonia, Inc.",
+      "matchedBrandName": "Patagonia",
+      "certificateNumber": "BCORP-PAT-2026",
+      "sourceUrl": "https://www.bcorporation.net/find-a-b-corp/company/patagonia-inc/",
+      "checkedAt": "2026-04-22T02:07:18.322Z",
+      "status": "verified",
+      "confidence": 0.97,
+      "rawPayload": {
+        "source": "B Lab directory",
+        "impactScore": 151.4,
+        "matchType": "brand",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:07:18.322Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=utf-8",
+          "pageTitle": "Patagonia - Certified B Corporation - B Lab Global",
+          "matchedKeywords": [
+            "Patagonia, Inc.",
+            "Patagonia"
+          ],
+          "responseUrl": "https://www.bcorporation.net/en-us/find-a-b-corp/company/patagonia-inc/",
+          "fetchUrl": "https://www.bcorporation.net/find-a-b-corp/company/patagonia-inc/"
+        }
+      }
+    },
+    {
+      "sourceId": "fashion-bcorp",
+      "certificationAcronym": "BCORP",
+      "scope": "brand",
+      "externalBrandName": "Dr. Bronner's",
+      "matchedBrandName": "Dr. Bronner's",
+      "certificateNumber": "BCORP-DB-2026",
+      "sourceUrl": "https://www.bcorporation.net/en-us/find-a-b-corp/company/dr-bronners",
+      "checkedAt": "2026-04-22T02:07:18.322Z",
+      "status": "verified",
+      "confidence": 0.98,
+      "rawPayload": {
+        "source": "B Lab directory",
+        "impactScore": 206.7,
+        "matchType": "brand",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:07:18.322Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=utf-8",
+          "pageTitle": "Patagonia - Certified B Corporation - B Lab Global",
+          "matchedKeywords": [
+            "Patagonia, Inc.",
+            "Patagonia"
+          ],
+          "responseUrl": "https://www.bcorporation.net/en-us/find-a-b-corp/company/patagonia-inc/",
+          "fetchUrl": "https://www.bcorporation.net/find-a-b-corp/company/patagonia-inc/"
+        }
+      }
+    },
+    {
+      "sourceId": "fashion-bcorp",
+      "certificationAcronym": "BCORP",
+      "scope": "brand",
+      "externalBrandName": "Allbirds, Inc.",
+      "matchedBrandName": "Allbirds",
+      "certificateNumber": "BCORP-ALL-2026",
+      "sourceUrl": "https://www.bcorporation.net/find-a-b-corp/company/allbirds-inc",
+      "checkedAt": "2026-04-22T02:07:18.322Z",
+      "status": "verified",
+      "confidence": 0.96,
+      "rawPayload": {
+        "source": "B Lab directory",
+        "impactScore": 96.5,
+        "matchType": "brand",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:07:18.322Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=utf-8",
+          "pageTitle": "Patagonia - Certified B Corporation - B Lab Global",
+          "matchedKeywords": [
+            "Patagonia, Inc.",
+            "Patagonia"
+          ],
+          "responseUrl": "https://www.bcorporation.net/en-us/find-a-b-corp/company/patagonia-inc/",
+          "fetchUrl": "https://www.bcorporation.net/find-a-b-corp/company/patagonia-inc/"
+        }
+      }
+    },
+    {
+      "sourceId": "fashion-bcorp",
+      "certificationAcronym": "BCORP",
+      "scope": "brand",
+      "externalBrandName": "Good Goods Holdings Pty Ltd",
+      "matchedBrandName": "Who Gives A Crap",
+      "certificateNumber": "BCORP-WGAC-2026",
+      "sourceUrl": "https://www.bcorporation.net/find-a-b-corp/company/who-gives-a-crap",
+      "checkedAt": "2026-04-22T02:07:18.322Z",
+      "status": "verified",
+      "confidence": 0.95,
+      "rawPayload": {
+        "source": "B Lab directory",
+        "impactScore": 125.5,
+        "matchType": "brand",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:07:18.322Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=utf-8",
+          "pageTitle": "Patagonia - Certified B Corporation - B Lab Global",
+          "matchedKeywords": [
+            "Patagonia, Inc.",
+            "Patagonia"
+          ],
+          "responseUrl": "https://www.bcorporation.net/en-us/find-a-b-corp/company/patagonia-inc/",
+          "fetchUrl": "https://www.bcorporation.net/find-a-b-corp/company/patagonia-inc/"
+        }
+      }
+    },
+    {
+      "sourceId": "fashion-bcorp",
+      "certificationAcronym": "BCORP",
+      "scope": "brand",
+      "externalBrandName": "Ecover",
+      "matchedBrandName": "Ecover",
+      "certificateNumber": "BCORP-ECO-2026",
+      "sourceUrl": "https://www.bcorporation.net/en-us/find-a-b-corp/company/ecover/",
+      "checkedAt": "2026-04-22T02:07:18.322Z",
+      "status": "verified",
+      "confidence": 0.95,
+      "rawPayload": {
+        "source": "B Lab directory",
+        "matchType": "brand",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:07:18.322Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=utf-8",
+          "pageTitle": "Patagonia - Certified B Corporation - B Lab Global",
+          "matchedKeywords": [
+            "Patagonia, Inc.",
+            "Patagonia"
+          ],
+          "responseUrl": "https://www.bcorporation.net/en-us/find-a-b-corp/company/patagonia-inc/",
+          "fetchUrl": "https://www.bcorporation.net/find-a-b-corp/company/patagonia-inc/"
+        }
+      }
+    }
+  ]
+}

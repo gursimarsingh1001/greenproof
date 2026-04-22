@@ -1,0 +1,91 @@
+{
+  "records": [
+    {
+      "sourceId": "fashion-fairtrade-textile",
+      "certificationAcronym": "FTC",
+      "scope": "product",
+      "externalBrandName": "No Nasties",
+      "externalProductName": "Blanc Classic Tee",
+      "matchedBrandName": "No Nasties",
+      "matchedProductName": "No Nasties Blanc Classic Tee",
+      "certificateNumber": "FTC-NN-TEE-001",
+      "sourceUrl": "https://www.fairtradecertified.org/find-products",
+      "checkedAt": "2026-04-22T02:07:05.589Z",
+      "status": "verified",
+      "confidence": 0.98,
+      "rawPayload": {
+        "source": "Fair Trade finder",
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:07:05.589Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "How to Identify Fair Trade Products: Labels, Logos &amp; Tips",
+          "matchedKeywords": [
+            "Pact"
+          ],
+          "responseUrl": "https://www.fairtradecertified.org/knowledge-base/fair-trade-in-practice/how-can-i-find-fair-trade-products/",
+          "fetchUrl": "https://www.fairtradecertified.org/knowledge-base/fair-trade-in-practice/how-can-i-find-fair-trade-products/"
+        }
+      }
+    },
+    {
+      "sourceId": "fashion-fairtrade-textile",
+      "certificationAcronym": "FTC",
+      "scope": "product",
+      "externalBrandName": "Pact",
+      "externalProductName": "Organic Crew Tee",
+      "matchedBrandName": "Pact",
+      "matchedProductName": "Pact Organic Crew Tee",
+      "certificateNumber": "FTC-PACT-TEE-001",
+      "sourceUrl": "https://www.fairtradecertified.org/find-products",
+      "checkedAt": "2026-04-22T02:07:05.589Z",
+      "status": "verified",
+      "confidence": 0.98,
+      "rawPayload": {
+        "source": "Fair Trade finder",
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:07:05.589Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "How to Identify Fair Trade Products: Labels, Logos &amp; Tips",
+          "matchedKeywords": [
+            "Pact"
+          ],
+          "responseUrl": "https://www.fairtradecertified.org/knowledge-base/fair-trade-in-practice/how-can-i-find-fair-trade-products/",
+          "fetchUrl": "https://www.fairtradecertified.org/knowledge-base/fair-trade-in-practice/how-can-i-find-fair-trade-products/"
+        }
+      }
+    },
+    {
+      "sourceId": "fashion-fairtrade-textile",
+      "certificationAcronym": "FTC",
+      "scope": "product",
+      "externalBrandName": "VEJA",
+      "externalProductName": "Campo Sneakers",
+      "matchedBrandName": "Veja",
+      "matchedProductName": "Veja Campo Sneakers",
+      "certificateNumber": "FTC-VEJA-CAMPO-001",
+      "sourceUrl": "https://www.fairtradecertified.org/find-products",
+      "checkedAt": "2026-04-22T02:07:05.589Z",
+      "status": "verified",
+      "confidence": 0.9,
+      "rawPayload": {
+        "source": "Fair Trade finder",
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:07:05.589Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "How to Identify Fair Trade Products: Labels, Logos &amp; Tips",
+          "matchedKeywords": [
+            "Pact"
+          ],
+          "responseUrl": "https://www.fairtradecertified.org/knowledge-base/fair-trade-in-practice/how-can-i-find-fair-trade-products/",
+          "fetchUrl": "https://www.fairtradecertified.org/knowledge-base/fair-trade-in-practice/how-can-i-find-fair-trade-products/"
+        }
+      }
+    }
+  ]
+}

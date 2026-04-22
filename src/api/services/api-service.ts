@@ -1,3 +1,6 @@
+import { createHash } from "node:crypto";
+import { tmpdir } from "node:os";
+import path from "node:path";
 import { Prisma } from "@prisma/client";
 import { db } from "../../lib/db.js";
 import { normalizeLookupKey } from "../../engine/claim-classifier.js";
@@ -16,6 +19,7 @@ import type {
   CertificationCatalogItem,
   FeedbackReceiptPayload,
   FeedbackRequestPayload,
+  OfficialEvidenceSyncPayload,
   ProductVerificationPayload,
   ScanRequestPayload,
   ScanResponsePayload,
@@ -25,6 +29,7 @@ import type {
   VerifyIntegrityRequestPayload
 } from "../../types/api.js";
 import type { VerificationRating } from "../../types/index.js";
+import { certificationSources } from "../../lib/certification-sources.js";
 import { products as seededProducts } from "../../lib/seed-data.js";
 import {
   findBrandWithRelations,
@@ -38,6 +43,12 @@ import {
   type ProductWithRelations
 } from "./verification-data.js";
 import { OpenFoodFactsService, type ImportedCatalogProduct } from "./open-food-facts.js";
+import { OfficialEvidenceService, type OfficialProductDiscoveryCandidate } from "./official-evidence.js";
+import {
+  fetchLiveEvidenceSnapshots,
+  type FetchLiveEvidenceResult,
+  type LiveFetchMode
+} from "../../cli/fetch-live-evidence-snapshots.js";
 
 interface ProductQueryMatch {
   product: ProductWithRelations;
@@ -50,6 +61,8 @@ interface ProductQueryMatch {
 export class GreenProofApiService {
   private readonly verificationEngine = new VerificationEngine();
   private readonly openFoodFactsService: OpenFoodFactsService;
+  private readonly officialEvidenceService: OfficialEvidenceService;
+  private static readonly runtimeEvidenceSyncDirectory = path.join(tmpdir(), "greenproof-official-evidence-sync");
   private static readonly localQueryAcceptanceThreshold = 80;
   private static readonly seededBarcodeSet = new Set(seededProducts.map((product) => product.barcode));
   private static readonly queryStopWords = new Set([
@@ -80,8 +93,12 @@ export class GreenProofApiService {
     ["soaps", "soap"]
   ]);
 
-  public constructor(openFoodFactsService = new OpenFoodFactsService()) {
+  public constructor(
+    openFoodFactsService = new OpenFoodFactsService(),
+    officialEvidenceService = new OfficialEvidenceService()
+  ) {
     this.openFoodFactsService = openFoodFactsService;
+    this.officialEvidenceService = officialEvidenceService;
   }
 
   /**
@@ -117,7 +134,9 @@ export class GreenProofApiService {
       if (localMatch && this.isAcceptableLocalQueryMatch(localMatch)) {
         product = localMatch.product;
       } else {
-        const importedProduct = await this.importQueryFromOpenFoodFacts(payload.query);
+        const importedProduct =
+          (await this.importQueryFromOfficialEvidence(payload.query)) ??
+          (await this.importQueryFromOpenFoodFacts(payload.query));
 
         if (importedProduct) {
           data = await loadVerificationData();
@@ -219,6 +238,70 @@ export class GreenProofApiService {
     return certifications.map(serializeCertificationCatalogItem);
   }
 
+  public async listCertificationSources() {
+    return this.officialEvidenceService.listCertificationSources();
+  }
+
+  public async syncOfficialEvidence(
+    mode: LiveFetchMode = "all",
+    value?: string,
+    options: {
+      skipFetch?: boolean;
+    } = {}
+  ): Promise<OfficialEvidenceSyncPayload> {
+    const skipFetch = options.skipFetch ?? false;
+    const snapshotDirectory = process.env.OFFICIAL_EVIDENCE_SYNC_DIR ?? GreenProofApiService.runtimeEvidenceSyncDirectory;
+    let fetchSummary: FetchLiveEvidenceResult | null = null;
+
+    if (!skipFetch) {
+      fetchSummary = await fetchLiveEvidenceSnapshots({
+        mode,
+        ...(value ? { value } : {}),
+        outputDirectory: snapshotDirectory,
+        delayMs: 0
+      });
+    }
+
+    const syncService = new OfficialEvidenceService({
+      snapshotDirectory,
+      ...(typeof fetch === "function"
+        ? {
+            fetchImpl: fetch
+          }
+        : {})
+    });
+    const sourceIds =
+      fetchSummary?.sourceIds ??
+      (mode === "source" && value
+        ? [value]
+        : mode === "sector" && value
+          ? certificationSources.filter((source) => source.sector === value).map((source) => source.id)
+          : mode === "all"
+            ? certificationSources.map((source) => source.id)
+            : []);
+    const ingestionRuns =
+      mode === "source" && value
+        ? [await syncService.ingestSource(value)]
+        : await Promise.all(sourceIds.map((sourceId) => syncService.ingestSource(sourceId)));
+
+    return {
+      mode,
+      ...(value ? { value } : {}),
+      skipFetch,
+      ...(fetchSummary ? { fetchSummary } : {}),
+      ingestionRuns: ingestionRuns.map((run) => ({
+        sourceId: run.sourceId ?? "",
+        status: run.status,
+        recordsFetched: run.recordsFetched,
+        recordsMatched: run.recordsMatched,
+        recordsProjected: run.recordsProjected,
+        startedAt: run.startedAt.toISOString(),
+        ...(run.finishedAt ? { finishedAt: run.finishedAt.toISOString() } : {}),
+        ...(run.errorMessage ? { errorMessage: run.errorMessage } : {})
+      }))
+    };
+  }
+
   /**
    * Returns platform-wide verification statistics.
    */
@@ -311,7 +394,8 @@ export class GreenProofApiService {
    */
   private buildVerificationReport(
     product: ProductWithRelations,
-    data: LoadedVerificationData
+    data: LoadedVerificationData,
+    officialEvidence = this.officialEvidenceService.buildEmptySummary()
   ): VerificationReportPayload {
     const record = data.recordsByProductId.get(product.id);
 
@@ -324,6 +408,14 @@ export class GreenProofApiService {
       product: serializeProductDetails(product),
       brand: serializeBrandDetails(product.brand),
       dataSource: record.dataSource,
+      evidenceLookup: officialEvidence.lookup,
+      evidenceSources: officialEvidence.consultedSources,
+      evidenceFreshness: officialEvidence.freshness,
+      officialEvidence: {
+        ...(officialEvidence.lastCheckedAt ? { lastCheckedAt: officialEvidence.lastCheckedAt } : {}),
+        product: officialEvidence.productEvidence,
+        brand: officialEvidence.brandEvidence
+      },
       claims: outcome.claims,
       result: outcome.result,
       explanation: outcome.explanation,
@@ -351,13 +443,18 @@ export class GreenProofApiService {
       reuseLatestSnapshot: boolean;
     }
   ): Promise<ProductVerificationPayload> {
-    const report = this.buildVerificationReport(product, data);
+    const officialEvidence = await this.officialEvidenceService.resolveEvidenceForProduct(product);
+    const refreshedData =
+      officialEvidence.lookup === "live_refresh" ? await loadVerificationData() : data;
+    const refreshedProduct =
+      refreshedData.products.find((candidate) => candidate.id === product.id) ?? product;
+    const report = this.buildVerificationReport(refreshedProduct, refreshedData, officialEvidence);
     const preparedRecord = prepareIntegrityRecord(report);
     const snapshot =
       options.reuseLatestSnapshot
-        ? (await this.findLatestMatchingSnapshot(product.id, preparedRecord.resultHash, preparedRecord.algorithmVersion)) ??
-          (await this.createVerificationSnapshot(product.id, preparedRecord))
-        : await this.createVerificationSnapshot(product.id, preparedRecord);
+        ? (await this.findLatestMatchingSnapshot(refreshedProduct.id, preparedRecord.resultHash, preparedRecord.algorithmVersion)) ??
+          (await this.createVerificationSnapshot(refreshedProduct.id, preparedRecord))
+        : await this.createVerificationSnapshot(refreshedProduct.id, preparedRecord);
 
     return attachIntegrityMetadata(report, snapshot);
   }
@@ -425,6 +522,19 @@ export class GreenProofApiService {
   }
 
   /**
+   * Imports a verified product from official evidence rows when manual search misses the local catalog.
+   */
+  private async importQueryFromOfficialEvidence(query: string): Promise<ProductWithRelations | null> {
+    const candidate = await this.officialEvidenceService.discoverProductByQuery(query);
+
+    if (!candidate) {
+      return null;
+    }
+
+    return this.upsertOfficialEvidenceImportedProduct(candidate);
+  }
+
+  /**
    * Stores or refreshes one imported OFF product inside the local Prisma catalog.
    */
   private async upsertImportedProduct(importedProduct: ImportedCatalogProduct): Promise<ProductWithRelations | null> {
@@ -481,6 +591,110 @@ export class GreenProofApiService {
   }
 
   /**
+   * Stores or refreshes one official-evidence-backed product inside the local Prisma catalog.
+   */
+  private async upsertOfficialEvidenceImportedProduct(
+    candidate: OfficialProductDiscoveryCandidate
+  ): Promise<ProductWithRelations | null> {
+    const brand =
+      (candidate.existingBrandId
+        ? await db.brand.findUnique({
+            where: {
+              id: candidate.existingBrandId
+            }
+          })
+        : null) ??
+      (await db.brand.findFirst({
+        where: {
+          OR: [
+            {
+              name: candidate.brandName
+            },
+            {
+              brandAliases: {
+                some: {
+                  alias: candidate.brandName
+                }
+              }
+            }
+          ]
+        }
+      })) ??
+      (await db.brand.create({
+        data: {
+          name: candidate.brandName,
+          reputationScore: 0.62
+        }
+      }));
+
+    if (brand.name !== candidate.brandName) {
+      await db.brandAlias.upsert({
+        where: {
+          brandId_alias: {
+            brandId: brand.id,
+            alias: candidate.brandName
+          }
+        },
+        update: {},
+        create: {
+          brandId: brand.id,
+          alias: candidate.brandName
+        }
+      });
+    }
+
+    const barcode = this.buildOfficialEvidenceImportBarcode(candidate.brandName, candidate.productName);
+    const existingByBarcode = await db.product.findUnique({
+      where: {
+        barcode
+      }
+    });
+    const productName = existingByBarcode
+      ? candidate.productName
+      : await this.ensureUniqueImportedProductName(candidate.productName, brand.id, barcode);
+
+    await db.product.upsert({
+      where: {
+        barcode
+      },
+      update: {
+        name: productName,
+        brandId: brand.id,
+        category: candidate.category,
+        description: candidate.description,
+        imageUrl: null,
+        dataSource: "official_evidence_import",
+        sourceUrl: candidate.sourceUrl,
+        sourceMetadata: candidate.sourceDetails as unknown as Prisma.InputJsonValue,
+        claims: candidate.claimTexts
+      },
+      create: {
+        name: productName,
+        brandId: brand.id,
+        barcode,
+        category: candidate.category,
+        description: candidate.description,
+        imageUrl: null,
+        dataSource: "official_evidence_import",
+        sourceUrl: candidate.sourceUrl,
+        sourceMetadata: candidate.sourceDetails as unknown as Prisma.InputJsonValue,
+        claims: candidate.claimTexts
+      }
+    });
+
+    const refreshedData = await loadVerificationData();
+    const importedProduct = refreshedData.products.find((product) => product.barcode === barcode) ?? null;
+
+    if (!importedProduct) {
+      return null;
+    }
+
+    await this.officialEvidenceService.linkEvidenceToImportedProduct(importedProduct.id, brand.id, candidate);
+    const finalData = await loadVerificationData();
+    return finalData.products.find((product) => product.id === importedProduct.id) ?? null;
+  }
+
+  /**
    * Avoids collisions with the local unique constraint on product name plus brand.
    */
   private async ensureUniqueImportedProductName(name: string, brandId: number, barcode: string): Promise<string> {
@@ -495,6 +709,19 @@ export class GreenProofApiService {
     });
 
     return existingProduct ? `${name} (${barcode})` : name;
+  }
+
+  /**
+   * Creates a stable synthetic catalog barcode for official-evidence imports that do not ship with UPC/EAN data.
+   */
+  private buildOfficialEvidenceImportBarcode(brandName: string, productName: string): string {
+    const digest = createHash("sha256")
+      .update(normalizeLookupKey(`${brandName}:${productName}`))
+      .digest("hex")
+      .slice(0, 12)
+      .toUpperCase();
+
+    return `OFF-${digest}`;
   }
 
   /**

@@ -1,0 +1,64 @@
+{
+  "records": [
+    {
+      "sourceId": "fashion-fsc",
+      "certificationAcronym": "FSC",
+      "scope": "product",
+      "externalBrandName": "Allbirds",
+      "externalProductName": "Tree Runners",
+      "matchedBrandName": "Allbirds",
+      "matchedProductName": "Allbirds Tree Runners",
+      "certificateNumber": "FSC-ALL-RUN-001",
+      "sourceUrl": "https://www.allbirds.com/pages/sustainable-practices",
+      "checkedAt": "2026-04-22T02:07:06.085Z",
+      "status": "verified",
+      "confidence": 0.88,
+      "rawPayload": {
+        "source": "Allbirds sustainability page",
+        "evidenceScope": "FSC-certified packaging",
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:07:06.085Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=utf-8",
+          "pageTitle": "Sustainability Guide &amp; Practices | Allbirds",
+          "matchedKeywords": [
+            "Allbirds"
+          ],
+          "responseUrl": "https://www.allbirds.com/pages/sustainable-practices",
+          "fetchUrl": "https://www.allbirds.com/pages/sustainable-practices"
+        }
+      }
+    },
+    {
+      "sourceId": "fashion-fsc",
+      "certificationAcronym": "FSC",
+      "scope": "product",
+      "externalBrandName": "Who Gives A Crap",
+      "externalProductName": "Bamboo Toilet Paper",
+      "matchedBrandName": "Who Gives A Crap",
+      "matchedProductName": "Who Gives A Crap Bamboo Toilet Paper",
+      "certificateNumber": "FSC-WGAC-TP-001",
+      "sourceUrl": "https://us.whogivesacrap.org/pages/our-forest-friendly-toilet-paper",
+      "checkedAt": "2026-04-22T02:07:06.085Z",
+      "status": "verified",
+      "confidence": 0.9,
+      "rawPayload": {
+        "source": "Who Gives A Crap official materials page",
+        "evidenceScope": "FSC-certified tissue",
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:07:06.085Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=utf-8",
+          "pageTitle": "Sustainability Guide &amp; Practices | Allbirds",
+          "matchedKeywords": [
+            "Allbirds"
+          ],
+          "responseUrl": "https://www.allbirds.com/pages/sustainable-practices",
+          "fetchUrl": "https://www.allbirds.com/pages/sustainable-practices"
+        }
+      }
+    }
+  ]
+}

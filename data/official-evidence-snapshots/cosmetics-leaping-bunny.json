@@ -1,0 +1,60 @@
+{
+  "records": [
+    {
+      "sourceId": "cosmetics-leaping-bunny",
+      "certificationAcronym": "LB",
+      "scope": "brand",
+      "externalBrandName": "The Body Shop",
+      "matchedBrandName": "The Body Shop",
+      "certificateNumber": "LB-TBS-2026",
+      "sourceUrl": "https://www.leapingbunny.org/companies",
+      "checkedAt": "2026-04-22T02:06:47.533Z",
+      "expiresAt": "2027-12-31T00:00:00.000Z",
+      "status": "verified",
+      "confidence": 0.96,
+      "rawPayload": {
+        "source": "Leaping Bunny company list",
+        "matchType": "brand",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:47.533Z",
+          "httpStatus": 200,
+          "contentType": "application/pdf",
+          "pageTitle": null,
+          "matchedKeywords": [
+            "LB"
+          ],
+          "responseUrl": "https://www.leapingbunny.org/sites/default/files/Recomm-list_v5_060418.pdf",
+          "fetchUrl": "https://www.leapingbunny.org/sites/default/files/Recomm-list_v5_060418.pdf"
+        }
+      }
+    },
+    {
+      "sourceId": "cosmetics-leaping-bunny",
+      "certificationAcronym": "LB",
+      "scope": "brand",
+      "externalBrandName": "Method",
+      "matchedBrandName": "Method",
+      "certificateNumber": "LB-MET-2026",
+      "sourceUrl": "https://www.leapingbunny.org/companies",
+      "checkedAt": "2026-04-22T02:06:47.533Z",
+      "expiresAt": "2028-05-31T00:00:00.000Z",
+      "status": "verified",
+      "confidence": 0.95,
+      "rawPayload": {
+        "source": "Leaping Bunny company list",
+        "matchType": "brand",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:47.533Z",
+          "httpStatus": 200,
+          "contentType": "application/pdf",
+          "pageTitle": null,
+          "matchedKeywords": [
+            "LB"
+          ],
+          "responseUrl": "https://www.leapingbunny.org/sites/default/files/Recomm-list_v5_060418.pdf",
+          "fetchUrl": "https://www.leapingbunny.org/sites/default/files/Recomm-list_v5_060418.pdf"
+        }
+      }
+    }
+  ]
+}

@@ -236,6 +236,35 @@ assert(vagueOnlyResult.penalties.some((penalty) => penalty.type === "VAGUE_TERM_
 assert(vagueOnlyResult.penalties.some((penalty) => penalty.type === "VAGUE_WITHOUT_SPECIFICS"));
 assert(vagueOnlyResult.penalties.some((penalty) => penalty.type === "LOW_REPUTATION"));
 
+const multipleVagueClaimsResult = scorer.calculateTrustScore(
+  createRecord(),
+  [
+    createClaim("natural", "vague"),
+    {
+      ...createClaim("sustainability", "vague"),
+      position: {
+        start: 12,
+        end: 26
+      }
+    }
+  ],
+  referenceData
+);
+
+assert.equal(
+  multipleVagueClaimsResult.penalties.filter((penalty) => penalty.type === "VAGUE_WITHOUT_SPECIFICS").length,
+  1
+);
+assert.equal(multipleVagueClaimsResult.score, 52);
+assert(
+  multipleVagueClaimsResult.penalties.some(
+    (penalty) =>
+      penalty.type === "VAGUE_WITHOUT_SPECIFICS" &&
+      penalty.message.includes("natural") &&
+      penalty.message.includes("sustainability")
+  )
+);
+
 const measurableEvidenceResult = scorer.calculateTrustScore(
   createRecord({
     rawText: "This item uses recycled cotton with no percentage disclosed.",
@@ -282,9 +311,16 @@ const importedNoEvidenceResult = scorer.calculateTrustScore(
   referenceData
 );
 
-assert.equal(importedNoEvidenceResult.score, 45);
+assert.equal(importedNoEvidenceResult.score, 65);
 assert(importedNoEvidenceResult.penalties.some((penalty) => penalty.type === "NO_SUSTAINABILITY_EVIDENCE"));
-assert(importedNoEvidenceResult.penalties.some((penalty) => penalty.type === "NO_VERIFIABLE_ECO_SIGNALS"));
+assert.equal(
+  importedNoEvidenceResult.penalties.filter((penalty) => penalty.type === "NO_SUSTAINABILITY_EVIDENCE").length,
+  1
+);
+assert.equal(
+  importedNoEvidenceResult.penalties.filter((penalty) => penalty.type === "NO_VERIFIABLE_ECO_SIGNALS").length,
+  0
+);
 
 const importedWeakEcoSignalResult = scorer.calculateTrustScore(
   createRecord({
@@ -323,13 +359,13 @@ assert(absolutesResult.penalties.some((penalty) => penalty.type === "TOO_MANY_AB
 
 const { recordsByName, referenceData: seededReferenceData } = buildSeedReferenceData();
 const engine = new VerificationEngine();
-const patagoniaOutcome = engine.verify(
-  recordsByName.get("Patagonia Organic Cotton Hoodie") as VerificationRecord,
+const noNastiesOutcome = engine.verify(
+  recordsByName.get("No Nasties Blanc Classic Tee") as VerificationRecord,
   seededReferenceData
 );
 const adidasOutcome = engine.verify(recordsByName.get("Adidas Parley Shoes") as VerificationRecord, seededReferenceData);
-const fastFashionOutcome = engine.verify(
-  recordsByName.get("FastFashionX Eco Collection Basic Tee") as VerificationRecord,
+const biotiqueOutcome = engine.verify(
+  recordsByName.get("Biotique Fresh Neem Pimple Control Face Wash") as VerificationRecord,
   seededReferenceData
 );
 const urbanFuelOutcome = engine.verify(
@@ -352,24 +388,24 @@ const importedNoEvidenceOutcome = engine.verify(
   seededReferenceData
 );
 const calibratedDemoProducts = [
-  "Patagonia Organic Cotton Hoodie",
+  "No Nasties Blanc Classic Tee",
   "Seventh Generation Dish Soap",
-  "Ecover Toilet Cleaner",
-  "H&M Conscious Collection T-Shirt",
+  "The Better Home Dishwash Liquid",
+  "H&M Organic Cotton T-Shirt",
   "Adidas Parley Shoes",
-  "The Body Shop Vitamin C Serum",
-  "FastFashionX Eco Collection Basic Tee",
-  "Honest Company Diapers",
+  "Mamaearth Vitamin C Face Wash",
+  "Biotique Fresh Neem Pimple Control Face Wash",
+  "Mamaearth Onion Shampoo",
   "Tesla Model Y"
 ] as const;
 
-assert.equal(patagoniaOutcome.result.rating, "TRUSTED");
-assert(patagoniaOutcome.result.score >= 85);
+assert.equal(noNastiesOutcome.result.rating, "TRUSTED");
+assert(noNastiesOutcome.result.score >= 85);
 assert.equal(adidasOutcome.result.rating, "MODERATE");
 assert(adidasOutcome.result.score >= 60 && adidasOutcome.result.score <= 79);
 assert(adidasOutcome.result.penalties.some((penalty) => penalty.type === "NO_SUPPORTING_EVIDENCE"));
-assert.equal(fastFashionOutcome.result.rating, "UNVERIFIED");
-assert(fastFashionOutcome.result.score <= 40);
+assert.equal(biotiqueOutcome.result.rating, "UNVERIFIED");
+assert(biotiqueOutcome.result.score <= 40);
 assert(urbanFuelOutcome.result.score <= 40);
 assert(urbanFuelOutcome.claims.some((claim) => claim.type === "impossible" && claim.text.includes("zero toxins")));
 assert(earthGlowOutcome.result.score <= 40);
@@ -377,11 +413,11 @@ assert(earthGlowOutcome.claims.some((claim) => claim.text.includes("compostable"
 assert.equal(teslaOutcome.result.rating, "MODERATE");
 assert(teslaOutcome.result.score >= 60 && teslaOutcome.result.score <= 79);
 assert(importedNoEvidenceOutcome.explanation.summary.includes("external catalog data"));
-assert(patagoniaOutcome.result.score > fastFashionOutcome.result.score);
-assert(fastFashionOutcome.alternatives.length > 0);
+assert(noNastiesOutcome.result.score > biotiqueOutcome.result.score);
+assert(biotiqueOutcome.alternatives.length > 0);
 assert(
-  fastFashionOutcome.alternatives.every(
-    (alternative) => alternative.product.category === fastFashionOutcome.product.category && alternative.scoreDifference > 5
+  biotiqueOutcome.alternatives.every(
+    (alternative) => alternative.product.category === biotiqueOutcome.product.category && alternative.scoreDifference > 5
   )
 );
 

@@ -2,7 +2,11 @@ export type ClaimType = "certifiable" | "measurable" | "verifiable" | "vague" | 
 export type VerificationConfidenceLevel = "HIGH" | "MEDIUM" | "LOW";
 export type VerificationRating = "TRUSTED" | "MODERATE" | "SUSPICIOUS" | "UNVERIFIED";
 export type VerificationModule = "certification" | "vagueness" | "impossibility" | "brand" | "consistency";
-export type ProductDataSource = "local_seed" | "open_food_facts";
+export type ProductDataSource = "local_seed" | "open_food_facts" | "official_evidence_import";
+export type EvidenceLookupMode = "cached" | "live_refresh" | "none_found";
+export type EvidenceFreshness = "fresh" | "stale" | "unavailable";
+export type OfficialEvidenceScope = "product" | "brand";
+export type OfficialEvidenceStatus = "verified" | "expired" | "manual_review" | "unmatched" | "unsupported";
 
 export type VerificationPenaltyType =
   | "BRAND_CERT_ONLY"
@@ -55,6 +59,37 @@ export interface ProductSourceDetails {
   ecoscoreScore?: number | null;
   nutriscoreGrade?: string | null;
   novaGroup?: number | null;
+}
+
+export interface OfficialEvidenceItem {
+  id: number;
+  sourceId: string;
+  sourceLabel: string;
+  certificationId: number;
+  certificationName: string;
+  certificationAcronym: string;
+  issuingBody: string;
+  scope: OfficialEvidenceScope;
+  status: OfficialEvidenceStatus;
+  confidence: number;
+  matchedVia: string;
+  sourceUrl?: string | null;
+  certificateNumber?: string | null;
+  externalBrandName: string;
+  externalProductName?: string | null;
+  checkedAt: string;
+  expiresAt?: string | null;
+  rawPayload?: Record<string, unknown> | null;
+  isProjected: boolean;
+}
+
+export interface OfficialEvidenceSummary {
+  lookup: EvidenceLookupMode;
+  freshness: EvidenceFreshness;
+  lastCheckedAt?: string | null;
+  consultedSources: string[];
+  productEvidence: OfficialEvidenceItem[];
+  brandEvidence: OfficialEvidenceItem[];
 }
 
 export interface VerificationBrand {
@@ -168,6 +203,7 @@ export interface VerificationRecord {
   rawText?: string;
   productCertifications: VerificationProductCertification[];
   brandCertifications: VerificationBrandCertification[];
+  officialEvidence?: OfficialEvidenceSummary;
   cachedTrustScore?: number;
 }
 

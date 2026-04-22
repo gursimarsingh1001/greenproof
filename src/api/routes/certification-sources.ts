@@ -1,17 +1,17 @@
 import { Router } from "express";
 import { asyncHandler, sendSuccess } from "../http.js";
-import { buildCertificationSourceRegistry } from "../../lib/certification-sources.js";
+import { GreenProofApiService } from "../services/api-service.js";
 
 /**
  * Registers the official source-registry endpoint for certification databases.
  */
-export function createCertificationSourcesRouter(): Router {
+export function createCertificationSourcesRouter(service: GreenProofApiService): Router {
   const router = Router();
 
   router.get(
     "/",
     asyncHandler(async (_request, response) => {
-      sendSuccess(response, buildCertificationSourceRegistry());
+      sendSuccess(response, await service.listCertificationSources());
     })
   );
 

@@ -1,0 +1,35 @@
+{
+  "records": [
+    {
+      "sourceId": "household-dfe",
+      "certificationAcronym": "DFE",
+      "scope": "product",
+      "externalBrandName": "CloroxPro",
+      "externalProductName": "EcoClean Disinfecting Cleaner",
+      "matchedBrandName": "Clorox",
+      "matchedProductName": "Clorox EcoClean Disinfecting Cleaner",
+      "certificateNumber": "DFE-CLX-ECO-001",
+      "sourceUrl": "https://www.epa.gov/pesticide-labels/dfe-certified-disinfectants",
+      "checkedAt": "2026-04-22T02:07:00.872Z",
+      "status": "verified",
+      "confidence": 0.9,
+      "rawPayload": {
+        "source": "EPA DfE-certified disinfectants list",
+        "legacyProgram": true,
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:07:00.872Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "DfE-Certified Disinfectants | US EPA",
+          "matchedKeywords": [
+            "Design for the Environment",
+            "DFE"
+          ],
+          "responseUrl": "https://www.epa.gov/pesticide-labels/dfe-certified-disinfectants",
+          "fetchUrl": "https://www.epa.gov/pesticide-labels/dfe-certified-disinfectants"
+        }
+      }
+    }
+  ]
+}

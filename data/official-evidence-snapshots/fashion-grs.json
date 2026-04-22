@@ -1,0 +1,117 @@
+{
+  "records": [
+    {
+      "sourceId": "fashion-grs",
+      "certificationAcronym": "GRS",
+      "scope": "brand",
+      "externalBrandName": "adidas",
+      "matchedBrandName": "Adidas",
+      "certificateNumber": "GRS-ADI-PARLEY-001",
+      "sourceUrl": "https://www.adidas.com/us/blog/814848-iconic-made-with-nature-and-grs-certified-the-boston-12-running-shoe-is-a-step-forward-in-sustainable-material-innovation",
+      "checkedAt": "2026-04-22T02:07:11.735Z",
+      "status": "verified",
+      "confidence": 0.91,
+      "rawPayload": {
+        "source": "adidas official materials blog",
+        "matchType": "brand",
+        "productFamily": "running footwear",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:07:11.735Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "Find a Certified Company - Textile Exchange",
+          "matchedKeywords": [
+            "Global Recycled Standard"
+          ],
+          "responseUrl": "https://textileexchange.org/find-certified-company/",
+          "fetchUrl": "https://textileexchange.org/standards/find-certified-company/"
+        }
+      }
+    },
+    {
+      "sourceId": "fashion-grs",
+      "certificationAcronym": "GRS",
+      "scope": "brand",
+      "externalBrandName": "H&M",
+      "matchedBrandName": "H&M",
+      "certificateNumber": "GRS-HM-2026",
+      "sourceUrl": "https://www2.hm.com/en_in/sustainability-at-hm/our-work/close-the-loop.html",
+      "checkedAt": "2026-04-22T02:07:11.735Z",
+      "status": "verified",
+      "confidence": 0.88,
+      "rawPayload": {
+        "source": "H&M sustainability materials page",
+        "matchType": "brand",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:07:11.735Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "Find a Certified Company - Textile Exchange",
+          "matchedKeywords": [
+            "Global Recycled Standard"
+          ],
+          "responseUrl": "https://textileexchange.org/find-certified-company/",
+          "fetchUrl": "https://textileexchange.org/standards/find-certified-company/"
+        }
+      }
+    },
+    {
+      "sourceId": "fashion-grs",
+      "certificationAcronym": "GRS",
+      "scope": "product",
+      "externalBrandName": "adidas",
+      "externalProductName": "Boston 12 Running Shoe",
+      "matchedBrandName": "Adidas",
+      "matchedProductName": "Adidas Boston 12 GRS Running Shoe",
+      "certificateNumber": "GRS-ADI-B12-001",
+      "sourceUrl": "https://www.adidas.com/us/blog/814848-iconic-made-with-nature-and-grs-certified-the-boston-12-running-shoe-is-a-step-forward-in-sustainable-material-innovation",
+      "checkedAt": "2026-04-22T02:07:11.735Z",
+      "status": "verified",
+      "confidence": 0.92,
+      "rawPayload": {
+        "source": "adidas official materials blog",
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:07:11.735Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "Find a Certified Company - Textile Exchange",
+          "matchedKeywords": [
+            "Global Recycled Standard"
+          ],
+          "responseUrl": "https://textileexchange.org/find-certified-company/",
+          "fetchUrl": "https://textileexchange.org/standards/find-certified-company/"
+        }
+      }
+    },
+    {
+      "sourceId": "fashion-grs",
+      "certificationAcronym": "GRS",
+      "scope": "product",
+      "externalBrandName": "adidas",
+      "externalProductName": "Parley Shoes",
+      "matchedBrandName": "Adidas",
+      "matchedProductName": "Adidas Parley Shoes",
+      "certificateNumber": "GRS-ADI-PARLEY-001",
+      "sourceUrl": "https://www.adidas.com/us/blog/827181-made-with-recycled-materials-parley-shoes",
+      "checkedAt": "2026-04-22T02:07:11.735Z",
+      "status": "verified",
+      "confidence": 0.9,
+      "rawPayload": {
+        "source": "adidas official materials page",
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:07:11.735Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "Find a Certified Company - Textile Exchange",
+          "matchedKeywords": [
+            "Global Recycled Standard"
+          ],
+          "responseUrl": "https://textileexchange.org/find-certified-company/",
+          "fetchUrl": "https://textileexchange.org/standards/find-certified-company/"
+        }
+      }
+    }
+  ]
+}

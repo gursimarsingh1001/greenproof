@@ -2,9 +2,10 @@
 
 import { startTransition, useEffect, useEffectEvent, useRef, useState } from "react";
 import { BrowserMultiFormatReader } from "@zxing/library";
-import { Camera, Keyboard, LoaderCircle, ScanLine, Search, Sparkles } from "lucide-react";
+import { Camera, ImageUp, Keyboard, LoaderCircle, ScanLine, Search, Sparkles } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { readJsonResponse } from "@/lib/backend";
+import { extractProductQueryFromImage } from "@/lib/product-ocr";
 import { useScanStore } from "@/lib/scan-store";
 import type { ApiEnvelope, ScanResultPayload } from "@/lib/types";
 
@@ -13,16 +14,14 @@ interface ScannerProps {
 }
 
 const recommendedSearches = [
-  { term: "Patagonia Organic Cotton Hoodie", tone: "trusted" as const },
-  { term: "Pact Organic Crew Tee", tone: "trusted" as const },
-  { term: "Seventh Generation Dish Soap", tone: "trusted" as const },
-  { term: "The Body Shop Vitamin C Serum", tone: "mixed" as const },
-  { term: "Adidas Parley Shoes", tone: "mixed" as const },
-  { term: "Honest Company Diapers", tone: "mixed" as const },
-  { term: "FastFashionX Eco Collection Basic Tee", tone: "warning" as const },
-  { term: "Cheapo Natural Shampoo", tone: "warning" as const },
-  { term: "WastefulCo Earth Friendly Water Bottle", tone: "warning" as const },
-  { term: "Tesla Model Y", tone: "mixed" as const }
+  { term: "No Nasties Blanc Classic Tee", tone: "trusted" as const },
+  { term: "H&M Organic Cotton T-Shirt", tone: "mixed" as const },
+  { term: "Mamaearth Vitamin C Face Wash", tone: "mixed" as const },
+  { term: "Mamaearth Onion Shampoo", tone: "mixed" as const },
+  { term: "The Better Home Dishwash Liquid", tone: "warning" as const },
+  { term: "Patanjali Kesh Kanti Natural Hair Cleanser", tone: "warning" as const },
+  { term: "Biotique Fresh Neem Pimple Control Face Wash", tone: "warning" as const },
+  { term: "Beco Natural Dishwash Liquid Refill", tone: "warning" as const }
 ];
 
 const toneClassNames = {
@@ -39,6 +38,7 @@ export function Scanner({ defaultMode }: ScannerProps) {
   const [cameraState, setCameraState] = useState<"idle" | "requesting" | "ready" | "denied" | "unsupported" | "error">("idle");
   const [cameraHint, setCameraHint] = useState("Point the camera at a barcode and GreenProof will do the rest.");
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const readerRef = useRef<BrowserMultiFormatReader | null>(null);
   const lookupInFlightRef = useRef(false);
   const detectedCodeRef = useRef(false);
@@ -254,6 +254,68 @@ export function Scanner({ defaultMode }: ScannerProps) {
     void runLookup(term);
   };
 
+  const handleUploadButtonClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+
+    if (!file) {
+      return;
+    }
+
+    setError("");
+    setIsSubmitting(true);
+    setCameraHint("Checking the uploaded photo for a barcode first...");
+
+    const objectUrl = URL.createObjectURL(file);
+    const imageReader = new BrowserMultiFormatReader();
+
+    try {
+      const result = await imageReader.decodeFromImageUrl(objectUrl);
+      const nextText = result.getText().trim();
+
+      if (!nextText) {
+        throw new Error("We couldn't read a barcode from that image.");
+      }
+
+      detectedCodeRef.current = true;
+      setCameraHint("Barcode found in the uploaded photo. Running the GreenProof check...");
+      await runLookup(nextText);
+    } catch (uploadError) {
+      try {
+        setCameraHint("No barcode found. Reading the front-label text for a product match...");
+        const { query } = await extractProductQueryFromImage(file);
+
+        if (!query) {
+          throw new Error("We couldn't recognize a product name from that photo.");
+        }
+
+        detectedCodeRef.current = true;
+        setMode("manual");
+        setQuery(query);
+        setCameraHint(`Detected "${query}". Running the GreenProof check...`);
+        await runLookup(query);
+      } catch (ocrError) {
+        detectedCodeRef.current = false;
+        setIsSubmitting(false);
+        setError(
+          ocrError instanceof Error
+            ? ocrError.message
+            : uploadError instanceof Error
+              ? uploadError.message
+              : "We couldn't read a barcode or product label from that image."
+        );
+        setCameraHint("Try a sharper front-label photo for packaged products, or switch to manual search.");
+      }
+    } finally {
+      imageReader.reset();
+      URL.revokeObjectURL(objectUrl);
+      event.target.value = "";
+    }
+  };
+
   return (
     <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
       <section className="surface-card mesh-card relative overflow-hidden p-5 md:p-7">
@@ -287,6 +349,14 @@ export function Scanner({ defaultMode }: ScannerProps) {
             {mode === "camera" ? (
               <div className="relative h-full w-full">
                 <video ref={videoRef} className="h-full w-full object-cover" muted playsInline autoPlay />
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  capture="environment"
+                  className="hidden"
+                  onChange={handleImageUpload}
+                />
                 <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(16,32,25,0.2),rgba(16,32,25,0.58))]" />
                 <div className="pointer-events-none absolute inset-7 rounded-[30px] border border-white/15" />
                 <div className="pointer-events-none absolute inset-12 rounded-[24px] border border-white/20" />
@@ -302,8 +372,18 @@ export function Scanner({ defaultMode }: ScannerProps) {
                 </div>
                 <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-4 px-6 py-5">
                   <p className="max-w-sm text-sm text-white/80">{cameraHint}</p>
-                  <div className="rounded-full border border-white/12 bg-white/10 px-3 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-white/85">
-                    {cameraState === "ready" ? "Live" : cameraState}
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={handleUploadButtonClick}
+                      className="inline-flex items-center gap-2 rounded-full border border-white/16 bg-white/10 px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/90 transition hover:bg-white/16"
+                    >
+                      <ImageUp className="h-4 w-4" />
+                      Upload Photo
+                    </button>
+                    <div className="rounded-full border border-white/12 bg-white/10 px-3 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-white/85">
+                      {cameraState === "ready" ? "Live" : cameraState}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -316,7 +396,7 @@ export function Scanner({ defaultMode }: ScannerProps) {
                   <p className="text-xs uppercase tracking-[0.28em] text-white/45">Manual Mode</p>
                   <h2 className="font-[var(--font-display)] text-3xl font-semibold text-white">Type a barcode or product name</h2>
                   <p className="mx-auto max-w-md text-sm leading-6 text-white/65">
-                    Useful for demos, browsers without camera access, or products already on your desk.
+                    Useful for demos, browsers without camera access, or packaged products already on your desk.
                   </p>
                 </div>
               </div>
@@ -401,6 +481,9 @@ export function Scanner({ defaultMode }: ScannerProps) {
                 <li>2. We check the claims against product certifications, brand certifications, and reputation signals.</li>
                 <li>3. You get an explainable trust score with better alternatives if the claims look weak.</li>
               </ul>
+              <p className="rounded-2xl bg-white/70 px-4 py-3 text-xs leading-5 text-moss/60">
+                Upload-photo mode works best for packaged products like face wash, shampoo, cleaners, and food labels. It is not tuned for plain clothing photos yet.
+              </p>
             </div>
           </div>
 

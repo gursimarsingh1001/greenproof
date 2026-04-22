@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -23,6 +23,8 @@ model Product {
   // SQLite cannot store primitive string lists directly, so claims are kept as a JSON array.
   claims                Json                   @default("[]")
   productCertifications ProductCertification[]
+  productAliases        ProductAlias[]
+  certificationEvidence CertificationEvidence[] @relation("ProductEvidence")
   verificationSnapshots VerificationSnapshot[]
   feedback              Feedback[]
   createdAt             DateTime               @default(now())
@@ -43,7 +45,9 @@ model Brand {
   flagReason          String?
   reputationScore     Float                @default(0.5)
   products            Product[]
+  brandAliases        BrandAlias[]
   brandCertifications BrandCertification[]
+  certificationEvidence CertificationEvidence[] @relation("BrandEvidence")
   createdAt           DateTime             @default(now())
   updatedAt           DateTime             @updatedAt
 
@@ -57,9 +61,116 @@ model Certification {
   issuingBody           String
   scope                 String
   brandCertifications   BrandCertification[]
+  certificationEvidence CertificationEvidence[]
   productCertifications ProductCertification[]
   createdAt             DateTime               @default(now())
   updatedAt             DateTime               @updatedAt
+}
+
+model CertificationSource {
+  id                    String                  @id
+  sector                String
+  certificationName     String
+  databaseUrl           String
+  liveFetchUrl          String?
+  access                String
+  notes                 String
+  coverageHint          String?
+  isOfficial            Boolean                 @default(true)
+  isSupported           Boolean                 @default(false)
+  wave                  Int                     @default(1)
+  priority              Int                     @default(100)
+  certificationEvidence CertificationEvidence[]
+  ingestionRuns         CertificationIngestionRun[]
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+
+  @@index([sector, priority])
+  @@index([wave])
+  @@index([isSupported])
+}
+
+model CertificationEvidence {
+  id                Int                       @id @default(autoincrement())
+  sourceId          String
+  certificationId   Int
+  scope             String
+  status            String                    @default("verified")
+  matchedVia        String                    @default("exact")
+  confidence        Float                     @default(1)
+  externalBrandName String
+  externalProductName String?
+  certificateNumber String?
+  sourceUrl         String?
+  rawPayload        Json?
+  checkedAt         DateTime
+  expiresAt         DateTime?
+  firstSeenAt       DateTime                  @default(now())
+  brandId           Int?
+  productId         Int?
+  ingestionRunId    Int?
+  certification     Certification             @relation(fields: [certificationId], references: [id], onDelete: Cascade)
+  source            CertificationSource       @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  brand             Brand?                    @relation("BrandEvidence", fields: [brandId], references: [id], onDelete: SetNull)
+  product           Product?                  @relation("ProductEvidence", fields: [productId], references: [id], onDelete: SetNull)
+  ingestionRun      CertificationIngestionRun? @relation(fields: [ingestionRunId], references: [id], onDelete: SetNull)
+  createdAt         DateTime                  @default(now())
+  updatedAt         DateTime                  @updatedAt
+
+  @@index([sourceId, checkedAt])
+  @@index([brandId, status])
+  @@index([productId, status])
+  @@index([certificationId, status])
+  @@index([scope, status])
+}
+
+model CertificationIngestionRun {
+  id               Int                     @id @default(autoincrement())
+  sourceId         String?
+  sector           String?
+  mode             String
+  status           String
+  query            String?
+  recordsFetched   Int                     @default(0)
+  recordsMatched   Int                     @default(0)
+  recordsProjected Int                     @default(0)
+  errorMessage     String?
+  startedAt        DateTime                @default(now())
+  finishedAt       DateTime?
+  source           CertificationSource?    @relation(fields: [sourceId], references: [id], onDelete: SetNull)
+  evidence         CertificationEvidence[]
+  createdAt        DateTime                @default(now())
+  updatedAt        DateTime                @updatedAt
+
+  @@index([sourceId, startedAt])
+  @@index([sector, startedAt])
+  @@index([status])
+}
+
+model BrandAlias {
+  id        Int      @id @default(autoincrement())
+  brandId    Int
+  alias      String
+  isPrimary  Boolean  @default(false)
+  brand      Brand    @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([brandId, alias])
+  @@index([alias])
+}
+
+model ProductAlias {
+  id        Int      @id @default(autoincrement())
+  productId  Int
+  alias      String
+  isPrimary  Boolean  @default(false)
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([productId, alias])
+  @@index([alias])
 }
 
 model BrandCertification {

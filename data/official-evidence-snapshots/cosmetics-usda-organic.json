@@ -1,0 +1,60 @@
+{
+  "records": [
+    {
+      "sourceId": "cosmetics-usda-organic",
+      "certificationAcronym": "USDA",
+      "scope": "product",
+      "externalBrandName": "VIVA DORIA Inc",
+      "externalProductName": "Jojoba Oil",
+      "matchedBrandName": "VIVA DORIA",
+      "matchedProductName": "VIVA DORIA Organic Jojoba Oil",
+      "certificateNumber": "USDA-VIVA-JOJOBA-001",
+      "sourceUrl": "https://organic.ams.usda.gov/Integrity/Certificate.aspx?cid=24&nopid=7880299289",
+      "checkedAt": "2026-04-22T02:06:50.833Z",
+      "status": "verified",
+      "confidence": 0.95,
+      "rawPayload": {
+        "source": "USDA Organic Integrity operation profile",
+        "certifier": "Ecocert SAS (formerly Ecocert SA)",
+        "operationName": "VIVA DORIA Inc",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:50.833Z",
+          "httpStatus": 200,
+          "contentType": "application/pdf",
+          "pageTitle": null,
+          "matchedKeywords": [],
+          "responseUrl": "https://organic.ams.usda.gov/Integrity/Certificate.aspx?cid=24&nopid=7880299289",
+          "fetchUrl": "https://organic.ams.usda.gov/Integrity/Certificate.aspx?cid=24&nopid=7880299289"
+        }
+      }
+    },
+    {
+      "sourceId": "cosmetics-usda-organic",
+      "certificationAcronym": "USDA",
+      "scope": "product",
+      "externalBrandName": "Dr. Bronner's",
+      "externalProductName": "Pure-Castile Bar Soap",
+      "matchedBrandName": "Dr. Bronner's",
+      "matchedProductName": "Dr. Bronner's Organic Soap Bar",
+      "certificateNumber": "USDA-DB-SOAP-001",
+      "sourceUrl": "https://www.drbronner.com/products/peppermint-pure-castile-bar-soap",
+      "checkedAt": "2026-04-22T02:06:50.833Z",
+      "status": "verified",
+      "confidence": 0.91,
+      "rawPayload": {
+        "source": "Dr. Bronner's official product page",
+        "organicLine": true,
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:50.833Z",
+          "httpStatus": 200,
+          "contentType": "application/pdf",
+          "pageTitle": null,
+          "matchedKeywords": [],
+          "responseUrl": "https://organic.ams.usda.gov/Integrity/Certificate.aspx?cid=24&nopid=7880299289",
+          "fetchUrl": "https://organic.ams.usda.gov/Integrity/Certificate.aspx?cid=24&nopid=7880299289"
+        }
+      }
+    }
+  ]
+}

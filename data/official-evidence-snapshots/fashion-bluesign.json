@@ -1,0 +1,32 @@
+{
+  "records": [
+    {
+      "sourceId": "fashion-bluesign",
+      "certificationAcronym": "BLS",
+      "scope": "brand",
+      "externalBrandName": "Patagonia",
+      "matchedBrandName": "Patagonia",
+      "certificateNumber": "BLS-PAT-2026",
+      "sourceUrl": "https://www.bluesign.com/find-sustainable-brands",
+      "checkedAt": "2026-04-22T02:07:16.854Z",
+      "status": "verified",
+      "confidence": 0.93,
+      "rawPayload": {
+        "source": "bluesign system partner brands directory",
+        "partnerType": "brand",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:07:16.854Z",
+          "httpStatus": 200,
+          "contentType": "text/html;charset=utf-8",
+          "pageTitle": "Find bluesign System Partner Brands &amp; Products",
+          "matchedKeywords": [
+            "bluesign",
+            "Patagonia"
+          ],
+          "responseUrl": "https://www.bluesign.com/find-sustainable-brands",
+          "fetchUrl": "https://www.bluesign.com/find-sustainable-brands"
+        }
+      }
+    }
+  ]
+}

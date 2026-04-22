@@ -11,7 +11,6 @@ import {
   NO_CERTIFICATION_PENALTY,
   NO_SUSTAINABILITY_EVIDENCE_PENALTY,
   NO_SUPPORTING_EVIDENCE_PENALTY,
-  NO_VERIFIABLE_ECO_SIGNALS_PENALTY,
   RATING_COLORS,
   RATING_EMOJIS,
   TOO_MANY_ABSOLUTES_PENALTY,
@@ -117,7 +116,9 @@ export class TrustScorer {
       evidenceCount += evidenceDelta;
     }
 
-    for (const claim of preparedClaims.filter((entry) => entry.type === "vague")) {
+    const vagueClaims = preparedClaims.filter((entry) => entry.type === "vague");
+
+    for (const claim of vagueClaims) {
       const vagueTerm = vagueTermLookup.get(normalizeLookupKey(claim.text));
 
       this.addPenalty(penalties, breakdown, {
@@ -129,15 +130,21 @@ export class TrustScorer {
           ? `"${claim.text}" is vague and has no legal definition: ${vagueTerm.explanation}`
           : `"${claim.text}" is vague and lacks a clear legal or technical definition`
       });
+    }
 
-      if (specificClaims.length === 0) {
-        this.addPenalty(penalties, breakdown, {
-          type: "VAGUE_WITHOUT_SPECIFICS",
-          module: "vagueness",
-          impact: VAGUE_WITHOUT_SPECIFICS_PENALTY,
-          message: `Only vague terms used (${claim.text}) without any specific verifiable claims`
-        });
-      }
+    if (vagueClaims.length > 0 && specificClaims.length === 0) {
+      const uniqueVagueTerms = [...new Set(vagueClaims.map((claim) => claim.text))];
+      const summaryTerms =
+        uniqueVagueTerms.length > 2
+          ? `${uniqueVagueTerms.slice(0, 2).join(", ")}, and more`
+          : uniqueVagueTerms.join(", ");
+
+      this.addPenalty(penalties, breakdown, {
+        type: "VAGUE_WITHOUT_SPECIFICS",
+        module: "vagueness",
+        impact: VAGUE_WITHOUT_SPECIFICS_PENALTY,
+        message: `Only vague terms used (${summaryTerms}) without any specific verifiable claims`
+      });
     }
 
     for (const claim of preparedClaims.filter((entry) => entry.type === "impossible")) {
@@ -375,15 +382,7 @@ export class TrustScorer {
         impact: NO_SUSTAINABILITY_EVIDENCE_PENALTY,
         message: `External catalog data for "${record.product.name}" does not show recognized sustainability proof or certification-backed eco claims.`
       });
-    }
-
-    if (claims.length === 0 && !hasCertificationEvidence) {
-      this.addPenalty(penalties, breakdown, {
-        type: "NO_VERIFIABLE_ECO_SIGNALS",
-        module: "certification",
-        impact: NO_VERIFIABLE_ECO_SIGNALS_PENALTY,
-        message: "We found limited or no sustainability signals in the external catalog data, so this score reflects missing eco-proof rather than confirmed fraud."
-      });
+      return;
     }
   }
 

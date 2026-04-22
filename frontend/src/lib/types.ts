@@ -1,6 +1,8 @@
 export type VerificationRating = "TRUSTED" | "MODERATE" | "SUSPICIOUS" | "UNVERIFIED";
 export type VerificationConfidenceLevel = "HIGH" | "MEDIUM" | "LOW";
-export type ProductDataSource = "local_seed" | "open_food_facts";
+export type ProductDataSource = "local_seed" | "open_food_facts" | "official_evidence_import";
+export type EvidenceLookupMode = "cached" | "live_refresh" | "none_found";
+export type EvidenceFreshness = "fresh" | "stale" | "unavailable";
 
 export interface ApiEnvelope<T> {
   success: boolean;
@@ -29,6 +31,9 @@ export interface CertificationSourceEntry {
   notes: string;
   coverageHint?: string;
   isOfficial: boolean;
+  isSupported: boolean;
+  wave: number;
+  priority: number;
 }
 
 export interface CertificationSourceRegistryPayload {
@@ -59,6 +64,28 @@ export interface ProductSourceDetails {
   ecoscoreScore?: number | null;
   nutriscoreGrade?: string | null;
   novaGroup?: number | null;
+}
+
+export interface OfficialEvidenceItem {
+  id: number;
+  sourceId: string;
+  sourceLabel: string;
+  certificationId: number;
+  certificationName: string;
+  certificationAcronym: string;
+  issuingBody: string;
+  scope: "product" | "brand";
+  status: "verified" | "expired" | "manual_review" | "unmatched" | "unsupported";
+  confidence: number;
+  matchedVia: string;
+  sourceUrl?: string | null;
+  certificateNumber?: string | null;
+  externalBrandName: string;
+  externalProductName?: string | null;
+  checkedAt: string;
+  expiresAt?: string | null;
+  rawPayload?: Record<string, unknown> | null;
+  isProjected: boolean;
 }
 
 export interface BrandSummary {
@@ -161,6 +188,14 @@ export interface VerificationReportPayload {
   brand: BrandSummary;
   dataSource: ProductDataSource;
   sourceDetails?: ProductSourceDetails;
+  evidenceLookup: EvidenceLookupMode;
+  evidenceSources: string[];
+  evidenceFreshness: EvidenceFreshness;
+  officialEvidence: {
+    lastCheckedAt?: string | null;
+    product: OfficialEvidenceItem[];
+    brand: OfficialEvidenceItem[];
+  };
   claims: ExtractedClaim[];
   result: VerificationResult;
   explanation: VerificationExplanation;

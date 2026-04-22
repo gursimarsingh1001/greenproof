@@ -1,5 +1,8 @@
 import assert from "node:assert/strict";
+import { rm, mkdtemp, writeFile } from "node:fs/promises";
 import type { AddressInfo } from "node:net";
+import os from "node:os";
+import path from "node:path";
 import { createApp } from "../src/api/app.js";
 import { db } from "../src/lib/db.js";
 import type {
@@ -155,10 +158,13 @@ try {
   assert.equal(scanResponse.status, 200);
   assertSuccess(scanBody);
 
-  assert.equal(scanBody.data.product.name, "FastFashionX Eco Collection Basic Tee");
+  assert.equal(scanBody.data.product.name, "Biotique Fresh Neem Pimple Control Face Wash");
   assert.equal(scanBody.data.result.rating, "UNVERIFIED");
   assert.equal(scanBody.data.integrity.displayId.length, 16);
   assert.equal(scanBody.data.integrity.resultHash.length, 64);
+  assert.equal(scanBody.data.evidenceLookup, "none_found");
+  assert.equal(scanBody.data.officialEvidence.product.length, 0);
+  assert.equal(scanBody.data.officialEvidence.brand.length, 0);
 
   const queryResponse = await fetch(`${baseUrl}/api/scan`, {
     method: "POST",
@@ -166,7 +172,7 @@ try {
       "content-type": "application/json"
     },
     body: JSON.stringify({
-      query: "organic hoodie"
+      query: "no nasties tee"
     })
   });
   const queryBody = (await queryResponse.json()) as ApiResponse<ScanResponsePayload>;
@@ -174,10 +180,12 @@ try {
   assert.equal(queryResponse.status, 200);
   assertSuccess(queryBody);
 
-  assert.equal(queryBody.data.product.name, "Patagonia Organic Cotton Hoodie");
+  assert.equal(queryBody.data.product.name, "No Nasties Blanc Classic Tee");
   assert.equal(queryBody.data.dataSource, "local_seed");
-  assert.equal(queryBody.data.product.priceCents, 12900);
   assert(queryBody.data.product.imageUrl);
+  assert.equal(queryBody.data.evidenceLookup, "cached");
+  assert(queryBody.data.evidenceSources.includes("GOTS (Global Organic Textile Standard)"));
+  assert(queryBody.data.officialEvidence.product.some((evidence) => evidence.certificationAcronym === "GOTS"));
 
   const organicTeeResponse = await fetch(`${baseUrl}/api/scan`, {
     method: "POST",
@@ -185,15 +193,14 @@ try {
       "content-type": "application/json"
     },
     body: JSON.stringify({
-      query: "organic t shirt"
+      query: "H&M Organic Cotton T-Shirt"
     })
   });
   const organicTeeBody = (await organicTeeResponse.json()) as ApiResponse<ScanResponsePayload>;
 
   assert.equal(organicTeeResponse.status, 200);
   assertSuccess(organicTeeBody);
-  assert.equal(organicTeeBody.data.product.name, "Pact Organic Crew Tee");
-  assert.equal(organicTeeBody.data.product.priceCents, 3400);
+  assert.equal(organicTeeBody.data.product.name, "H&M Organic Cotton T-Shirt");
   assert(organicTeeBody.data.product.imageUrl);
 
   const apparelQueryResponse = await fetch(`${baseUrl}/api/scan`, {
@@ -202,7 +209,7 @@ try {
       "content-type": "application/json"
     },
     body: JSON.stringify({
-      query: "eco t shirt"
+      query: "mamaearth onion shampoo"
     })
   });
   const apparelQueryBody = (await apparelQueryResponse.json()) as ApiResponse<ScanResponsePayload>;
@@ -210,9 +217,95 @@ try {
   assert.equal(apparelQueryResponse.status, 200);
   assertSuccess(apparelQueryBody);
 
-  assert.equal(apparelQueryBody.data.product.name, "FastFashionX Eco Collection Basic Tee");
-  assert.equal(apparelQueryBody.data.product.category, "Apparel");
+  assert.equal(apparelQueryBody.data.product.name, "Mamaearth Onion Shampoo");
+  assert.equal(apparelQueryBody.data.product.category, "Beauty");
   assert.equal(apparelQueryBody.data.dataSource, "local_seed");
+  assert.equal(apparelQueryBody.data.evidenceLookup, "cached");
+  assert(apparelQueryBody.data.evidenceSources.includes("MADE SAFE"));
+  assert(apparelQueryBody.data.officialEvidence.product.some((evidence) => evidence.certificationAcronym === "MSAFE"));
+
+  const attitudeBrand = await db.brand.findUnique({
+    where: {
+      name: "ATTITUDE"
+    }
+  });
+  const ewgCertification = await db.certification.findUnique({
+    where: {
+      acronym: "EWG"
+    }
+  });
+
+  assert(attitudeBrand, "Expected ATTITUDE brand to exist for official evidence discovery coverage.");
+  assert(ewgCertification, "Expected EWG certification to exist for official evidence discovery coverage.");
+
+  let discoveredOfficialProductId: number | null = null;
+  const officialDiscoveryEvidence = await db.certificationEvidence.create({
+    data: {
+      sourceId: "cosmetics-ewg-verified",
+      certificationId: ewgCertification.id,
+      scope: "product",
+      status: "verified",
+      matchedVia: "unmatched",
+      confidence: 0,
+      externalBrandName: "ATTITUDE",
+      externalProductName: "Oceanly Phyto-Cleanse Solid Cleanser",
+      sourceUrl: "https://attitudeliving.com/products/oceanly-phyto-cleanse-solid-cleanser",
+      checkedAt: new Date("2026-04-22T02:06:52.989Z"),
+      rawPayload: {
+        source: "api discovery test"
+      },
+      brandId: attitudeBrand.id
+    }
+  });
+
+  try {
+    const officialImportResponse = await fetch(`${baseUrl}/api/scan`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({
+        query: "attitude oceanly phyto cleanse solid cleanser"
+      })
+    });
+    const officialImportBody = (await officialImportResponse.json()) as ApiResponse<ScanResponsePayload>;
+
+    assert.equal(officialImportResponse.status, 200);
+    assertSuccess(officialImportBody);
+
+    discoveredOfficialProductId = officialImportBody.data.product.id;
+    assert.equal(officialImportBody.data.product.name, "Oceanly Phyto-Cleanse Solid Cleanser");
+    assert.equal(officialImportBody.data.brand.name, "ATTITUDE");
+    assert.equal(officialImportBody.data.dataSource, "official_evidence_import");
+    assert.equal(officialImportBody.data.sourceDetails?.label, "Official Evidence Import");
+    assert(officialImportBody.data.evidenceSources.includes("EWG Verified"));
+    assert(officialImportBody.data.officialEvidence.product.some((evidence) => evidence.certificationAcronym === "EWG"));
+    assert(officialImportBody.data.claims.some((claim) => /ewg verified/i.test(claim.text)));
+
+    const importedOfficialProduct = await db.product.findUnique({
+      where: {
+        id: discoveredOfficialProductId
+      }
+    });
+
+    assert(importedOfficialProduct, "Expected official discovery import to create a local product row.");
+    assert.equal(importedOfficialProduct.dataSource, "official_evidence_import");
+    assert(importedOfficialProduct.barcode.startsWith("OFF-"));
+  } finally {
+    if (discoveredOfficialProductId) {
+      await db.product.delete({
+        where: {
+          id: discoveredOfficialProductId
+        }
+      });
+    }
+
+    await db.certificationEvidence.deleteMany({
+      where: {
+        id: officialDiscoveryEvidence.id
+      }
+    });
+  }
 
   const offQueryResponse = await fetch(`${baseUrl}/api/scan`, {
     method: "POST",
@@ -233,6 +326,7 @@ try {
   assert.equal(offQueryBody.data.dataSource, "open_food_facts");
   assert.equal(offQueryBody.data.sourceDetails?.label, "Open Food Facts");
   assert.equal(offQueryBody.data.sourceDetails?.nutriscoreGrade, "D");
+  assert.equal(offQueryBody.data.evidenceLookup, "none_found");
 
   const importedBarcodeResponse = await fetch(`${baseUrl}/api/scan`, {
     method: "POST",
@@ -255,6 +349,7 @@ try {
   assert.equal(importedBarcodeBody.data.sourceDetails?.label, "Open Food Facts");
   assert.equal(importedBarcodeBody.data.sourceDetails?.ecoscoreGrade, "D");
   assert.equal(importedBarcodeBody.data.sourceDetails?.nutriscoreGrade, "E");
+  assert.equal(importedBarcodeBody.data.evidenceLookup, "none_found");
   assert(importedBarcodeBody.data.result.score < 100);
   assert(
     importedBarcodeBody.data.result.penalties.some(
@@ -294,6 +389,10 @@ try {
         brand: productBody.data.brand,
         dataSource: productBody.data.dataSource,
         ...(productBody.data.sourceDetails ? { sourceDetails: productBody.data.sourceDetails } : {}),
+        evidenceLookup: productBody.data.evidenceLookup,
+        evidenceSources: productBody.data.evidenceSources,
+        evidenceFreshness: productBody.data.evidenceFreshness,
+        officialEvidence: productBody.data.officialEvidence,
         claims: productBody.data.claims,
         result: productBody.data.result,
         explanation: productBody.data.explanation,
@@ -334,9 +433,111 @@ try {
   assert.equal(certificationSourcesResponse.status, 200);
   assertSuccess(certificationSourcesBody);
   assert(certificationSourcesBody.data.totalSources >= 10);
-  assert.equal(certificationSourcesBody.data.bySector.fashion, 6);
+  assert.equal(certificationSourcesBody.data.bySector.fashion, 8);
+  assert.equal(certificationSourcesBody.data.bySector.cosmetics, 8);
+  assert.equal(certificationSourcesBody.data.bySector.household, 7);
   assert(certificationSourcesBody.data.entries.some((entry) => entry.id === "cosmetics-leaping-bunny"));
   assert(certificationSourcesBody.data.entries.some((entry) => entry.id === "household-epa-safer-choice"));
+  assert(certificationSourcesBody.data.entries.some((entry) => entry.id === "cosmetics-made-safe"));
+
+  const syncSnapshotDirectory = await mkdtemp(path.join(os.tmpdir(), "greenproof-sync-route-"));
+  const previousCronSecret = process.env.CRON_SECRET;
+  const previousSyncDirectory = process.env.OFFICIAL_EVIDENCE_SYNC_DIR;
+
+  try {
+    process.env.CRON_SECRET = "test-cron-secret";
+    process.env.OFFICIAL_EVIDENCE_SYNC_DIR = syncSnapshotDirectory;
+
+    await writeFile(
+      path.join(syncSnapshotDirectory, "cosmetics-leaping-bunny.json"),
+      JSON.stringify(
+        [
+          {
+            sourceId: "cosmetics-leaping-bunny",
+            certificationAcronym: "LB",
+            scope: "brand",
+            externalBrandName: "Cron Test Beauty",
+            sourceUrl: "https://files.example.test/cosmetics-leaping-bunny/cron-test-beauty.json",
+            checkedAt: "2026-04-22T05:00:00.000Z",
+            status: "verified",
+            confidence: 0.91,
+            rawPayload: {
+              source: "api cron test"
+            }
+          }
+        ],
+        null,
+        2
+      ),
+      "utf8"
+    );
+
+    const unauthorizedSyncResponse = await fetch(
+      `${baseUrl}/api/sync-evidence?mode=source&value=cosmetics-leaping-bunny&skipFetch=1`
+    );
+    const unauthorizedSyncBody = (await unauthorizedSyncResponse.json()) as ApiResponse<{
+      mode: string;
+    }>;
+
+    assert.equal(unauthorizedSyncResponse.status, 401);
+    assert.equal(unauthorizedSyncBody.success, false);
+
+    const authorizedSyncResponse = await fetch(
+      `${baseUrl}/api/sync-evidence?mode=source&value=cosmetics-leaping-bunny&skipFetch=1`,
+      {
+        headers: {
+          authorization: "Bearer test-cron-secret"
+        }
+      }
+    );
+    const authorizedSyncBody = (await authorizedSyncResponse.json()) as ApiResponse<{
+      mode: string;
+      skipFetch: boolean;
+      ingestionRuns: Array<{
+        sourceId: string;
+      }>;
+    }>;
+
+    assert.equal(authorizedSyncResponse.status, 200);
+    assertSuccess(authorizedSyncBody);
+    assert.equal(authorizedSyncBody.data.mode, "source");
+    assert.equal(authorizedSyncBody.data.skipFetch, true);
+    assert.equal(authorizedSyncBody.data.ingestionRuns.length, 1);
+    assert.equal(authorizedSyncBody.data.ingestionRuns[0]?.sourceId, "cosmetics-leaping-bunny");
+
+    const syncedEvidence = await db.certificationEvidence.findFirst({
+      where: {
+        sourceId: "cosmetics-leaping-bunny",
+        externalBrandName: "Cron Test Beauty"
+      }
+    });
+
+    assert(syncedEvidence);
+  } finally {
+    await db.certificationEvidence.deleteMany({
+      where: {
+        sourceId: "cosmetics-leaping-bunny",
+        externalBrandName: "Cron Test Beauty"
+      }
+    });
+
+    if (previousCronSecret === undefined) {
+      delete process.env.CRON_SECRET;
+    } else {
+      process.env.CRON_SECRET = previousCronSecret;
+    }
+
+    if (previousSyncDirectory === undefined) {
+      delete process.env.OFFICIAL_EVIDENCE_SYNC_DIR;
+    } else {
+      process.env.OFFICIAL_EVIDENCE_SYNC_DIR = previousSyncDirectory;
+    }
+
+    await rm(syncSnapshotDirectory, {
+      recursive: true,
+      force: true
+    });
+  }
 
   const statsResponse = await fetch(`${baseUrl}/api/stats`);
   const statsBody = (await statsResponse.json()) as ApiResponse<StatsPayload>;

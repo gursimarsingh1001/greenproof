@@ -1,0 +1,334 @@
+{
+  "records": [
+    {
+      "sourceId": "household-green-seal",
+      "certificationAcronym": "GS",
+      "scope": "product",
+      "externalBrandName": "Shop Safely LLC",
+      "externalProductName": "Hand Soap - Calm",
+      "matchedBrandName": "Safely",
+      "matchedProductName": "Safely Hand Soap - Calm",
+      "certificateNumber": "GS-SAF-HAND-001",
+      "sourceUrl": "https://certified.greenseal.org/product/safely-hand-soap-calm-shop-safely-llc-safely",
+      "checkedAt": "2026-04-22T02:06:57.084Z",
+      "status": "verified",
+      "confidence": 0.94,
+      "rawPayload": {
+        "source": "Green Seal certified product directory",
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:57.084Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "Safely™ Hand Soap - Calm - Green Seal | Green Seal",
+          "matchedKeywords": [
+            "Green Seal",
+            "Shop Safely LLC",
+            "Hand Soap - Calm",
+            "Safely",
+            "GS"
+          ],
+          "responseUrl": "https://certified.greenseal.org/product/safely-hand-soap-calm-shop-safely-llc-safely",
+          "fetchUrl": "https://certified.greenseal.org/product/safely-hand-soap-calm-shop-safely-llc-safely"
+        }
+      }
+    },
+    {
+      "sourceId": "household-green-seal",
+      "certificationAcronym": "GS",
+      "scope": "product",
+      "externalBrandName": "Shop Safely LLC",
+      "externalProductName": "Hand Soap - Rise",
+      "matchedBrandName": "Safely",
+      "matchedProductName": "Safely Hand Soap - Rise",
+      "certificateNumber": "GS-SAF-HANDRISE-001",
+      "sourceUrl": "https://certified.greenseal.org/product/safely-hand-soap-rise-shop-safely-llc-safely",
+      "checkedAt": "2026-04-22T02:06:57.084Z",
+      "status": "verified",
+      "confidence": 0.94,
+      "rawPayload": {
+        "source": "Green Seal certified product directory",
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:57.084Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "Safely™ Hand Soap - Calm - Green Seal | Green Seal",
+          "matchedKeywords": [
+            "Green Seal",
+            "Shop Safely LLC",
+            "Hand Soap - Calm",
+            "Safely",
+            "GS"
+          ],
+          "responseUrl": "https://certified.greenseal.org/product/safely-hand-soap-calm-shop-safely-llc-safely",
+          "fetchUrl": "https://certified.greenseal.org/product/safely-hand-soap-calm-shop-safely-llc-safely"
+        }
+      }
+    },
+    {
+      "sourceId": "household-green-seal",
+      "certificationAcronym": "GS",
+      "scope": "product",
+      "externalBrandName": "Shop Safely LLC",
+      "externalProductName": "Universal Cleaner - Calm",
+      "matchedBrandName": "Safely",
+      "matchedProductName": "Safely Universal Cleaner - Calm",
+      "certificateNumber": "GS-SAF-UNICALM-001",
+      "sourceUrl": "https://certified.greenseal.org/product/safely-universal-cleaner-calm-shop-safely-llc-safely",
+      "checkedAt": "2026-04-22T02:06:57.084Z",
+      "status": "verified",
+      "confidence": 0.94,
+      "rawPayload": {
+        "source": "Green Seal certified product directory",
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:57.084Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "Safely™ Hand Soap - Calm - Green Seal | Green Seal",
+          "matchedKeywords": [
+            "Green Seal",
+            "Shop Safely LLC",
+            "Hand Soap - Calm",
+            "Safely",
+            "GS"
+          ],
+          "responseUrl": "https://certified.greenseal.org/product/safely-hand-soap-calm-shop-safely-llc-safely",
+          "fetchUrl": "https://certified.greenseal.org/product/safely-hand-soap-calm-shop-safely-llc-safely"
+        }
+      }
+    },
+    {
+      "sourceId": "household-green-seal",
+      "certificationAcronym": "GS",
+      "scope": "product",
+      "externalBrandName": "Shop Safely LLC",
+      "externalProductName": "Universal Cleaner - Rise",
+      "matchedBrandName": "Safely",
+      "matchedProductName": "Safely Universal Cleaner - Rise",
+      "certificateNumber": "GS-SAF-UNIRISE-001",
+      "sourceUrl": "https://certified.greenseal.org/product/safely-universal-cleaner-rise-shop-safely-llc-safely",
+      "checkedAt": "2026-04-22T02:06:57.084Z",
+      "status": "verified",
+      "confidence": 0.94,
+      "rawPayload": {
+        "source": "Green Seal certified product directory",
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:57.084Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "Safely™ Hand Soap - Calm - Green Seal | Green Seal",
+          "matchedKeywords": [
+            "Green Seal",
+            "Shop Safely LLC",
+            "Hand Soap - Calm",
+            "Safely",
+            "GS"
+          ],
+          "responseUrl": "https://certified.greenseal.org/product/safely-hand-soap-calm-shop-safely-llc-safely",
+          "fetchUrl": "https://certified.greenseal.org/product/safely-hand-soap-calm-shop-safely-llc-safely"
+        }
+      }
+    },
+    {
+      "sourceId": "household-green-seal",
+      "certificationAcronym": "GS",
+      "scope": "product",
+      "externalBrandName": "Shop Safely LLC",
+      "externalProductName": "Hand Soap - Fresh",
+      "matchedBrandName": "Safely",
+      "matchedProductName": "Safely Hand Soap - Fresh",
+      "certificateNumber": "GS-SAF-HANDFRESH-001",
+      "sourceUrl": "https://certified.greenseal.org/product/safely-hand-soap-fresh-shop-safely-llc-safely",
+      "checkedAt": "2026-04-22T02:06:57.084Z",
+      "status": "verified",
+      "confidence": 0.94,
+      "rawPayload": {
+        "source": "Green Seal certified product directory",
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:57.084Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "Safely™ Hand Soap - Calm - Green Seal | Green Seal",
+          "matchedKeywords": [
+            "Green Seal",
+            "Shop Safely LLC",
+            "Hand Soap - Calm",
+            "Safely",
+            "GS"
+          ],
+          "responseUrl": "https://certified.greenseal.org/product/safely-hand-soap-calm-shop-safely-llc-safely",
+          "fetchUrl": "https://certified.greenseal.org/product/safely-hand-soap-calm-shop-safely-llc-safely"
+        }
+      }
+    },
+    {
+      "sourceId": "household-green-seal",
+      "certificationAcronym": "GS",
+      "scope": "product",
+      "externalBrandName": "Shop Safely LLC",
+      "externalProductName": "Dish Soap - Rise",
+      "matchedBrandName": "Safely",
+      "matchedProductName": "Safely Dish Soap - Rise",
+      "certificateNumber": "GS-SAF-DISHRISE-001",
+      "sourceUrl": "https://certified.greenseal.org/product/safely-dish-soap-rise-shop-safely-llc-safely",
+      "checkedAt": "2026-04-22T02:06:57.084Z",
+      "status": "verified",
+      "confidence": 0.94,
+      "rawPayload": {
+        "source": "Green Seal certified product directory",
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:57.084Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "Safely™ Hand Soap - Calm - Green Seal | Green Seal",
+          "matchedKeywords": [
+            "Green Seal",
+            "Shop Safely LLC",
+            "Hand Soap - Calm",
+            "Safely",
+            "GS"
+          ],
+          "responseUrl": "https://certified.greenseal.org/product/safely-hand-soap-calm-shop-safely-llc-safely",
+          "fetchUrl": "https://certified.greenseal.org/product/safely-hand-soap-calm-shop-safely-llc-safely"
+        }
+      }
+    },
+    {
+      "sourceId": "household-green-seal",
+      "certificationAcronym": "GS",
+      "scope": "product",
+      "externalBrandName": "Shop Safely LLC",
+      "externalProductName": "Universal Cleaner - Fresh",
+      "matchedBrandName": "Safely",
+      "matchedProductName": "Safely Universal Cleaner - Fresh",
+      "certificateNumber": "GS-SAF-UNIFRESH-001",
+      "sourceUrl": "https://certified.greenseal.org/product/safely-universal-cleaner-fresh-shop-safely-llc-safely",
+      "checkedAt": "2026-04-22T02:06:57.084Z",
+      "status": "verified",
+      "confidence": 0.94,
+      "rawPayload": {
+        "source": "Green Seal certified product directory",
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:57.084Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "Safely™ Hand Soap - Calm - Green Seal | Green Seal",
+          "matchedKeywords": [
+            "Green Seal",
+            "Shop Safely LLC",
+            "Hand Soap - Calm",
+            "Safely",
+            "GS"
+          ],
+          "responseUrl": "https://certified.greenseal.org/product/safely-hand-soap-calm-shop-safely-llc-safely",
+          "fetchUrl": "https://certified.greenseal.org/product/safely-hand-soap-calm-shop-safely-llc-safely"
+        }
+      }
+    },
+    {
+      "sourceId": "household-green-seal",
+      "certificationAcronym": "GS",
+      "scope": "product",
+      "externalBrandName": "Shop Safely LLC",
+      "externalProductName": "Dish Soap - Fresh",
+      "matchedBrandName": "Safely",
+      "matchedProductName": "Safely Dish Soap - Fresh",
+      "certificateNumber": "GS-SAF-DISH-001",
+      "sourceUrl": "https://certified.greenseal.org/product/safely-dish-soap-fresh-shop-safely-llc-safely",
+      "checkedAt": "2026-04-22T02:06:57.084Z",
+      "status": "verified",
+      "confidence": 0.95,
+      "rawPayload": {
+        "source": "Green Seal certified product directory",
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:57.084Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "Safely™ Hand Soap - Calm - Green Seal | Green Seal",
+          "matchedKeywords": [
+            "Green Seal",
+            "Shop Safely LLC",
+            "Hand Soap - Calm",
+            "Safely",
+            "GS"
+          ],
+          "responseUrl": "https://certified.greenseal.org/product/safely-hand-soap-calm-shop-safely-llc-safely",
+          "fetchUrl": "https://certified.greenseal.org/product/safely-hand-soap-calm-shop-safely-llc-safely"
+        }
+      }
+    },
+    {
+      "sourceId": "household-green-seal",
+      "certificationAcronym": "GS",
+      "scope": "product",
+      "externalBrandName": "Shop Safely LLC",
+      "externalProductName": "Laundry Detergent - Calm",
+      "matchedBrandName": "Safely",
+      "matchedProductName": "Safely Laundry Detergent - Calm",
+      "certificateNumber": "GS-SAF-LAUNDRYCALM-001",
+      "sourceUrl": "https://certified.greenseal.org/product/safely-laundry-detergent-calm-shop-safely-llc-safely",
+      "checkedAt": "2026-04-22T02:06:57.084Z",
+      "status": "verified",
+      "confidence": 0.94,
+      "rawPayload": {
+        "source": "Green Seal certified product directory",
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:57.084Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "Safely™ Hand Soap - Calm - Green Seal | Green Seal",
+          "matchedKeywords": [
+            "Green Seal",
+            "Shop Safely LLC",
+            "Hand Soap - Calm",
+            "Safely",
+            "GS"
+          ],
+          "responseUrl": "https://certified.greenseal.org/product/safely-hand-soap-calm-shop-safely-llc-safely",
+          "fetchUrl": "https://certified.greenseal.org/product/safely-hand-soap-calm-shop-safely-llc-safely"
+        }
+      }
+    },
+    {
+      "sourceId": "household-green-seal",
+      "certificationAcronym": "GS",
+      "scope": "product",
+      "externalBrandName": "Shop Safely LLC",
+      "externalProductName": "Laundry Detergent - Rise",
+      "matchedBrandName": "Safely",
+      "matchedProductName": "Safely Laundry Detergent - Rise",
+      "certificateNumber": "GS-SAF-LAUNDRYRISE-001",
+      "sourceUrl": "https://certified.greenseal.org/product/safely-laundry-detergent-rise-shop-safely-llc-safely",
+      "checkedAt": "2026-04-22T02:06:57.084Z",
+      "status": "verified",
+      "confidence": 0.94,
+      "rawPayload": {
+        "source": "Green Seal certified product directory",
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:57.084Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "Safely™ Hand Soap - Calm - Green Seal | Green Seal",
+          "matchedKeywords": [
+            "Green Seal",
+            "Shop Safely LLC",
+            "Hand Soap - Calm",
+            "Safely",
+            "GS"
+          ],
+          "responseUrl": "https://certified.greenseal.org/product/safely-hand-soap-calm-shop-safely-llc-safely",
+          "fetchUrl": "https://certified.greenseal.org/product/safely-hand-soap-calm-shop-safely-llc-safely"
+        }
+      }
+    }
+  ]
+}

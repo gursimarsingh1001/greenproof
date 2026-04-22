@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Fraunces, Space_Grotesk } from "next/font/google";
+import { SiteHeader } from "@/components/SiteHeader";
 import "../styles/globals.css";
 
 const display = Fraunces({
@@ -29,6 +30,7 @@ export default function RootLayout({
       <body className="font-[var(--font-body)] antialiased">
         <div className="relative overflow-x-hidden">
           <div className="pointer-events-none absolute inset-x-0 top-0 h-[520px] bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.72),transparent_62%)]" />
+          <SiteHeader />
           {children}
         </div>
       </body>

@@ -1,0 +1,33 @@
+{
+  "records": [
+    {
+      "sourceId": "household-epa-safer-choice",
+      "certificationAcronym": "EPA",
+      "scope": "product",
+      "externalBrandName": "Seventh Generation",
+      "externalProductName": "Dish Liquid",
+      "matchedBrandName": "Seventh Generation",
+      "matchedProductName": "Seventh Generation Dish Soap",
+      "certificateNumber": "EPA-SG-DISH-001",
+      "sourceUrl": "https://www.epa.gov/saferchoice/products",
+      "checkedAt": "2026-04-22T02:06:54.971Z",
+      "status": "verified",
+      "confidence": 0.98,
+      "rawPayload": {
+        "source": "EPA Safer Choice listing",
+        "productType": "Dishwashing liquid",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:06:54.971Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "Search Products that Meet the Safer Choice Standard | US EPA",
+          "matchedKeywords": [
+            "EPA"
+          ],
+          "responseUrl": "https://www.epa.gov/saferchoice/products",
+          "fetchUrl": "https://www.epa.gov/saferchoice/products"
+        }
+      }
+    }
+  ]
+}

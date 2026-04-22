@@ -1,7 +1,10 @@
 import { mkdirSync, openSync, closeSync } from "node:fs";
-import { dirname, resolve } from "node:path";
+import { dirname } from "node:path";
+import { resolvePrismaProvider, resolveSqliteFilePath } from "./render-schema.mjs";
 
-const databaseFilePath = resolve("prisma", "dev.db");
+if (resolvePrismaProvider() === "sqlite") {
+  const databaseFilePath = resolveSqliteFilePath(process.env.DATABASE_URL);
 
-mkdirSync(dirname(databaseFilePath), { recursive: true });
-closeSync(openSync(databaseFilePath, "a"));
+  mkdirSync(dirname(databaseFilePath), { recursive: true });
+  closeSync(openSync(databaseFilePath, "a"));
+}

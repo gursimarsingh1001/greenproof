@@ -1,0 +1,33 @@
+{
+  "records": [
+    {
+      "sourceId": "cosmetics-nsf",
+      "certificationAcronym": "NSF",
+      "scope": "product",
+      "externalBrandName": "SmartyPants",
+      "externalProductName": "Prenatal Organic Multi & Probiotics",
+      "matchedBrandName": "SmartyPants",
+      "matchedProductName": "SmartyPants Prenatal Organic Multi & Probiotics",
+      "certificateNumber": "NSF-SP-PRENATAL-001",
+      "sourceUrl": "https://info.nsf.org/Certified/dietary/Listings.asp?Company=4D7900&Program=Contents",
+      "checkedAt": "2026-04-22T02:07:13.104Z",
+      "status": "verified",
+      "confidence": 0.94,
+      "rawPayload": {
+        "source": "NSF certified products database",
+        "matchType": "product",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:07:13.104Z",
+          "httpStatus": 200,
+          "contentType": "text/html",
+          "pageTitle": "Listing Category Search Page | NSF International",
+          "matchedKeywords": [
+            "NSF"
+          ],
+          "responseUrl": "https://info.nsf.org/Certified/dietary/Listings.asp?Company=4D7900&Program=Contents",
+          "fetchUrl": "https://info.nsf.org/Certified/dietary/Listings.asp?Company=4D7900&Program=Contents"
+        }
+      }
+    }
+  ]
+}

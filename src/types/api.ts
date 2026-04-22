@@ -1,5 +1,8 @@
 import type {
+  EvidenceFreshness,
+  EvidenceLookupMode,
   ExtractedClaim,
+  OfficialEvidenceItem,
   ProductDataSource,
   ProductSourceDetails,
   TrustScoreResult,
@@ -45,10 +48,14 @@ export interface CertificationSourceEntry {
   sector: "fashion" | "cosmetics" | "household";
   certificationName: string;
   databaseUrl: string;
+  liveFetchUrl?: string;
   access: string;
   notes: string;
   coverageHint?: string;
   isOfficial: boolean;
+  isSupported: boolean;
+  wave: number;
+  priority: number;
 }
 
 export interface CertificationSourceRegistryPayload {
@@ -100,6 +107,14 @@ export interface VerificationReportPayload {
   brand: ApiBrandDetails;
   dataSource: ProductDataSource;
   sourceDetails?: ProductSourceDetails;
+  evidenceLookup: EvidenceLookupMode;
+  evidenceSources: string[];
+  evidenceFreshness: EvidenceFreshness;
+  officialEvidence: {
+    lastCheckedAt?: string | null;
+    product: OfficialEvidenceItem[];
+    brand: OfficialEvidenceItem[];
+  };
   claims: ExtractedClaim[];
   result: TrustScoreResult;
   explanation: VerificationExplanation;
@@ -201,4 +216,27 @@ export interface FeedbackReceiptPayload {
   reportedScore?: number | null;
   expectedScore?: number | null;
   createdAt: string;
+}
+
+export interface OfficialEvidenceSyncPayload {
+  mode: "all" | "source" | "sector" | "missing";
+  value?: string | null;
+  skipFetch: boolean;
+  fetchSummary?: {
+    outputDirectory: string;
+    requestedRecords: number;
+    fetchedRecords: number;
+    snapshotFiles: number;
+    sourceIds: string[];
+  } | null;
+  ingestionRuns: Array<{
+    sourceId: string;
+    status: string;
+    recordsFetched: number;
+    recordsMatched: number;
+    recordsProjected: number;
+    startedAt: string;
+    finishedAt?: string | null;
+    errorMessage?: string | null;
+  }>;
 }

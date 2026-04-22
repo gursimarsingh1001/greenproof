@@ -1,4 +1,11 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "crons": [
+    {
+      "path": "/api/sync-evidence",
+      "schedule": "0 2 * * *"
+    }
+  ],
   "rewrites": [
     {
       "source": "/api/(.*)",
@@ -7,8 +14,8 @@
   ],
   "functions": {
     "api/index.ts": {
-      "includeFiles": "prisma/dev.db",
-      "maxDuration": 15
+      "maxDuration": 60,
+      "includeFiles": "data/official-evidence-snapshots/**"
     }
   }
 }

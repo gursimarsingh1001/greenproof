@@ -1,0 +1,64 @@
+{
+  "records": [
+    {
+      "sourceId": "fashion-better-cotton",
+      "certificationAcronym": "BCI",
+      "scope": "brand",
+      "externalBrandName": "H&M",
+      "matchedBrandName": "H&M",
+      "certificateNumber": "BCI-HM-2026",
+      "sourceUrl": "https://bettercotton.org/hm-launch-new-conscious-denim-collection/",
+      "checkedAt": "2026-04-22T02:07:17.605Z",
+      "status": "verified",
+      "confidence": 0.9,
+      "rawPayload": {
+        "source": "Better Cotton member publication",
+        "membership": "Pioneer Member",
+        "matchType": "brand",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:07:17.605Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "H&amp;M launch new Conscious Denim Collection. - Better Cotton Initiative",
+          "matchedKeywords": [
+            "Better Cotton Initiative",
+            "H&M",
+            "BCI"
+          ],
+          "responseUrl": "https://bettercotton.org/hm-launch-new-conscious-denim-collection/",
+          "fetchUrl": "https://bettercotton.org/hm-launch-new-conscious-denim-collection/"
+        }
+      }
+    },
+    {
+      "sourceId": "fashion-better-cotton",
+      "certificationAcronym": "BCI",
+      "scope": "brand",
+      "externalBrandName": "adidas Group",
+      "matchedBrandName": "Adidas",
+      "certificateNumber": "BCI-ADI-2026",
+      "sourceUrl": "https://bettercotton.org/the-adidas-groups-commitment-to-better-cotton/",
+      "checkedAt": "2026-04-22T02:07:17.605Z",
+      "status": "verified",
+      "confidence": 0.9,
+      "rawPayload": {
+        "source": "Better Cotton member publication",
+        "membership": "Pioneer Member",
+        "matchType": "brand",
+        "liveFetch": {
+          "fetchedAt": "2026-04-22T02:07:17.605Z",
+          "httpStatus": 200,
+          "contentType": "text/html; charset=UTF-8",
+          "pageTitle": "H&amp;M launch new Conscious Denim Collection. - Better Cotton Initiative",
+          "matchedKeywords": [
+            "Better Cotton Initiative",
+            "H&M",
+            "BCI"
+          ],
+          "responseUrl": "https://bettercotton.org/hm-launch-new-conscious-denim-collection/",
+          "fetchUrl": "https://bettercotton.org/hm-launch-new-conscious-denim-collection/"
+        }
+      }
+    }
+  ]
+}
