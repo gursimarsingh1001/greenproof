@@ -28,6 +28,7 @@ function assertSuccess<T>(response: ApiResponse<T>): asserts response is { succe
 const originalFetch = globalThis.fetch;
 const mockedOpenFoodFactsBarcode = "5449000000996";
 const mockedOpenFoodFactsSearchBarcode = "002800034006";
+const mockedOpenBeautyFactsBarcode = "3760207117948";
 
 globalThis.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
   const requestUrl =
@@ -53,6 +54,33 @@ globalThis.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
           nova_group: 4,
           url: "https://world.openfoodfacts.org/product/5449000000996/coca-cola-original-taste",
           image_front_url: "https://images.openfoodfacts.org/images/products/544/900/000/0996/front_en.3.400.jpg"
+        }
+      }),
+      {
+        status: 200,
+        headers: {
+          "content-type": "application/json"
+        }
+      }
+    );
+  }
+
+  if (requestUrl.startsWith(`https://world.openbeautyfacts.org/api/v2/product/${mockedOpenBeautyFactsBarcode}.json`)) {
+    return new Response(
+      JSON.stringify({
+        status: 1,
+        code: mockedOpenBeautyFactsBarcode,
+        product: {
+          product_name: "L'Oreal Paris Total Repair 5 Shampoo",
+          brands: "L'Oreal Paris",
+          categories: "Beauty, Hair care, Shampoo",
+          labels: "Shampoo",
+          labels_tags: ["en:shampoo"],
+          packaging: "Plastic bottle",
+          packaging_tags: ["en:plastic-bottle"],
+          ingredients_text: "Aqua, Sodium Laureth Sulfate, Dimethicone, Cocamidopropyl Betaine",
+          url: "https://world.openbeautyfacts.org/product/3760207117948/l-oreal-paris-total-repair-5-shampoo",
+          image_front_url: "https://images.openbeautyfacts.org/images/products/376/020/711/7948/front_en.3.400.jpg"
         }
       }),
       {
@@ -368,6 +396,41 @@ try {
   assert.equal(importedProduct.sourceUrl, "https://world.openfoodfacts.org/product/5449000000996/coca-cola-original-taste");
   assert(importedProduct.sourceMetadata);
 
+  const importedBeautyBarcodeResponse = await fetch(`${baseUrl}/api/scan`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json"
+    },
+    body: JSON.stringify({
+      barcode: mockedOpenBeautyFactsBarcode
+    })
+  });
+  const importedBeautyBarcodeBody = (await importedBeautyBarcodeResponse.json()) as ApiResponse<ScanResponsePayload>;
+
+  assert.equal(importedBeautyBarcodeResponse.status, 200);
+  assertSuccess(importedBeautyBarcodeBody);
+
+  assert.equal(importedBeautyBarcodeBody.data.product.barcode, mockedOpenBeautyFactsBarcode);
+  assert.equal(importedBeautyBarcodeBody.data.product.category, "Beauty");
+  assert.equal(importedBeautyBarcodeBody.data.brand.name, "L'Oreal Paris");
+  assert.equal(importedBeautyBarcodeBody.data.dataSource, "open_food_facts");
+  assert.equal(importedBeautyBarcodeBody.data.sourceDetails?.label, "Open Beauty Facts");
+  assert.equal(importedBeautyBarcodeBody.data.evidenceLookup, "none_found");
+  assert(importedBeautyBarcodeBody.data.product.name.includes("Shampoo"));
+
+  const importedBeautyProduct = await db.product.findUnique({
+    where: {
+      barcode: mockedOpenBeautyFactsBarcode
+    }
+  });
+
+  assert(importedBeautyProduct);
+  assert.equal(importedBeautyProduct.dataSource, "open_food_facts");
+  assert.equal(
+    importedBeautyProduct.sourceUrl,
+    "https://world.openbeautyfacts.org/product/3760207117948/l-oreal-paris-total-repair-5-shampoo"
+  );
+
   const productResponse = await fetch(`${baseUrl}/api/product/${queryBody.data.product.id}`);
   const productBody = (await productResponse.json()) as ApiResponse<ProductVerificationPayload>;
 
@@ -574,7 +637,7 @@ try {
   await db.product.deleteMany({
     where: {
       barcode: {
-        in: [mockedOpenFoodFactsBarcode, mockedOpenFoodFactsSearchBarcode]
+        in: [mockedOpenFoodFactsBarcode, mockedOpenFoodFactsSearchBarcode, mockedOpenBeautyFactsBarcode]
       }
     }
   });

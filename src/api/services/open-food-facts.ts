@@ -43,6 +43,13 @@ export interface ImportedCatalogProduct {
   sourceDetails: ProductSourceDetails;
 }
 
+interface OpenFactsCatalog {
+  label: string;
+  apiBaseUrl: string;
+  searchBaseUrl: string;
+  defaultCategory: string;
+}
+
 const LABEL_CLAIM_MATCHERS = [
   { matcher: /\borganic\b/i, text: "organic" },
   { matcher: /\bfair.?trade\b/i, text: "fair trade" },
@@ -62,8 +69,9 @@ const PACKAGING_SIGNAL_MATCHERS = [
  * Open Food Facts client used to hydrate real food barcode scans and manual search fallbacks.
  */
 export class OpenFoodFactsService {
-  private readonly apiBaseUrl: string;
-  private readonly searchBaseUrl: string;
+  private readonly foodCatalog: OpenFactsCatalog;
+  private readonly beautyCatalog: OpenFactsCatalog;
+  private readonly productsCatalog: OpenFactsCatalog;
   private readonly fetchImplementation: typeof fetch;
 
   public constructor(
@@ -71,8 +79,24 @@ export class OpenFoodFactsService {
     searchBaseUrl = process.env.OPEN_FOOD_FACTS_SEARCH_URL ?? "https://world.openfoodfacts.org/cgi/search.pl",
     fetchImplementation: typeof fetch = fetch
   ) {
-    this.apiBaseUrl = apiBaseUrl;
-    this.searchBaseUrl = searchBaseUrl;
+    this.foodCatalog = {
+      label: "Open Food Facts",
+      apiBaseUrl,
+      searchBaseUrl,
+      defaultCategory: "Food"
+    };
+    this.beautyCatalog = {
+      label: "Open Beauty Facts",
+      apiBaseUrl: process.env.OPEN_BEAUTY_FACTS_BASE_URL ?? "https://world.openbeautyfacts.org/api/v2",
+      searchBaseUrl: process.env.OPEN_BEAUTY_FACTS_SEARCH_URL ?? "https://world.openbeautyfacts.org/cgi/search.pl",
+      defaultCategory: "Beauty"
+    };
+    this.productsCatalog = {
+      label: "Open Products Facts",
+      apiBaseUrl: process.env.OPEN_PRODUCTS_FACTS_BASE_URL ?? "https://world.openproductsfacts.org/api/v2",
+      searchBaseUrl: process.env.OPEN_PRODUCTS_FACTS_SEARCH_URL ?? "https://world.openproductsfacts.org/cgi/search.pl",
+      defaultCategory: "Household"
+    };
     this.fetchImplementation = fetchImplementation;
   }
 
@@ -80,7 +104,26 @@ export class OpenFoodFactsService {
    * Fetches one product by barcode and maps it into the GreenProof import shape.
    */
   public async getProductByBarcode(barcode: string): Promise<ImportedCatalogProduct | null> {
-    const requestUrl = new URL(`product/${encodeURIComponent(barcode)}.json`, this.ensureTrailingSlash(this.apiBaseUrl));
+    return this.getProductByBarcodeFromCatalog(this.foodCatalog, barcode);
+  }
+
+  public async getProductByBarcodeAcrossCatalogs(barcode: string): Promise<ImportedCatalogProduct | null> {
+    for (const catalog of [this.foodCatalog, this.beautyCatalog, this.productsCatalog]) {
+      const importedProduct = await this.getProductByBarcodeFromCatalog(catalog, barcode);
+
+      if (importedProduct) {
+        return importedProduct;
+      }
+    }
+
+    return null;
+  }
+
+  private async getProductByBarcodeFromCatalog(
+    catalog: OpenFactsCatalog,
+    barcode: string
+  ): Promise<ImportedCatalogProduct | null> {
+    const requestUrl = new URL(`product/${encodeURIComponent(barcode)}.json`, this.ensureTrailingSlash(catalog.apiBaseUrl));
     requestUrl.searchParams.set("fields", this.getRequestedFieldList());
     const payload = await this.fetchJson<OpenFoodFactsBarcodeResponse>(requestUrl);
 
@@ -88,14 +131,37 @@ export class OpenFoodFactsService {
       return null;
     }
 
-    return this.mapImportedProduct(barcode, payload.product);
+    return this.mapImportedProduct(barcode, payload.product, catalog);
   }
 
   /**
    * Searches the Open Food Facts catalog for manual food queries and returns normalized candidates.
    */
   public async searchProducts(query: string, pageSize = 5): Promise<ImportedCatalogProduct[]> {
-    const requestUrl = new URL(this.searchBaseUrl);
+    return this.searchProductsFromCatalog(this.foodCatalog, query, pageSize);
+  }
+
+  public async searchProductsAcrossCatalogs(query: string, pageSize = 5): Promise<ImportedCatalogProduct[]> {
+    const merged = new Map<string, ImportedCatalogProduct>();
+
+    for (const catalog of [this.foodCatalog, this.beautyCatalog, this.productsCatalog]) {
+      for (const product of await this.searchProductsFromCatalog(catalog, query, pageSize)) {
+        const key = `${product.barcode}::${product.name.toLowerCase()}`;
+        if (!merged.has(key)) {
+          merged.set(key, product);
+        }
+      }
+    }
+
+    return [...merged.values()];
+  }
+
+  private async searchProductsFromCatalog(
+    catalog: OpenFactsCatalog,
+    query: string,
+    pageSize = 5
+  ): Promise<ImportedCatalogProduct[]> {
+    const requestUrl = new URL(catalog.searchBaseUrl);
     requestUrl.searchParams.set("search_terms", query);
     requestUrl.searchParams.set("json", "1");
     requestUrl.searchParams.set("page_size", String(pageSize));
@@ -108,7 +174,7 @@ export class OpenFoodFactsService {
     }
 
     return payload.products
-      .map((product) => this.mapImportedProduct(this.firstNonEmpty(product.code, ""), product))
+      .map((product) => this.mapImportedProduct(this.firstNonEmpty(product.code, ""), product, catalog))
       .filter((product): product is ImportedCatalogProduct => product !== null);
   }
 
@@ -169,7 +235,11 @@ export class OpenFoodFactsService {
   /**
    * Maps the external API response to the local GreenProof import format.
    */
-  private mapImportedProduct(barcode: string, product: OpenFoodFactsApiProduct): ImportedCatalogProduct | null {
+  private mapImportedProduct(
+    barcode: string,
+    product: OpenFoodFactsApiProduct,
+    catalog: OpenFactsCatalog
+  ): ImportedCatalogProduct | null {
     const normalizedBarcode = barcode.trim();
 
     if (!normalizedBarcode) {
@@ -183,7 +253,7 @@ export class OpenFoodFactsService {
       `Imported Product ${normalizedBarcode}`
     );
     const brandName = this.pickPrimaryValue(product.brands, "Unknown Brand");
-    const category = this.pickPrimaryValue(product.categories, "Food");
+    const category = this.pickPrimaryValue(product.categories, catalog.defaultCategory);
     const labels = this.extractTagDisplayValues(product.labels_tags, product.labels);
     const packaging = this.extractPackagingValues(product.packaging_tags, product.packaging);
     const claimTexts = this.extractClaimTexts(labels, packaging);
@@ -207,7 +277,7 @@ export class OpenFoodFactsService {
       imageUrl: product.image_front_url ?? product.image_url ?? null,
       sourceUrl: product.url ?? null,
       sourceDetails: {
-        label: "Open Food Facts",
+        label: catalog.label,
         ...(product.url ? { productUrl: product.url } : {}),
         ...(labels.length > 0 ? { labels } : {}),
         ...(packaging.length > 0 ? { packaging } : {}),

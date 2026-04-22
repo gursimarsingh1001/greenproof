@@ -1,5 +1,12 @@
 import type { ApiEnvelope } from "./types";
 
+type BackendRequestInit = RequestInit & {
+  next?: {
+    revalidate?: number;
+    tags?: string[];
+  };
+};
+
 const DEFAULT_LOCAL_BACKEND_URL = "http://localhost:4000";
 const DEFAULT_PRODUCTION_BACKEND_URL = "https://greenproof-api.vercel.app";
 const backendBaseUrl =
@@ -34,15 +41,16 @@ export async function readJsonResponse<T>(response: Response): Promise<T> {
 /**
  * Calls the backend API and unwraps the standard GreenProof response envelope.
  */
-export async function fetchBackendData<T>(path: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(buildBackendUrl(path), {
+export async function fetchBackendData<T>(path: string, init?: BackendRequestInit): Promise<T> {
+  const requestInit: BackendRequestInit = {
     ...init,
     headers: {
       "content-type": "application/json",
       ...(init?.headers ?? {})
     },
-    cache: "no-store"
-  });
+    ...(init?.cache ? { cache: init.cache } : !init?.next ? { cache: "no-store" as const } : {})
+  };
+  const response = await fetch(buildBackendUrl(path), requestInit);
   const payload = await readJsonResponse<ApiEnvelope<T>>(response);
 
   if (!response.ok || !payload.success || !payload.data) {

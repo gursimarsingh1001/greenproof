@@ -266,63 +266,11 @@ export class OfficialEvidenceService {
   }
 
   public async resolveEvidenceForProduct(product: ProductWithRelations): Promise<OfficialEvidenceSummary> {
-    await this.ensureSourceRegistry();
-    const sector = this.inferSector(product.category);
     const existingRows = await this.loadEvidenceRows(product.id, product.brandId);
-    const lookupQuery = normalizeLookupKey(`${product.brand.name} ${product.name}`);
-
-    if (this.hasFreshStrongEvidence(existingRows)) {
-      return this.buildSummary(existingRows, "cached");
-    }
-
-    if (!sector) {
-      return this.buildSummary(existingRows, existingRows.length > 0 ? "cached" : "none_found");
-    }
-    const relevantSources = await this.loadLookupSources(sector);
-    const lookupSummary = await this.runLookupAcrossSources(
-      lookupQuery,
-      relevantSources,
-      {
-        brandName: product.brand.name,
-        productName: product.name,
-        sector
-      },
-      sector
-    );
-
-    const refreshedRows = await this.loadEvidenceRows(product.id, product.brandId);
-    if (!lookupSummary.consultedAnySource && refreshedRows.length === 0) {
-      if (lookupSummary.skippedSourceLabels.length > 0) {
-        return this.buildSummary([], "none_found", {
-          consultedSources: lookupSummary.skippedSourceLabels,
-          lastCheckedAt: lookupSummary.latestSkippedLookupAt,
-          freshness: lookupSummary.latestSkippedLookupAt ? "fresh" : "unavailable"
-        });
-      }
-
-      return this.buildEmptySummary();
-    }
-
-    const summaryOptions: SummaryBuildOptions = {
-      consultedSources: relevantSources.map((source) => source.certificationName),
-      lastCheckedAt:
-        refreshedRows[0]?.checkedAt.toISOString() ??
-        (lookupSummary.consultedAnySource ? new Date().toISOString() : lookupSummary.latestSkippedLookupAt)
-    };
-
-    if (refreshedRows.length === 0) {
-      summaryOptions.freshness = lookupSummary.consultedAnySource || lookupSummary.latestSkippedLookupAt ? "fresh" : "unavailable";
-    }
-
-    return this.buildSummary(
-      refreshedRows,
-      refreshedRows.length > 0 && lookupSummary.consultedAnySource ? "live_refresh" : "none_found",
-      summaryOptions
-    );
+    return existingRows.length > 0 ? this.buildSummary(existingRows, "cached") : this.buildEmptySummary();
   }
 
   public async discoverProductByQuery(query: string): Promise<OfficialProductDiscoveryCandidate | null> {
-    await this.ensureSourceRegistry();
     const normalizedQuery = normalizeLookupKey(query);
 
     if (!normalizedQuery) {
@@ -661,7 +609,7 @@ export class OfficialEvidenceService {
       ? REQUEST_TIME_SOURCE_IDS_BY_SECTOR[preferredSector]
       : CROSS_SECTOR_REQUEST_TIME_SOURCE_IDS;
 
-    const sources = await db.certificationSource.findMany({
+    let sources = await db.certificationSource.findMany({
       where: {
         id: {
           in: requestTimeSourceIds
@@ -669,6 +617,18 @@ export class OfficialEvidenceService {
       },
       orderBy: [{ priority: "asc" }, { certificationName: "asc" }]
     });
+
+    if (sources.length === 0) {
+      await this.ensureSourceRegistry();
+      sources = await db.certificationSource.findMany({
+        where: {
+          id: {
+            in: requestTimeSourceIds
+          }
+        },
+        orderBy: [{ priority: "asc" }, { certificationName: "asc" }]
+      });
+    }
     const sourceOrder = new Map(requestTimeSourceIds.map((sourceId, index) => [sourceId, index]));
 
     return sources.sort((leftSource, rightSource) => {

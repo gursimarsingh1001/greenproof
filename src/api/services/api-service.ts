@@ -497,7 +497,7 @@ export class GreenProofApiService {
    * Imports a barcode from Open Food Facts into the local catalog when the product is missing locally.
    */
   private async importBarcodeFromOpenFoodFacts(barcode: string): Promise<ProductWithRelations | null> {
-    const importedProduct = await this.openFoodFactsService.getProductByBarcode(barcode);
+    const importedProduct = await this.openFoodFactsService.getProductByBarcodeAcrossCatalogs(barcode);
 
     if (!importedProduct) {
       return null;
@@ -510,7 +510,7 @@ export class GreenProofApiService {
    * Imports the top matching Open Food Facts search result for a manual food query.
    */
   private async importQueryFromOpenFoodFacts(query: string): Promise<ProductWithRelations | null> {
-    const importedProduct = (await this.openFoodFactsService.searchProducts(query, 5)).find(
+    const importedProduct = (await this.openFoodFactsService.searchProductsAcrossCatalogs(query, 5)).find(
       (candidate) => candidate.barcode.trim().length > 0
     );
 

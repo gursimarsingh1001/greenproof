@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
 import { ResultsClient } from "@/components/ResultsClient";
 import { fetchBackendData } from "@/lib/backend";
-import type { BrandReputationPayload, ScanResultPayload } from "@/lib/types";
+import type { ScanResultPayload } from "@/lib/types";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 export default async function ResultsPage({
   params
@@ -13,12 +13,15 @@ export default async function ResultsPage({
   const { id } = await params;
 
   try {
-    const payload = await fetchBackendData<ScanResultPayload>(`/api/product/${id}`);
-    const brandReputation = await fetchBackendData<BrandReputationPayload>(`/api/brand/${payload.brand.id}/reputation`);
+    const payload = await fetchBackendData<ScanResultPayload>(`/api/product/${id}`, {
+      next: {
+        revalidate: 300
+      }
+    });
 
     return (
       <main className="mx-auto max-w-7xl px-6 py-8 md:px-10 md:py-10">
-        <ResultsClient payload={payload} brandReputation={brandReputation} />
+        <ResultsClient payload={payload} />
       </main>
     );
   } catch {

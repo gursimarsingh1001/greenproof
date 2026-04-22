@@ -12,15 +12,29 @@ import { IntegrityBadge } from "./IntegrityBadge";
 import { ScoreDisplay } from "./ScoreDisplay";
 import { SourceContextCard } from "./SourceContextCard";
 import { TrustBreakdownChart } from "./TrustBreakdownChart";
-import type { BrandReputationPayload, ScanResultPayload } from "@/lib/types";
+import type { ApiEnvelope, BrandReputationPayload, BrandSummary, ScanResultPayload } from "@/lib/types";
 
 interface ResultsClientProps {
   payload: ScanResultPayload;
-  brandReputation: BrandReputationPayload;
+  brandReputation?: BrandReputationPayload | null;
 }
 
-export function ResultsClient({ payload, brandReputation }: ResultsClientProps) {
+function buildFallbackBrandReputation(brand: BrandSummary): BrandReputationPayload {
+  return {
+    brand,
+    history: [],
+    pastScores: [],
+    newsMentions: [],
+    averageTrustScore: Math.round(brand.reputationScore * 100)
+  };
+}
+
+export function ResultsClient({ payload, brandReputation: initialBrandReputation = null }: ResultsClientProps) {
   const [feedbackOpen, setFeedbackOpen] = useState(false);
+  const [brandReputation, setBrandReputation] = useState<BrandReputationPayload | null>(initialBrandReputation);
+  const [brandReputationStatus, setBrandReputationStatus] = useState<"loading" | "ready" | "error">(
+    initialBrandReputation ? "ready" : "loading"
+  );
   const addRecentScan = useScanStore((state) => state.addRecentScan);
 
   useEffect(() => {
@@ -33,6 +47,44 @@ export function ResultsClient({ payload, brandReputation }: ResultsClientProps) 
       scannedAt: new Date().toISOString()
     });
   }, [addRecentScan, payload.brand.name, payload.product.id, payload.product.name, payload.result.rating, payload.result.score]);
+
+  useEffect(() => {
+    if (brandReputation && brandReputation.brand.id === payload.brand.id) {
+      return;
+    }
+
+    let active = true;
+    setBrandReputationStatus("loading");
+
+    void fetch(`/api/brand/${payload.brand.id}/reputation`, {
+      cache: "no-store"
+    })
+      .then(async (response) => {
+        const parsedPayload = (await response.json()) as ApiEnvelope<BrandReputationPayload>;
+
+        if (!response.ok || !parsedPayload.success || !parsedPayload.data) {
+          throw new Error(parsedPayload.error ?? "Failed to load brand reputation.");
+        }
+
+        if (!active) {
+          return;
+        }
+
+        setBrandReputation(parsedPayload.data);
+        setBrandReputationStatus("ready");
+      })
+      .catch(() => {
+        if (!active) {
+          return;
+        }
+
+        setBrandReputationStatus("error");
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [brandReputation, payload.brand.id]);
 
   const handleShare = async () => {
     const shareUrl = window.location.href;
@@ -48,6 +100,9 @@ export function ResultsClient({ payload, brandReputation }: ResultsClientProps) 
 
     await navigator.clipboard.writeText(shareUrl);
   };
+
+  const resolvedBrandReputation = brandReputation ?? buildFallbackBrandReputation(payload.brand);
+  const brandHistory = brandReputation?.history.slice(0, 4) ?? [];
 
   return (
     <div className="space-y-8">
@@ -96,7 +151,7 @@ export function ResultsClient({ payload, brandReputation }: ResultsClientProps) 
           />
         </div>
 
-        <BrandReputationCard brand={payload.brand} brandReputation={brandReputation} />
+        <BrandReputationCard brand={payload.brand} brandReputation={resolvedBrandReputation} />
       </section>
 
       <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
@@ -135,17 +190,25 @@ export function ResultsClient({ payload, brandReputation }: ResultsClientProps) 
               <h3 className="mt-3 font-[var(--font-display)] text-2xl font-semibold text-ink">Recent brand signals</h3>
             </div>
             <div className="space-y-3">
-              {brandReputation.history.slice(0, 4).map((entry) => (
-                <div key={`${entry.date}-${entry.title}`} className="rounded-2xl bg-sand/65 px-4 py-3">
-                  <div className="flex items-center justify-between gap-4">
-                    <p className="font-semibold text-ink">{entry.title}</p>
-                    <span className="text-xs uppercase tracking-[0.22em] text-moss/45">
-                      {new Date(entry.date).toLocaleDateString()}
-                    </span>
+              {brandHistory.length > 0 ? (
+                brandHistory.map((entry) => (
+                  <div key={`${entry.date}-${entry.title}`} className="rounded-2xl bg-sand/65 px-4 py-3">
+                    <div className="flex items-center justify-between gap-4">
+                      <p className="font-semibold text-ink">{entry.title}</p>
+                      <span className="text-xs uppercase tracking-[0.22em] text-moss/45">
+                        {new Date(entry.date).toLocaleDateString()}
+                      </span>
+                    </div>
+                    <p className="mt-2 text-sm leading-6 text-moss/70">{entry.detail}</p>
                   </div>
-                  <p className="mt-2 text-sm leading-6 text-moss/70">{entry.detail}</p>
+                ))
+              ) : (
+                <div className="rounded-2xl bg-sand/65 px-4 py-4 text-sm leading-6 text-moss/68">
+                  {brandReputationStatus === "loading"
+                    ? "Loading brand context..."
+                    : "No recent brand context entries are available for this product yet."}
                 </div>
-              ))}
+              )}
             </div>
           </section>
         </div>
